@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,7 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridMap\d2\Map2d10.cs" />
+    <Compile Include="GridMap\d2\Map2d20.cs" />
+    <Compile Include="GridMap\d2\Map2d100.cs" />
+    <Compile Include="GridMap\d2\Map2d50.cs" />
+    <Compile Include="GridMap\d2\Map2d1000.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="GridMap\IMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

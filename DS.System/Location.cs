@@ -1,13 +1,14 @@
-﻿namespace DS.System
+﻿namespace DSUtils
 {
-    public struct Location
+    public struct Location 
     {
-        public readonly int X, Y, Z;
+        public int X, Y, Z;
         public Location(int x, int y, int z)
         {
-            this.X = x;
+            this.X = x; 
             this.Y = y;
-            this.Z = z;
+            this.Z = z; 
         }
     }
+
 }
