@@ -19,17 +19,18 @@ namespace DSUtils.GridMap.d2
             int middleY = (int)Math.Round((double)(Matrix.GetUpperBound(1) / 2));
             int smesh = 2;
 
+
             for (int z = 0; z <= Matrix.GetUpperBound(2); z++)
             {
                 for (int y = 0; y <= middleY + smesh; y++)
-                    for (int x = 3; x <= 4; x++)
+                    for (int x = 3; x <= 5; x++)
                         Matrix[x, y, z] = 1;
             }
 
             for (int z = 0; z <= Matrix.GetUpperBound(2); z++)
             {
                 for (int y = middleY - smesh; y <= Matrix.GetUpperBound(1); y++)
-                    for (int x = 6; x <= 7; x++)
+                    for (int x = 12; x <= 14; x++)
                         Matrix[x, y, z] = 1;
             }
 

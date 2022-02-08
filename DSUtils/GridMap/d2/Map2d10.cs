@@ -29,7 +29,7 @@ namespace DSUtils.GridMap.d2
             for (int z = 0; z <= Matrix.GetUpperBound(2); z++)
             {
                 for (int y = 0; y <= middleY + smesh; y++)
-                    for (int x = 3; x <= 4; x++)
+                    for (int x = 2; x <= 3; x++)
                         Matrix[x, y, z] = 1;
             }
 

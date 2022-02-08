@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace DSUtils.GridMap.d2
+namespace DSUtils.GridMap.d3
 {
     /// <summary>
-    /// 2-dimensional grid map size 20x20 with 1 wall. Start and goal points by map's angles.
+    /// 3-dimensional grid map size 20x20x20 with 1 wall. Start and goal points by map's angles.
     /// </summary>
-    public class Map2d20 : IMap
+    public class Map3d20 : IMap
     {
         public Location Start { get; set; } = new Location(0, 0, 0);
-        public Location Goal { get; set; } = new Location(19, 19, 0);
+        public Location Goal { get; set; } = new Location(19, 19, 19);
         public int[,,] Matrix { get; set; }
 
-        public Map2d20()
+        public Map3d20()
         {
             Matrix = new int[Goal.X + 1, Goal.Y + 1, Goal.Z + 1];
        
@@ -33,7 +33,7 @@ namespace DSUtils.GridMap.d2
                         Matrix[x, y, z] = 1;
             }
 
-            
+
             Matrix[Start.X, Start.Y, Start.Z] = 8;
             Matrix[Goal.X, Goal.Y, Goal.Z] = 9;
 

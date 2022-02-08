@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DSUtils.GridMap
+namespace DSUtils.GridMap.d2    
 {
     /// <summary>
     /// 2-dimensional grid map size 100x100 with 2 walls. Start and goal points by map's angles.
