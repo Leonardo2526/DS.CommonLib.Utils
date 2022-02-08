@@ -7,8 +7,8 @@
     <ProjectGuid>{F527628D-44B6-4E91-8026-0FF5F0289486}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DS.System</RootNamespace>
-    <AssemblyName>DS.System</AssemblyName>
+    <RootNamespace>DSUtils</RootNamespace>
+    <AssemblyName>DSUtils</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,7 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GridMap\d2\Map2d10.cs" />
+    <Compile Include="GridMap\d2\Map2d1000v1.cs" />
+    <Compile Include="GridMap\d2\Map2d20v1.cs" />
+    <Compile Include="GridMap\d3\Map3d100.cs" />
+    <Compile Include="GridMap\d2\Map2d20.cs" />
+    <Compile Include="GridMap\d2\Map2d100.cs" />
+    <Compile Include="GridMap\d2\Map2d50.cs" />
+    <Compile Include="GridMap\d2\Map2d1000.cs" />
+    <Compile Include="GridMap\d3\Map3d20.cs" />
+    <Compile Include="GridMap\IGraph.cs" />
+    <Compile Include="GridMap\IPathRequiment.cs" />
+    <Compile Include="GridMap\PathRequiment0.cs" />
+    <Compile Include="GridMap\PathRequiment1.cs" />
     <Compile Include="Location.cs" />
+    <Compile Include="GridMap\IMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
