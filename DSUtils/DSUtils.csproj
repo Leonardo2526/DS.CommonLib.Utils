@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="GridMap\d2\Map2d10.cs" />
     <Compile Include="GridMap\d2\Map2d1000v1.cs" />
+    <Compile Include="GridMap\d2\Map2d20v2.cs" />
     <Compile Include="GridMap\d2\Map2d20v1.cs" />
     <Compile Include="GridMap\d3\Map3d100.cs" />
     <Compile Include="GridMap\d2\Map2d20.cs" />
@@ -54,6 +55,10 @@
     <Compile Include="GridMap\IGraph.cs" />
     <Compile Include="GridMap\IPathRequiment.cs" />
     <Compile Include="GridMap\PathRequiment0.cs" />
+    <Compile Include="GridMap\PathRequiment02.cs" />
+    <Compile Include="GridMap\PathRequiment10.cs" />
+    <Compile Include="GridMap\PathRequiment20.cs" />
+    <Compile Include="GridMap\PathRequiment2.cs" />
     <Compile Include="GridMap\PathRequiment1.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="GridMap\IMap.cs" />
