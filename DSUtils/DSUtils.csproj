@@ -30,6 +30,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,8 +46,10 @@
   <ItemGroup>
     <Compile Include="GridMap\d2\Map2d10.cs" />
     <Compile Include="GridMap\d2\Map2d1000v1.cs" />
+    <Compile Include="GridMap\d2\Map2d20v3.cs" />
     <Compile Include="GridMap\d2\Map2d20v2.cs" />
     <Compile Include="GridMap\d2\Map2d20v1.cs" />
+    <Compile Include="GridMap\d3\Map3d100v1.cs" />
     <Compile Include="GridMap\d3\Map3d100.cs" />
     <Compile Include="GridMap\d2\Map2d20.cs" />
     <Compile Include="GridMap\d2\Map2d100.cs" />
