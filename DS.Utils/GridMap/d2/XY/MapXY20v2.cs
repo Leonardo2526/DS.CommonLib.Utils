@@ -3,15 +3,15 @@
 namespace DS.PathSearch.GridMap.d2
 {
     /// <summary>
-    /// 2-dimensional grid map size 20x20 with 1 wall. Start and goal points by map's center.
+    /// 2-dimensional grid map size 20x20 with stepped walls. Start and goal points by map's center.
     /// </summary>
-    public class Map2d20v1 : IMap
+    public class MapXY20v2 : IMap
     {
         public Location Start { get; set; } = new Location(0, 9, 0);
         public Location Goal { get; set; } = new Location(19, 9, 0);
         public int[,,] Matrix { get; set; }
 
-        public Map2d20v1()
+        public MapXY20v2()
         {
             Matrix = new int[20, 20, 1];
        
@@ -21,8 +21,16 @@ namespace DS.PathSearch.GridMap.d2
 
             for (int z = 0; z <= Matrix.GetUpperBound(2); z++)
             {
-                for (int y = 7; y <= 15; y++)
-                    for (int x = 7; x <= 10; x++)
+                for (int y = 0; y <= 10; y++)
+                    for (int x = 5; x <= 6; x++)
+                        Matrix[x, y, z] = 1;
+
+                for (int y = 0; y <= 11; y++)
+                    for (int x = 6; x <= 7; x++)
+                        Matrix[x, y, z] = 1;
+
+                for (int y = 0; y <= 12; y++)
+                    for (int x = 7; x <= 8; x++)
                         Matrix[x, y, z] = 1;
             }
             

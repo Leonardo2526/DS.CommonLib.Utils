@@ -5,13 +5,13 @@ namespace DS.PathSearch.GridMap.d2
     /// <summary>
     /// 2-dimensional grid map size 20x20 with both sides stepped walls. Start and goal points by map's center.
     /// </summary>
-    public class Map2d20v3 : IMap
+    public class MapXY20v3 : IMap
     {
         public Location Start { get; set; } = new Location(0, 9, 0);
         public Location Goal { get; set; } = new Location(19, 9, 0);
         public int[,,] Matrix { get; set; }
 
-        public Map2d20v3()
+        public MapXY20v3()
         {
             Matrix = new int[20, 20, 1];
        

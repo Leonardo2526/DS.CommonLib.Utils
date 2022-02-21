@@ -5,13 +5,13 @@ namespace DS.PathSearch.GridMap.d2
     /// <summary>
     /// 2-dimensional grid map size 1000x1000 with 2 walls. Start and goal points by map's angles.
     /// </summary>
-    public class Map2d1000 : IMap
+    public class MapXY1000 : IMap
     {
         public Location Start { get; set; } = new Location(0, 0, 0);
         public Location Goal { get; set; } = new Location(999, 999, 0);
         public int[,,] Matrix { get; set; }
 
-        public Map2d1000()
+        public MapXY1000()
         {
             Matrix = new int[Goal.X + 1, Goal.Y + 1, Goal.Z + 1];
 

@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace DS.PathSearch.GridMap.d2    
+namespace DS.PathSearch.GridMap.d2
 {
     /// <summary>
     /// 2-dimensional grid map size 100x100 with 2 walls. Start and goal points by map's angles.
     /// </summary>
-    public class Map2d100 : IMap
+    public class MapXY100 : IMap
     {
         public Location Start { get; set; } = new Location(0, 0, 0);
         public Location Goal { get; set; } = new Location(99, 99, 0);
         public int[,,] Matrix { get; set; }
 
-        public Map2d100()
+        public MapXY100()
         {
             Matrix = new int[Goal.X + 1, Goal.Y + 1, Goal.Z + 1];
 
