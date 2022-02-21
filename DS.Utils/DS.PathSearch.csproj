@@ -49,6 +49,9 @@
     <Compile Include="GridMap\d2\XY\MapXY20v3.cs" />
     <Compile Include="GridMap\d2\XY\MapXY20v2.cs" />
     <Compile Include="GridMap\d2\XY\MapXY20v1.cs" />
+    <Compile Include="GridMap\d2\XZ\MapXZ100.cs" />
+    <Compile Include="GridMap\d2\XZ\MapXZ20v3.cs" />
+    <Compile Include="GridMap\d2\XZ\MapXZ20v1.cs" />
     <Compile Include="GridMap\d2\XZ\MapXZ10.cs" />
     <Compile Include="GridMap\d3\Map3d100v1.cs" />
     <Compile Include="GridMap\d3\Map3d100.cs" />
