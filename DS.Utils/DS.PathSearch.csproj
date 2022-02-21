@@ -7,8 +7,8 @@
     <ProjectGuid>{F527628D-44B6-4E91-8026-0FF5F0289486}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DSUtils</RootNamespace>
-    <AssemblyName>DSUtils</AssemblyName>
+    <RootNamespace>DS.PathSearch</RootNamespace>
+    <AssemblyName>DS.PathSearch</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -1,4 +1,4 @@
-﻿namespace DSUtils.GridMap
+﻿namespace DS.PathSearch.GridMap
 {
     public class PathRequiment1 : IPathRequiment
     {

@@ -1,4 +1,4 @@
-﻿namespace DSUtils
+﻿namespace DS.PathSearch
 {
     public struct Location 
     {
