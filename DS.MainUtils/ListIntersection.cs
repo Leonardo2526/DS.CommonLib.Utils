@@ -5,19 +5,19 @@ namespace DS.MainUtils
 {
     public static class ListIntersection
     {
-        public static List<int> GetIntersections(List<int> list1, List<int> list2)
+        public static List<T> GetIntersections<T>(List<T> list1, List<T> list2)
         {
             var intersecion = list1.Intersect(list2).ToList();
             return intersecion;
         }
 
-        public static List<int> GetNoIntersections(List<int> list1, List<int> list2)
+        public static List<T> GetNoIntersections<T>(List<T> list1, List<T> list2)
         {
-            var NoIntersections = new List<int>();
+            var NoIntersections = new List<T>();
 
             foreach (var one in list1)
             {
-                if (!list2.Any(two => two == one))
+                if (!list2.Any(two => two.Equals(one)))
                 {
                     NoIntersections.Add(one);
                 }
