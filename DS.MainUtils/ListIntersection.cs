@@ -10,7 +10,7 @@ namespace DS.MainUtils
             var intersecion = list1.Intersect(list2).ToList();
             return intersecion;
         }
-
+         
         public static List<T> GetNoIntersections<T>(List<T> list1, List<T> list2)
         {
             var NoIntersections = new List<T>();
