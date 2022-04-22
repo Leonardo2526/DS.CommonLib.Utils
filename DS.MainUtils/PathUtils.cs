@@ -10,6 +10,11 @@ namespace DS.MainUtils
 {
     public static class PathUtils
     {
+        private static string DefaultDirName = @"%USERPROFILE%\Desktop\";
+        private static string DefaultLogName = "OutputLog";
+        private static string DefaultLogExt = ".log";
+
+
         /// <summary>
         /// Check if current directory has write permissions.
         /// </summary>
@@ -41,16 +46,48 @@ namespace DS.MainUtils
         }
 
 
-        public static string GetPath(string CurDateTime, string DirName = @"%USERPROFILE%\Desktop\Logs\", string FileName = "Log", string FileExt = ".txt")
+        //public static string GetPath(string CurDateTime, string DirName = @"%USERPROFILE%\Desktop\Logs\", string FileName = "Log", string FileExt = ".txt")
+        public static string GetPath(PathStringType pathStringType, Type type = null)
         {
-            string ExpDirName = Environment.ExpandEnvironmentVariables(DirName);
+            CheckValues(pathStringType, type);
+
+            string ExpDirName = Environment.ExpandEnvironmentVariables(DefaultDirName);
 
             if (Directory.Exists(ExpDirName) == false)
             {
                 Directory.CreateDirectory(ExpDirName);
             }
 
-            return Environment.ExpandEnvironmentVariables(DirName + CurDateTime + "_" + FileName + FileExt);
+            if (!HasWritePermissionOnDir(ExpDirName))
+            {
+                return "";
+            }
+
+            return Environment.ExpandEnvironmentVariables(DefaultDirName + CurDateTime + "_" + FileName + FileExt);
+        }
+
+        private static void CheckValues(PathStringType pathStringType, Type type)
+        {
+            if (type is not null)
+            {
+                DefaultLogName = type.Namespace;
+            }
+
+            switch (pathStringType)
+            {
+                case PathStringType.Default:                    
+                        break;
+                default:
+                    break;
+            }
+        }
+
+
+        public enum PathStringType
+        {
+            Default, 
+            CurDateTime, 
+            Custom
         }
     }
 }
