@@ -3,11 +3,11 @@ using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
 
-namespace DS.MainUtils.PathUtils
+namespace DS.MainUtils.DirPathUtils
 {
-    public class PathBuilder
+    public class DirPathBuilder
     {
-        public PathBuilder(string fileName = "", string dirName = "", 
+        public DirPathBuilder(string fileName = "", string dirName = "", 
             DirOption dirOption = DirOption.Default, LogNameOption logNameOption = LogNameOption.Default)
         {
             LogName = "OutputLog";

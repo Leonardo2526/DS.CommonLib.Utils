@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="ListIntersection.cs" />
-    <Compile Include="PathUtils\PathUtils.cs" />
+    <Compile Include="PathUtils\DirPathBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
