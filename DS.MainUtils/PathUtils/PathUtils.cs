@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Reflection;
 using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DS.MainUtils.PathUtils
 {
@@ -12,20 +9,29 @@ namespace DS.MainUtils.PathUtils
     {
         public string DirName { get; private set; }
         public string LogName { get; private set; }
-        private string LogExt { get;  set; }
+        private string LogExt { get; set; }
 
         //Get current date and time 
         private static string CurDate = DateTime.Now.ToString("yyMMdd");
         private static string CurDateTime = DateTime.Now.ToString("yyMMdd_HHmmss");
 
-
-        public PathBuilder(string fileName = "", string dirName = "", DirOption dirOption = DirOption.Desktop, Type type = null)
+        public static string AssemblyDirectory
         {
-            DirName = @"%USERPROFILE%\Desktop\";
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        public PathBuilder(string fileName = "", string dirName = "", DirOption dirOption = DirOption.Default, LogNameOption logNameOption = LogNameOption.Default)
+        {
             LogName = "OutputLog";
             LogExt = ".log";
 
-            UpdateDefaults(fileName, dirName, dirOption, type);
+            UpdateDefaults(dirOption, logNameOption, fileName, dirName);
         }
 
 
@@ -38,7 +44,7 @@ namespace DS.MainUtils.PathUtils
         /// <param name="type"></param>
         /// <returns>Return directory by </returns>
         public string GetPath()
-        {          
+        {
 
             string ExpDirName = Environment.ExpandEnvironmentVariables(DirName);
 
@@ -52,7 +58,8 @@ namespace DS.MainUtils.PathUtils
                 return "";
             }
 
-            string dir = $"{ExpDirName}+{LogName}+{LogExt}";
+
+            string dir = ExpDirName + "\\" + LogName + LogExt;
 
             return Environment.ExpandEnvironmentVariables(dir);
         }
@@ -97,15 +104,15 @@ namespace DS.MainUtils.PathUtils
         /// <param name="dirName"></param>
         /// <param name="dirOption"></param>
         /// <param name="type"></param>
-        private void UpdateDefaults(string fileName, string dirName, DirOption dirOption, Type type)
+        private void UpdateDefaults(DirOption dirOption, LogNameOption logNameOption, string fileName, string dirName)
         {
 
-            UpdateFileName(fileName, dirOption);
-            UpdateDirName(dirName, dirOption, type);
+            UpdateFileName(fileName, logNameOption);
+            UpdateDirName(dirName, dirOption);
 
         }
 
-        private void UpdateFileName(string fileName, DirOption dirOption)
+        private void UpdateFileName(string fileName, LogNameOption logNameOption)
         {
 
             if (fileName != "")
@@ -114,37 +121,41 @@ namespace DS.MainUtils.PathUtils
             }
             else
             {
-                switch (dirOption)
+                switch (logNameOption)
                 {
-                    case DirOption.CurDateTime:
+                    case LogNameOption.Default:
+                        break;
+                    case LogNameOption.CurDateTime:
                         LogName = $"{CurDateTime}_{LogName}";
                         break;
-                    case DirOption.CurDate:
+                    case LogNameOption.CurDate:
                         LogName = $"{CurDate}_{LogName}";
                         break;
                 }
             }
         }
 
-        private void UpdateDirName(string dirName, DirOption dirOption, Type type)
+        private void UpdateDirName(string dirName, DirOption dirOption)
         {
             if (dirName != "")
             {
                 DirName = dirName;
             }
-            else if (type is not null)
-            {
-                DirName = type.Assembly.Location;
-            }
             else
             {
                 switch (dirOption)
                 {
+                    case DirOption.Default:
+                        DirName = AssemblyDirectory;
+                        break;
                     case DirOption.Desktop:
+                        DirName = @"%USERPROFILE%\Desktop\";
                         break;
                 }
             }
         }
+
+
 
         #endregion
 
@@ -152,9 +163,21 @@ namespace DS.MainUtils.PathUtils
         public enum DirOption
         {
             /// <summary>
+            /// Save log file to application folder
+            /// </summary>
+            Default,
+            /// <summary>
             /// Save log file to desktop
             /// </summary>
-            Desktop,
+            Desktop,  
+        }
+
+        public enum LogNameOption
+        {    
+            /// <summary>
+             /// No option
+             /// </summary>
+            Default,
             /// <summary>
             /// Add to log name current date
             /// </summary>
@@ -162,7 +185,7 @@ namespace DS.MainUtils.PathUtils
             /// <summary>
             /// Add to log name current date and time
             /// </summary>
-            CurDateTime, 
+            CurDateTime,
         }
     }
 }
