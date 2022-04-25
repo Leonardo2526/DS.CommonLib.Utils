@@ -48,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\Activity\ActivityBuilder.cs" />
+    <Compile Include="Builders\Activity\InfoActivityBuilder.cs" />
+    <Compile Include="Builders\Activity\CriticalActivityBuilder.cs" />
+    <Compile Include="Builders\Activity\WarningActivityBuilder.cs" />
     <Compile Include="Builders\Activity\ErrorActivityBuilder.cs" />
     <Compile Include="Builders\Activity\MultipleActivityBuilder.cs" />
     <Compile Include="LogBuilder.cs" />
