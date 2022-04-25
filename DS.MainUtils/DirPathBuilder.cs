@@ -3,11 +3,11 @@ using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
 
-namespace DS.MainUtils.DirPathUtils
+namespace DS.MainUtils
 {
     public class DirPathBuilder
     {
-        public DirPathBuilder(string fileName = "", string dirName = "", 
+        public DirPathBuilder(string fileName = "", string dirName = "",
             DirOption dirOption = DirOption.Default, LogNameOption logNameOption = LogNameOption.Default)
         {
             LogName = "OutputLog";
@@ -63,7 +63,7 @@ namespace DS.MainUtils.DirPathUtils
             else
             {
                 Directory.CreateDirectory(ExpDirName);
-            } 
+            }
 
             string dir = ExpDirName + "\\" + LogName + LogExt;
 
@@ -126,20 +126,19 @@ namespace DS.MainUtils.DirPathUtils
             {
                 LogName = fileName;
             }
-            else
+
+            switch (logNameOption)
             {
-                switch (logNameOption)
-                {
-                    case LogNameOption.Default:
-                        break;
-                    case LogNameOption.CurDateTime:
-                        LogName = $"{CurDateTime}_{LogName}";
-                        break;
-                    case LogNameOption.CurDate:
-                        LogName = $"{CurDate}_{LogName}";
-                        break;
-                }
+                case LogNameOption.Default:
+                    break;
+                case LogNameOption.CurDateTime:
+                    LogName = $"{CurDateTime}_{LogName}";
+                    break;
+                case LogNameOption.CurDate:
+                    LogName = $"{CurDate}_{LogName}";
+                    break;
             }
+
         }
 
         private void UpdateDirName(string dirName, DirOption dirOption)
@@ -176,14 +175,14 @@ namespace DS.MainUtils.DirPathUtils
             /// <summary>
             /// Save log file to desktop
             /// </summary>
-            Desktop,  
+            Desktop,
         }
 
         public enum LogNameOption
-        {    
+        {
             /// <summary>
-             /// No option
-             /// </summary>
+            /// No option
+            /// </summary>
             Default,
             /// <summary>
             /// Add to log name current date
