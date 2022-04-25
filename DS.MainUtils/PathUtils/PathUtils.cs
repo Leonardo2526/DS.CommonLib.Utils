@@ -7,15 +7,18 @@ namespace DS.MainUtils.PathUtils
 {
     public class PathBuilder
     {
+        public PathBuilder(string fileName = "", string dirName = "", 
+            DirOption dirOption = DirOption.Default, LogNameOption logNameOption = LogNameOption.Default)
+        {
+            LogName = "OutputLog";
+            LogExt = ".log";
+
+            UpdateDefaults(dirOption, logNameOption, fileName, dirName);
+        }
+
         public string DirName { get; private set; }
         public string LogName { get; private set; }
-        private string LogExt { get; set; }
-
-        //Get current date and time 
-        private static string CurDate = DateTime.Now.ToString("yyMMdd");
-        private static string CurDateTime = DateTime.Now.ToString("yyMMdd_HHmmss");
-
-        public static string AssemblyDirectory
+        private static string AssemblyDirectory
         {
             get
             {
@@ -26,13 +29,15 @@ namespace DS.MainUtils.PathUtils
             }
         }
 
-        public PathBuilder(string fileName = "", string dirName = "", DirOption dirOption = DirOption.Default, LogNameOption logNameOption = LogNameOption.Default)
-        {
-            LogName = "OutputLog";
-            LogExt = ".log";
+        #region Fields
 
-            UpdateDefaults(dirOption, logNameOption, fileName, dirName);
-        }
+        private readonly string LogExt;
+
+        //Get current date and time 
+        private static readonly string CurDate = DateTime.Now.ToString("yyMMdd");
+        private static readonly string CurDateTime = DateTime.Now.ToString("yyMMdd_HHmmss");
+
+        #endregion
 
 
         /// <summary>
@@ -48,21 +53,23 @@ namespace DS.MainUtils.PathUtils
 
             string ExpDirName = Environment.ExpandEnvironmentVariables(DirName);
 
-            if (Directory.Exists(ExpDirName) == false)
+            if (Directory.Exists(ExpDirName))
+            {
+                if (!HasWritePermissionOnDir(ExpDirName))
+                {
+                    throw new InvalidOperationException($"There is no permission to write into this directory: {DirName}");
+                }
+            }
+            else
             {
                 Directory.CreateDirectory(ExpDirName);
-            }
-
-            if (!HasWritePermissionOnDir(ExpDirName))
-            {
-                return "";
-            }
-
+            } 
 
             string dir = ExpDirName + "\\" + LogName + LogExt;
 
             return Environment.ExpandEnvironmentVariables(dir);
         }
+
 
         #region PrivateMethods
 
