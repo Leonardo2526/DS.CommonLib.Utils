@@ -41,13 +41,13 @@ namespace DS.MainUtils
 
 
         /// <summary>
-        /// Get directory path and file name.
+        /// Get directory path and file name. If current directory name is absent it'll be created. 
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="dirName"></param>
         /// <param name="dirOption"></param>
         /// <param name="type"></param>
-        /// <returns>Return directory by </returns>
+        /// <returns>Return directory name.</returns>
         public string GetPath()
         {
 
