@@ -13,28 +13,38 @@ namespace DS.TraceUtils
             this.Message = message;
             this.TraceEventType = traceEventType;
 
-            string expDirName = GetDirName(pathBuilder);
-            SW = GetStream(expDirName, append);
+            ExpDirName = GetDirName(pathBuilder);
+            SW = GetStream(ExpDirName, append);
 
             CreateLog();
         }
 
-        private readonly TraceEventType TraceEventType;
-        private readonly StreamWriter SW;
-        private readonly string Message;
-
+        private TraceEventType TraceEventType;
+        private StreamWriter SW;
+        private string Message;
+        private TraceListener TextListener;
+        private string ExpDirName;
 
         #region Methods
 
+        public void AddMessage(string message, TraceEventType traceEventType)
+        {
+            this.Message = message;
+            this.TraceEventType = traceEventType;
+            this.SW = GetStream(ExpDirName, true);
+
+            CreateLog();
+        }
+
         private void CreateLog()
         {
-            TraceListener textListener = GetTextTraceListener();
+            TextListener = GetTextTraceListener();
             TraceListener consoleListener = GetConsoleTraceListener();
 
             ActivityBuilder activityBuilder = GetActivityBuilder();
 
             activityBuilder.TS.Listeners.Clear();
-            activityBuilder.TS.Listeners.Add(textListener);
+            activityBuilder.TS.Listeners.Add(TextListener);
             activityBuilder.TS.Listeners.Add(consoleListener);
 
             activityBuilder.Build();
@@ -57,22 +67,34 @@ namespace DS.TraceUtils
 
         private ActivityBuilder GetActivityBuilder()
         {
-            string traceSourceName = "TraceSource";
-            ActivityBuilder activityBuilder;
+            string traceSourceName = "TS";
+            ActivityBuilder activityBuilder = null;
 
             switch (TraceEventType)
             {
                 case TraceEventType.Error:
                     activityBuilder = new ErrorActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch = new SourceSwitch("ErrorSwitch", "Error");
-                    return activityBuilder;
+                    activityBuilder.TS.Switch.Level = SourceLevels.Error;
+                    break;
+                case TraceEventType.Warning:
+                    activityBuilder = new WarningActivityBuilder(Message, traceSourceName);
+                    activityBuilder.TS.Switch.Level = SourceLevels.Warning;
+                    break;
+                case TraceEventType.Information:
+                    activityBuilder = new InfoActivityBuilder(Message, traceSourceName);
+                    activityBuilder.TS.Switch.Level = SourceLevels.Information;
+                    break;
+                case TraceEventType.Critical:
+                    activityBuilder = new CriticalActivityBuilder(Message, traceSourceName);
+                    activityBuilder.TS.Switch.Level = SourceLevels.Critical;
+                    break;
                 case TraceEventType.Verbose:
                     activityBuilder = new MultipleActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch = new SourceSwitch("VerboseSwitch", "Verbose");
-                    return activityBuilder;
+                    activityBuilder.TS.Switch.Level = SourceLevels.Verbose;
+                    break;
             }
+                    return activityBuilder;
 
-            return null;
         }
 
         private string GetDirName(DirPathBuilder pathBuilder)

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace DS.TraceUtils
 {
-    class ErrorActivityBuilder : ActivityBuilder
+    class WarningActivityBuilder : ActivityBuilder
     {
-        public ErrorActivityBuilder(string message, string traceSourceName) : base(message, traceSourceName)
+        public WarningActivityBuilder(string message, string traceSourceName) : base(message, traceSourceName)
         { }
 
         public override ActivityBuilder Build()
         {
-            TS.TraceEvent(TraceEventType.Error, 1, Message);
+            TS.TraceEvent(TraceEventType.Warning, 2, Message);
 
             return this;
         }
