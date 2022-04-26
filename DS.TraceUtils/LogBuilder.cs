@@ -7,48 +7,70 @@ namespace DS.TraceUtils
 {
     public class LogBuilder
     {
-        public LogBuilder(string message, TraceEventType traceEventType,
-            DirPathBuilder pathBuilder = null, bool append = false)
+        public LogBuilder(DirPathBuilder pathBuilder = null, SourceLevels sourceLevels = SourceLevels.Verbose)
         {
-            this.Message = message;
-            this.TraceEventType = traceEventType;
+            this.SourceLevels = sourceLevels;
 
             ExpDirName = GetDirName(pathBuilder);
-            SW = GetStream(ExpDirName, append);
-
-            CreateLog();
         }
 
         private TraceEventType TraceEventType;
         private StreamWriter SW;
         private string Message;
-        private TraceListener TextListener;
         private string ExpDirName;
+        private ActivityBuilder ActivityBuilder;
+        private SourceLevels SourceLevels;
 
         #region Methods
 
-        public void AddMessage(string message, TraceEventType traceEventType)
+        public void ClearLog()
+        {
+            System.IO.File.WriteAllText(ExpDirName, string.Empty);
+        }
+
+        public void AddMessage(string message, TraceEventType traceEventType, bool append = true)
         {
             this.Message = message;
             this.TraceEventType = traceEventType;
-            this.SW = GetStream(ExpDirName, true);
+            this.SW = GetStream(ExpDirName, append);
 
-            CreateLog();
-        }
-
-        private void CreateLog()
-        {
-            TextListener = GetTextTraceListener();
+            TraceListener textListener = GetTextTraceListener();
             TraceListener consoleListener = GetConsoleTraceListener();
 
-            ActivityBuilder activityBuilder = GetActivityBuilder();
+            Build(textListener);
+            //Build(textListener, consoleListener);
+        }
 
-            activityBuilder.TS.Listeners.Clear();
-            activityBuilder.TS.Listeners.Add(TextListener);
-            activityBuilder.TS.Listeners.Add(consoleListener);
+        public void AddMessage(string text, bool append = true)
+        {
+            var sw = GetStream(ExpDirName, append);
+            using (sw)
+            {
+                sw.WriteLine(text);
+                //Console.WriteLine(text);
+            }
+        }
 
-            activityBuilder.Build();
-            activityBuilder.TS.Close();
+        private void Build(TraceListener listener1, TraceListener listener2 = null)
+        {
+            ActivityBuilder = GetActivityBuilder();
+            ActivityBuilder.TS.Switch.Level = SourceLevels;
+
+            ActivityBuilder.TS.Listeners.Clear();
+
+            AddListener(listener1);
+            AddListener(listener2);
+
+            ActivityBuilder.Build();
+            ActivityBuilder.TS.Close();
+        }
+
+        private void AddListener(TraceListener listener)
+        {
+            if (listener is not null)
+            {
+                ActivityBuilder.TS.Listeners.Add(listener);
+            }
         }
 
         private TraceListener GetTextTraceListener()
@@ -60,9 +82,9 @@ namespace DS.TraceUtils
 
         private TraceListener GetConsoleTraceListener()
         {
-            var textListener = new ConsoleTraceListener();
-            textListener.Name = "ConsoleListener";
-            return textListener;
+            var consoleListener = new ConsoleTraceListener();
+            consoleListener.Name = "ConsoleListener";
+            return consoleListener;
         }
 
         private ActivityBuilder GetActivityBuilder()
@@ -74,26 +96,22 @@ namespace DS.TraceUtils
             {
                 case TraceEventType.Error:
                     activityBuilder = new ErrorActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch.Level = SourceLevels.Error;
                     break;
                 case TraceEventType.Warning:
                     activityBuilder = new WarningActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch.Level = SourceLevels.Warning;
                     break;
                 case TraceEventType.Information:
                     activityBuilder = new InfoActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch.Level = SourceLevels.Information;
                     break;
                 case TraceEventType.Critical:
                     activityBuilder = new CriticalActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch.Level = SourceLevels.Critical;
                     break;
                 case TraceEventType.Verbose:
                     activityBuilder = new MultipleActivityBuilder(Message, traceSourceName);
-                    activityBuilder.TS.Switch.Level = SourceLevels.Verbose;
                     break;
             }
-                    return activityBuilder;
+
+            return activityBuilder;
 
         }
 
