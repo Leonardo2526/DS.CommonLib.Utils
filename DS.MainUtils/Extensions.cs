@@ -17,5 +17,15 @@ namespace DS.MainUtils
         {
             return (int)Math.Round(Math.Abs(number));
         }
+
+        /// <summary>
+        /// Convert radians to degrees
+        /// </summary>
+        /// <param name="angleRad"></param>
+        /// <returns>Return angle in degress.</returns>
+        public static double RadToDeg(this double angleRad)
+        {
+            return angleRad * (180 / Math.PI);
+        }
     }
 }
