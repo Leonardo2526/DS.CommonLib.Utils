@@ -27,5 +27,35 @@ namespace DS.MainUtils
         {
             return angleRad * (180 / Math.PI);
         }
+
+        /// <summary>
+        /// Convert radians to degrees
+        /// </summary>
+        /// <param name="angleRad"></param>
+        /// <returns>Return angle in degress.</returns>
+        public static double RadToDeg(this int angleRad)
+        {
+            return angleRad * (180 / Math.PI);
+        }
+
+        /// <summary>
+        /// Convert degrees to radians
+        /// </summary>
+        /// <param name="angleDeg"></param>
+        /// <returns>Return angle in radians.</returns>
+        public static double DegToRad(this double angleDeg)
+        {
+            return (angleDeg * Math.PI) / 180;
+        }
+
+        /// <summary>
+        /// Convert degrees to radians
+        /// </summary>
+        /// <param name="angleDeg"></param>
+        /// <returns>Return angle in radians.</returns>
+        public static double DegToRad(this int angleDeg)
+        {
+            return (angleDeg * Math.PI) / 180;
+        }
     }
 }
