@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DS.MainUtils
 {
-    public static class Extensions
+    public static class NumberExtensions
     {
         /// <summary>
         /// Get normalize number.
@@ -56,6 +52,23 @@ namespace DS.MainUtils
         public static double DegToRad(this int angleDeg)
         {
             return (angleDeg * Math.PI) / 180;
+        }
+
+
+        /// <summary>
+        /// Check if number and can be divided to devisibleNumber.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="devisibleNumber"></param>
+        /// <returns>Return true if number can be divided to devisibleNumber without rest. Return false if it isn't.</returns>
+        public static bool IsDevisible(this int input, int devisibleNumber)
+        {
+            if (input % devisibleNumber == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
