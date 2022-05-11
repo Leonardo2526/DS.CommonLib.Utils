@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files.cs" />
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ListIntersection.cs" />
     <Compile Include="DirPathBuilder.cs" />
