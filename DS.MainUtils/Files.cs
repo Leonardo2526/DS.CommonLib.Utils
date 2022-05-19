@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.AccessControl;
 
 namespace DS.MainUtils
 {
@@ -24,5 +22,73 @@ namespace DS.MainUtils
             }
             return false;
         }
+
+        /// <summary>
+        /// Clear txt file by path.
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <returns>Return true if clerance was successful. Return false if it wasn't.</returns>
+        public static bool ClearFile(string fullPath)
+        {
+            if (IsDirExistAndWritable(fullPath))
+            {
+                System.IO.File.WriteAllText(fullPath, string.Empty);
+                return true;
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Check if directory exist and has write permissions.
+        /// </summary>
+        /// <param name="fullPath"></param>
+        /// <returns>Return true if directory exist and has write permissions. Return false if it isn't.</returns>
+        public static bool IsDirExistAndWritable(string fullPath)
+        {
+            string ExpDirName = Environment.ExpandEnvironmentVariables(fullPath);
+
+            if (Directory.Exists(ExpDirName))
+            {
+                if (HasWritePermissionOnDir(ExpDirName))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check if current directory has write permissions.
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns>Return true if directory is available for write. Return false if it isn't. </returns>
+        public static bool HasWritePermissionOnDir(string directory)
+        {
+            //Check directory permissions
+            var writeAllow = false;
+            var writeDeny = false;
+            var accessControlList = Directory.GetAccessControl(directory);
+            if (accessControlList == null)
+                return false;
+            var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+            if (accessRules == null)
+                return false;
+
+            //Check rules
+            foreach (FileSystemAccessRule rule in accessRules)
+            {
+                if ((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) continue;
+
+                if (rule.AccessControlType == AccessControlType.Allow)
+                    writeAllow = true;
+                else if (rule.AccessControlType == AccessControlType.Deny)
+                    writeDeny = true;
+            }
+            return writeAllow && !writeDeny;
+        }
     }
+
 }
