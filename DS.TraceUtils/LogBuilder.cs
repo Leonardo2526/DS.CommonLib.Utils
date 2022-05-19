@@ -130,6 +130,9 @@ namespace DS.TraceUtils
                 case TraceEventType.Verbose:
                     activityBuilder = new MultipleActivityBuilder(Message, traceSourceName);
                     break;
+                case TraceEventType.Resume:
+                    activityBuilder = new ResumeActivityBuilder(Message, traceSourceName);
+                    break;
             }
 
             return activityBuilder;
