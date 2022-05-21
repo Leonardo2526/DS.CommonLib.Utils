@@ -8,6 +8,6 @@ namespace DS.MainUtils
 {
     enum RegexPatterns
     {
-        NoSpecialChar, Number
+        NoSpecialChar, Number, NaturalNumber
     }
 }
