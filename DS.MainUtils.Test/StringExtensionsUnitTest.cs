@@ -3,7 +3,7 @@ using DS.MainUtils.Strings;
 namespace DS.MainUtils.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class StringExtensionsUnitTest
     {
         [DataTestMethod]
         [DataRow()]
