@@ -13,9 +13,11 @@ namespace DS.MainUtils.Strings
             switch (regexPatterns)
             {
                 case RegexPatterns.NoSpecialChar:
-                   return @"^[A-Z0-9]*$";
+                   return @"^[\w]*$";
                 case RegexPatterns.Number:
-                    return @"^[,0-9]*$";
+                    return @"^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$";
+                case RegexPatterns.NaturalNumber:
+                    return @"^[\d]*$";
                 default:
                     break;
             }

@@ -9,10 +9,10 @@ namespace DS.MainUtils.Strings
         /// </summary>
         /// <param name="input"></param>
         /// <returns>Return true if string contains only numbers or letters. Return false if it isn't.</returns>
-        public static bool IsNumberOrLetter(this string input)
+        public static bool IsNoSpecialSymbol(this string input)
         {
             string pattern = PatternSelector.Select(RegexPatterns.NoSpecialChar);
-            return !Regex.IsMatch(input, pattern);
+            return Regex.IsMatch(input, pattern);
         }
 
         /// <summary>
@@ -23,7 +23,18 @@ namespace DS.MainUtils.Strings
         public static bool IsNumber(this string input)
         {
             string pattern = PatternSelector.Select(RegexPatterns.Number);
-            return !Regex.IsMatch(input, pattern);
+            return Regex.IsMatch(input, pattern);
+        }
+
+        /// <summary>
+        /// Check if string is a natural number.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>Return true if string contains only natural numbers. Return false if it isn't.</returns>
+        public static bool IsNaturalNumber(this string input)
+        {
+            string pattern = PatternSelector.Select(RegexPatterns.NaturalNumber);
+            return Regex.IsMatch(input, pattern);
         }
 
         /// <summary>
