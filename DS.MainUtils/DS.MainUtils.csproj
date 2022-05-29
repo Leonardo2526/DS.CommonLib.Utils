@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Files.cs" />
+    <Compile Include="Matrix.cs" />
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ListIntersection.cs" />
     <Compile Include="DirPathBuilder.cs" />
