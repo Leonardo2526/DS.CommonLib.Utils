@@ -2,8 +2,9 @@
 using System.IO;
 using System.Reflection;
 using System.Security.AccessControl;
+using DS.ClassLib.FileSystemUtils;
 
-namespace DS.MainUtils
+namespace DS.VarUtils
 {
     public class DirPathBuilder
     {
@@ -55,7 +56,7 @@ namespace DS.MainUtils
 
             if (Directory.Exists(ExpDirName))
             {
-                if (!Files.HasWritePermissionOnDir(ExpDirName))
+                if (!DirectoryUtils.HasWritePermissionOnDir(ExpDirName))
                 {
                     throw new InvalidOperationException($"There is no permission to write into this directory: {DirName}");
                 }

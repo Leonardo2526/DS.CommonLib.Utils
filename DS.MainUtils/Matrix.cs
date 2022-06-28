@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.MainUtils
+namespace DS.VarUtils
 {
     public static class Matrix
     {

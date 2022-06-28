@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DS.MainUtils\DS.MainUtils.csproj" />
+    <ProjectReference Include="..\DS.MainUtils\DS.ClassLib.VarUtils.csproj" />
   </ItemGroup>
 
 </Project>

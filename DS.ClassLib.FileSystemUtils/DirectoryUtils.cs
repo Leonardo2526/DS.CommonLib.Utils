@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -39,8 +40,7 @@ namespace DS.ClassLib.FileSystemUtils
             //Check directory permissions
             var writeAllow = false;
             var writeDeny = false;
-            DirectoryInfo dirInfo = new DirectoryInfo(directory);
-            var accessControlList = FileSystemAclExtensions.GetAccessControl(dirInfo);
+            var accessControlList = Directory.GetAccessControl(directory);
             if (accessControlList == null)
                 return false;
             var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));

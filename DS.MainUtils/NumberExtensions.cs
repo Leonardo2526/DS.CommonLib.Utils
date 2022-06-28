@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DS.MainUtils
+namespace DS.VarUtils
 {
     public static class NumberExtensions
     {
