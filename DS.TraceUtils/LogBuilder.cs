@@ -10,8 +10,7 @@ namespace DS.TraceUtils
         public LogBuilder(DirPathBuilder pathBuilder = null, SourceLevels sourceLevels = SourceLevels.Verbose)
         {
             this.SourceLevels = sourceLevels;
-
-            ExpDirName = GetDirName(pathBuilder);
+            this.PathBuilder = pathBuilder;
         }
 
         private TraceEventType TraceEventType;
@@ -20,16 +19,16 @@ namespace DS.TraceUtils
         private string ExpDirName;
         private ActivityBuilder ActivityBuilder;
         private SourceLevels SourceLevels;
+        private DirPathBuilder PathBuilder;
 
-        #region Methods
 
-        public void ClearLog()
-        {
-            System.IO.File.WriteAllText(ExpDirName, string.Empty);
-        }
+        #region PublicMethods
+      
 
         public void AddMessage(string message, TraceEventType traceEventType, bool append = true)
         {
+            CheckExpDirName();
+
             this.Message = message;
             this.TraceEventType = traceEventType;
             this.SW = GetStream(ExpDirName, append);
@@ -38,16 +37,38 @@ namespace DS.TraceUtils
             TraceListener consoleListener = GetConsoleTraceListener();
 
             Build(textListener);
+
             //Build(textListener, consoleListener);
         }
 
-        public void AddMessage(string text, bool append = true)
+        public void AddMessage(string message, bool append = true)
         {
+            CheckExpDirName();
+
             var sw = GetStream(ExpDirName, append);
             using (sw)
             {
-                sw.WriteLine(text);
+                sw.WriteLine(message);
                 //Console.WriteLine(text);
+            }
+        }
+
+        #endregion
+
+
+        #region PrivateMethods
+
+        private void ClearLog()
+        {
+            System.IO.File.WriteAllText(ExpDirName, string.Empty);
+        }
+
+        private void CheckExpDirName()
+        {
+            if (ExpDirName is null)
+            {
+                ExpDirName = GetDirName(PathBuilder);
+                ClearLog();
             }
         }
 
@@ -109,6 +130,9 @@ namespace DS.TraceUtils
                 case TraceEventType.Verbose:
                     activityBuilder = new MultipleActivityBuilder(Message, traceSourceName);
                     break;
+                case TraceEventType.Resume:
+                    activityBuilder = new ResumeActivityBuilder(Message, traceSourceName);
+                    break;
             }
 
             return activityBuilder;
@@ -132,5 +156,7 @@ namespace DS.TraceUtils
         }
 
         #endregion
+
+
     }
 }

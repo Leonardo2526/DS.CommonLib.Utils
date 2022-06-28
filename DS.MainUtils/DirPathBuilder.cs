@@ -41,13 +41,13 @@ namespace DS.MainUtils
 
 
         /// <summary>
-        /// Get directory path and file name.
+        /// Get directory path and file name. If current directory name is absent it'll be created. 
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="dirName"></param>
         /// <param name="dirOption"></param>
         /// <param name="type"></param>
-        /// <returns>Return directory by </returns>
+        /// <returns>Return directory name.</returns>
         public string GetPath()
         {
 
@@ -55,7 +55,7 @@ namespace DS.MainUtils
 
             if (Directory.Exists(ExpDirName))
             {
-                if (!HasWritePermissionOnDir(ExpDirName))
+                if (!Files.HasWritePermissionOnDir(ExpDirName))
                 {
                     throw new InvalidOperationException($"There is no permission to write into this directory: {DirName}");
                 }
@@ -73,36 +73,6 @@ namespace DS.MainUtils
 
         #region PrivateMethods
 
-
-        /// <summary>
-        /// Check if current directory has write permissions.
-        /// </summary>
-        /// <param name="directory"></param>
-        /// <returns>Return true if directory is available for write. Return false if it isn't. </returns>
-        private bool HasWritePermissionOnDir(string directory)
-        {
-            //Check directory permissions
-            var writeAllow = false;
-            var writeDeny = false;
-            var accessControlList = Directory.GetAccessControl(directory);
-            if (accessControlList == null)
-                return false;
-            var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
-            if (accessRules == null)
-                return false;
-
-            //Check rules
-            foreach (FileSystemAccessRule rule in accessRules)
-            {
-                if ((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) continue;
-
-                if (rule.AccessControlType == AccessControlType.Allow)
-                    writeAllow = true;
-                else if (rule.AccessControlType == AccessControlType.Deny)
-                    writeDeny = true;
-            }
-            return writeAllow && !writeDeny;
-        }
 
         /// <summary>
         /// Update default names of output directory and log file.

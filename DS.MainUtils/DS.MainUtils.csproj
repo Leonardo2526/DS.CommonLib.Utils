@@ -44,10 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Files.cs" />
+    <Compile Include="Matrix.cs" />
+    <Compile Include="NumberExtensions.cs" />
     <Compile Include="ListIntersection.cs" />
     <Compile Include="DirPathBuilder.cs" />
+    <Compile Include="Strings\PatternSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strings\RegexPatterns.cs" />
+    <Compile Include="Strings\StringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
