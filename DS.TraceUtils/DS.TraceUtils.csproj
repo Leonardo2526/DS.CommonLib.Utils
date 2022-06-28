@@ -63,7 +63,7 @@
     <Compile Include="Builders\SW\SWBuilderDefault.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DS.MainUtils\DS.ClassLib.VarUtils.csproj">
+    <ProjectReference Include="..\DS.ClassLib.VarUtils\DS.ClassLib.VarUtils.csproj">
       <Project>{97d2548b-ba7f-4c31-8f52-6bf929e0c37b}</Project>
       <Name>DS.ClassLib.VarUtils</Name>
     </ProjectReference>
