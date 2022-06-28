@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Files.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ListIntersection.cs" />

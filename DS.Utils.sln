@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.MainUtils", "DS.MainUtil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.TraceUtils", "DS.TraceUtils\DS.TraceUtils.csproj", "{D3D2B971-AA8C-40B3-A7C8-0814F66BFE14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.MainUtils.Test", "DS.MainUtils.Test\DS.MainUtils.Test.csproj", "{8244D583-B1D9-40D9-B7A6-DC67C81675E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS.MainUtils.Test", "DS.MainUtils.Test\DS.MainUtils.Test.csproj", "{8244D583-B1D9-40D9-B7A6-DC67C81675E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.FileSystemUtils", "DS.ClassLib.FileSystemUtils\DS.ClassLib.FileSystemUtils.csproj", "{B85287A9-D609-4EEB-8EF4-CCB94B42D22F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8244D583-B1D9-40D9-B7A6-DC67C81675E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8244D583-B1D9-40D9-B7A6-DC67C81675E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8244D583-B1D9-40D9-B7A6-DC67C81675E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B85287A9-D609-4EEB-8EF4-CCB94B42D22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B85287A9-D609-4EEB-8EF4-CCB94B42D22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B85287A9-D609-4EEB-8EF4-CCB94B42D22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B85287A9-D609-4EEB-8EF4-CCB94B42D22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
