@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Security.AccessControl;
 using DS.ClassLib.FileSystemUtils;
 
-namespace DS.VarUtils
+namespace DS.ClassLib.VarUtils
 {
     public class DirPathBuilder
     {

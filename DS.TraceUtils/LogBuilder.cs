@@ -1,4 +1,4 @@
-﻿using DS.VarUtils;
+﻿using DS.ClassLib.VarUtils;
 using System;
 using System.Diagnostics;
 using System.IO;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DS.VarUtils
+namespace DS.ClassLib.VarUtils
 {
     public static class ListIntersection
     {

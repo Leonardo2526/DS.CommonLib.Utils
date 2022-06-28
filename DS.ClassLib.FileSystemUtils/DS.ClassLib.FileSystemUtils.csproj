@@ -7,8 +7,8 @@
     <ProjectGuid>{17AD6675-969C-42B2-98C1-2F6B2CF0CBDE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DS.ClassLib.FileSystemUtils48</RootNamespace>
-    <AssemblyName>DS.ClassLib.FileSystemUtils48</AssemblyName>
+    <RootNamespace>DS.ClassLib.FileSystemUtils</RootNamespace>
+    <AssemblyName>DS.ClassLib.FileSystemUtils</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

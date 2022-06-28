@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.VarUtils.Test
+namespace DS.ClassLib.VarUtils.Test
 {
     [TestClass]
     public class ListIntersectionUntiTest

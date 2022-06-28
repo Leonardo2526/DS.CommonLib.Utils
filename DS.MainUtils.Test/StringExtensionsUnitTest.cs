@@ -1,4 +1,4 @@
-using DS.VarUtils.Strings;
+using DS.ClassLib.VarUtils.Strings;
 
 namespace DS.VarUtils.Test
 {
