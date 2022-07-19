@@ -1,6 +1,6 @@
-using DS.MainUtils.Strings;
+using DS.ClassLib.VarUtils.Strings;
 
-namespace DS.MainUtils.Test
+namespace DS.VarUtils.Test
 {
     [TestClass]
     public class StringExtensionsUnitTest

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.MainUtils.Strings
+namespace DS.ClassLib.VarUtils.Strings
 {
     internal static class PatternSelector
     {

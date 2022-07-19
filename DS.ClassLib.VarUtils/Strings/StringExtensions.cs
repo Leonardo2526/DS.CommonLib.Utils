@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace DS.MainUtils.Strings
+namespace DS.ClassLib.VarUtils.Strings
 {
     public static class StringExtensions
     {

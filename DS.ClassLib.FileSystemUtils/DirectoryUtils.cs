@@ -1,45 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DS.MainUtils
+namespace DS.ClassLib.FileSystemUtils
 {
-    public static class Files
+    public static class DirectoryUtils
     {
-        /// <summary>
-        /// Check if file is empty;
-        /// </summary>
-        /// <param name="fullPath"></param>
-        /// <returns>Return true if file by fullPath is empty. Return null if it isn't.</returns>
-        public static bool IsFileEmpty(string fullPath)
-        {
-            long fileLength = new FileInfo(fullPath).Length;
-
-            if (fileLength == 0 || (fileLength == 3 && File.ReadAllBytes(fullPath).SequenceEqual(new byte[] { 239, 187, 191 })))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Clear txt file by path.
-        /// </summary>
-        /// <param name="fullPath"></param>
-        /// <returns>Return true if clerance was successful. Return false if it wasn't.</returns>
-        public static bool ClearFile(string fullPath)
-        {
-            if (IsDirExistAndWritable(fullPath))
-            {
-                System.IO.File.WriteAllText(fullPath, string.Empty);
-                return true;
-            }
-
-            return false;
-        }
-
-
         /// <summary>
         /// Check if directory exist and has write permissions.
         /// </summary>
@@ -89,6 +59,23 @@ namespace DS.MainUtils
             }
             return writeAllow && !writeDeny;
         }
-    }
 
+        /// <summary>
+        /// Delete all files and folders in input directory
+        /// </summary>
+        /// <param name="dirPath"></param>
+        public static void ClearFolder(string dirPath)
+        {
+            DirectoryInfo di = new DirectoryInfo(dirPath);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+        }
+    }
 }

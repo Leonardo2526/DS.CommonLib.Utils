@@ -1,4 +1,4 @@
-﻿using DS.MainUtils;
+﻿using DS.ClassLib.VarUtils;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -23,10 +23,11 @@ namespace DS.TraceUtils
 
 
         #region PublicMethods
-      
+
 
         public void AddMessage(string message, TraceEventType traceEventType, bool append = true)
         {
+
             CheckExpDirName();
 
             this.Message = message;
@@ -38,11 +39,11 @@ namespace DS.TraceUtils
 
             Build(textListener);
 
-            //Build(textListener, consoleListener);
         }
 
         public void AddMessage(string message, bool append = true)
         {
+
             CheckExpDirName();
 
             var sw = GetStream(ExpDirName, append);
@@ -50,6 +51,7 @@ namespace DS.TraceUtils
             {
                 sw.WriteLine(message);
                 //Console.WriteLine(text);
+
             }
         }
 
