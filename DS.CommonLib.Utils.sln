@@ -7,11 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathSearch", "DS.Utils\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.TraceUtils", "DS.TraceUtils\DS.TraceUtils.csproj", "{D3D2B971-AA8C-40B3-A7C8-0814F66BFE14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS.MainUtils.Test", "DS.MainUtils.Test\DS.MainUtils.Test.csproj", "{8244D583-B1D9-40D9-B7A6-DC67C81675E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS.ClassLib.Test", "DS.MainUtils.Test\DS.ClassLib.Test.csproj", "{8244D583-B1D9-40D9-B7A6-DC67C81675E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.FileSystemUtils", "DS.ClassLib.FileSystemUtils\DS.ClassLib.FileSystemUtils.csproj", "{17AD6675-969C-42B2-98C1-2F6B2CF0CBDE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.VarUtils", "DS.ClassLib.VarUtils\DS.ClassLib.VarUtils.csproj", "{97D2548B-BA7F-4C31-8F52-6BF929E0C37B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.DataStructure", "DS.ClassLib.DataStructure\DS.ClassLib.DataStructure.csproj", "{17AABF89-AF9A-4DEF-973D-928975F4C660}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{97D2548B-BA7F-4C31-8F52-6BF929E0C37B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97D2548B-BA7F-4C31-8F52-6BF929E0C37B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97D2548B-BA7F-4C31-8F52-6BF929E0C37B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

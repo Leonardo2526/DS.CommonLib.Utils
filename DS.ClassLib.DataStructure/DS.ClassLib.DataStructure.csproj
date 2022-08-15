@@ -2,16 +2,13 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{97D2548B-BA7F-4C31-8F52-6BF929E0C37B}</ProjectGuid>
+    <ProjectGuid>{17AABF89-AF9A-4DEF-973D-928975F4C660}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DS.ClassLib.VarUtils</RootNamespace>
-    <AssemblyName>DS.ClassLib.VarUtils</AssemblyName>
+    <RootNamespace>DS.ClassLib.DataStructure</RootNamespace>
+    <AssemblyName>DS.ClassLib.DataStructure</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -44,27 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\Points\MaxDistanceClient.cs" />
-    <Compile Include="Algorithms\Points\PointUtils.cs" />
-    <Compile Include="Algorithms\Points\Strategies\MaxDistnaceStrategy.cs" />
-    <Compile Include="Algorithms\Points\Strategies\NaiveStrategy.cs" />
-    <Compile Include="Models\PointModel.cs" />
-    <Compile Include="Matrix.cs" />
-    <Compile Include="NumberExtensions.cs" />
-    <Compile Include="ListIntersection.cs" />
-    <Compile Include="DirPathBuilder.cs" />
-    <Compile Include="OperationCreator.cs" />
-    <Compile Include="Strings\PatternSelector.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strings\RegexPatterns.cs" />
-    <Compile Include="Strings\StringExtensions.cs" />
+    <Compile Include="Queue.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DS.ClassLib.FileSystemUtils\DS.ClassLib.FileSystemUtils.csproj">
-      <Project>{17ad6675-969c-42b2-98c1-2f6b2cf0cbde}</Project>
-      <Name>DS.ClassLib.FileSystemUtils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
