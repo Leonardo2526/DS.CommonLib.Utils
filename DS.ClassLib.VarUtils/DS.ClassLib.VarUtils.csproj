@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Points\MaxDistanceClient.cs" />
+    <Compile Include="Points\PointExtenstions.cs" />
     <Compile Include="Points\PointUtils.cs" />
     <Compile Include="Points\Strategies\MaxDistnaceStrategy.cs" />
     <Compile Include="Points\Strategies\NaiveStrategy.cs" />
