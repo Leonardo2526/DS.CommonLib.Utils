@@ -44,10 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\Points\MaxDistanceClient.cs" />
-    <Compile Include="Algorithms\Points\PointUtils.cs" />
-    <Compile Include="Algorithms\Points\Strategies\MaxDistnaceStrategy.cs" />
-    <Compile Include="Algorithms\Points\Strategies\NaiveStrategy.cs" />
+    <Compile Include="Points\MaxDistanceClient.cs" />
+    <Compile Include="Points\PointUtils.cs" />
+    <Compile Include="Points\Strategies\MaxDistnaceStrategy.cs" />
+    <Compile Include="Points\Strategies\NaiveStrategy.cs" />
     <Compile Include="Models\PointModel.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="NumberExtensions.cs" />

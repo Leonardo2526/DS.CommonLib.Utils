@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.ClassLib.VarUtils.Algorithms.Points
+namespace DS.ClassLib.VarUtils.Points
 {
     public class MaxDistanceClient
     {
@@ -21,6 +21,10 @@ namespace DS.ClassLib.VarUtils.Algorithms.Points
         public PointModel Point1 { get; private set; }
         public PointModel Point2 { get; private set; }
 
+        /// <summary>
+        /// Get points pair with max distance between them.
+        /// </summary>
+        /// <returns>Returns max distance between points.</returns>
         public double GetMaxDistance()
         {
            var max = _strategy.AlgorithmInterface(_points);

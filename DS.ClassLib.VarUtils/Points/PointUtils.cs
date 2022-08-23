@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.ClassLib.VarUtils.Algorithms.Points
+namespace DS.ClassLib.VarUtils.Points
 {
     public static class PointExtenstions
     {

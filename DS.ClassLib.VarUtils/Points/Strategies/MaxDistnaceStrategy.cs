@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.ClassLib.VarUtils.Algorithms.Points.Strategies
+namespace DS.ClassLib.VarUtils.Points.Strategies
 {
     public abstract class MaxDistnaceStrategy
     {
