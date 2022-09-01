@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Points\MaxDistanceClient.cs" />
     <Compile Include="Points\PointExtenstions.cs" />
     <Compile Include="Points\PointUtils.cs" />

@@ -1,4 +1,4 @@
-﻿using DS.ClassLib.VarUtils.Algorithms.Points.Strategies;
+﻿using DS.ClassLib.VarUtils.Points.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
