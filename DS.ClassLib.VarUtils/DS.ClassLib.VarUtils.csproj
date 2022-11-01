@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,6 +64,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings\RegexPatterns.cs" />
     <Compile Include="Strings\StringExtensions.cs" />
+    <Compile Include="TaskEvents\ITaskEvent.cs" />
+    <Compile Include="TaskEvents\WindowTaskEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DS.ClassLib.FileSystemUtils\DS.ClassLib.FileSystemUtils.csproj">
