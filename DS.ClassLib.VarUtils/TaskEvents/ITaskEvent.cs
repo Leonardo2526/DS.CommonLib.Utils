@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace DS.ClassLib.VarUtils
 {
@@ -12,5 +13,16 @@ namespace DS.ClassLib.VarUtils
         /// </summary>
         /// <returns></returns>
         public Task Create();
+    }
+
+    /// <summary>
+    /// Interface to create task events with window's state checker.
+    /// </summary>
+    public interface IWindowTaskEvent : ITaskEvent
+    {
+        /// <summary>
+        /// Check if window is closed.
+        /// </summary>
+        public bool WindowClosed { get; }
     }
 }

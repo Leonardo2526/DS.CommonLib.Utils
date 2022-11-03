@@ -11,7 +11,7 @@ namespace DS.ClassLib.VarUtils
     /// <summary>
     /// An object to create a new task event for <see cref="Window"/>.
     /// </summary>
-    public class WindowTaskEvent : ITaskEvent
+    public class WindowTaskEvent : IWindowTaskEvent
     {
         private readonly Window _window;
         private readonly List<Button> _buttons;
@@ -29,9 +29,7 @@ namespace DS.ClassLib.VarUtils
             _buttons = buttons;
         }
 
-        /// <summary>
-        /// Check if <see cref="_window"/> is closed.
-        /// </summary>
+        /// <inheritdoc/>
         public bool WindowClosed { get; private set; }
 
         /// <summary>
