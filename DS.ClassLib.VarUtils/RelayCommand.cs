@@ -6,7 +6,7 @@ namespace DS.ClassLib.VarUtils
     /// <summary>
     /// Class for WPF interaction with commands
     /// </summary>
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
