@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.VarUtils", "DS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.DataStructure", "DS.ClassLib.DataStructure\DS.ClassLib.DataStructure.csproj", "{17AABF89-AF9A-4DEF-973D-928975F4C660}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ConsoleApp.Test", "DS.ConsoleApp.Test\DS.ConsoleApp.Test.csproj", "{A8E2F020-88F6-4F34-AAEC-EADD84512430}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17AABF89-AF9A-4DEF-973D-928975F4C660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
