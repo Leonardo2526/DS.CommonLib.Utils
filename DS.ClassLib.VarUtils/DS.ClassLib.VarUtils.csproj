@@ -63,18 +63,11 @@
     <Compile Include="Matrix.cs" />
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ListIntersection.cs" />
-    <Compile Include="DirPathBuilder.cs" />
     <Compile Include="OperationCreator.cs" />
     <Compile Include="Strings\PatternSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings\RegexPatterns.cs" />
     <Compile Include="Strings\StringExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DS.ClassLib.FileSystemUtils\DS.ClassLib.FileSystemUtils.csproj">
-      <Project>{17ad6675-969c-42b2-98c1-2f6b2cf0cbde}</Project>
-      <Name>DS.ClassLib.FileSystemUtils</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
