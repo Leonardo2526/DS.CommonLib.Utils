@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.DataStructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ConsoleApp.Test", "DS.ConsoleApp.Test\DS.ConsoleApp.Test.csproj", "{A8E2F020-88F6-4F34-AAEC-EADD84512430}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.WpfApp.Licensing", "DS.WpfApp.Licensing\DS.WpfApp.Licensing.csproj", "{3414CB2D-DBB8-4F65-99E5-85ABAB855CF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8E2F020-88F6-4F34-AAEC-EADD84512430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3414CB2D-DBB8-4F65-99E5-85ABAB855CF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3414CB2D-DBB8-4F65-99E5-85ABAB855CF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3414CB2D-DBB8-4F65-99E5-85ABAB855CF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3414CB2D-DBB8-4F65-99E5-85ABAB855CF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
