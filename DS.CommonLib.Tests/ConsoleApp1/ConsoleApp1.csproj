@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A8E2F020-88F6-4F34-AAEC-EADD84512430}</ProjectGuid>
+    <ProjectGuid>{CB6F9388-3F8B-4702-88CF-3E1A73DFA851}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DS.ConsoleApp.Test</RootNamespace>
-    <AssemblyName>DS.ConsoleApp.Test</AssemblyName>
+    <RootNamespace>ConsoleApp1</RootNamespace>
+    <AssemblyName>ConsoleApp1</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,7 +35,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoriesTest.cs" />
-    <Compile Include="LicensingTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,12 +50,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DS.ClassLib.FileSystemUtils\DS.ClassLib.FileSystemUtils.csproj">
-      <Project>{17ad6675-969c-42b2-98c1-2f6b2cf0cbde}</Project>
-      <Name>DS.ClassLib.FileSystemUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DS.ClassLib.Licensing\DS.ClassLib.Licensing.csproj">
-      <Project>{37411903-2a48-4d32-b23b-fc9c4535b44a}</Project>
+      <Project>{37411903-2A48-4D32-B23B-FC9C4535B44A}</Project>
       <Name>DS.ClassLib.Licensing</Name>
     </ProjectReference>
   </ItemGroup>
