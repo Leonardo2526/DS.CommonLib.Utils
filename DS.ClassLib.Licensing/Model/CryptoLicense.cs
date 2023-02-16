@@ -79,11 +79,15 @@ namespace DS.ClassLib.LicensingModel
         public bool VerifyLicenceOffLine()
         {
             var licensefile = new LicenseKey();
+            var machineCode = Helpers.GetMachineCodePI(v: 2);
 
             bool isValid;
             if (isValid = licensefile.LoadFromFile()
                           .HasValidSignature(_rSAPubKey)
-                          .IsValid())
+                          .IsValid() &&
+                          Helpers.
+                          IsOnRightMachine(licensefile.
+                          LoadFromFile(), machineCode))
             {
                 Message = "The license is valid!";
             }

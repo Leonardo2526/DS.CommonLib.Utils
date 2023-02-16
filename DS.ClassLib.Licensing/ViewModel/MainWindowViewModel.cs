@@ -21,15 +21,16 @@ namespace DS.ClassLib.Licensing.ViewModel
         private readonly string _rSAPubKey;
         private readonly string _auth;
         private readonly int _productId;
-
+        private readonly Action _action;
         private string _licenseKey;
 
-        public MainWindowViewModel(ActivateDialog mainWindow, string rSAPubKey, string auth, int productId)
+        public MainWindowViewModel(ActivateDialog mainWindow, string rSAPubKey, string auth, int productId, Action action)
         {
             _mainWindow = mainWindow;
             _rSAPubKey = rSAPubKey;
             _auth = auth;
             _productId = productId;
+            _action = action;
         }
 
         public string LicenseKey
@@ -48,6 +49,7 @@ namespace DS.ClassLib.Licensing.ViewModel
             if (IsLicenseValid)
             {
                 _mainWindow.Close();
+                _action?.Invoke();
             }
 
         }, o => !String.IsNullOrEmpty(_licenseKey));

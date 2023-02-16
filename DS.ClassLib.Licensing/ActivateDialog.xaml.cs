@@ -23,10 +23,10 @@ namespace DS.ClassLib.Licensing
     {
         private readonly MainWindowViewModel _viewModel;
 
-        public ActivateDialog(string rSAPubKey, string auth, int productId)
+        public ActivateDialog(string rSAPubKey, string auth, int productId, Action action)
         {
             InitializeComponent();
-            _viewModel = new MainWindowViewModel(this, rSAPubKey, auth, productId);
+            _viewModel = new MainWindowViewModel(this, rSAPubKey, auth, productId, action);
             DataContext = _viewModel;
         }
 
@@ -37,9 +37,5 @@ namespace DS.ClassLib.Licensing
                 return _viewModel.IsLicenseValid;
             }
         }
-
-        public string RSAPubKey { get; set; }
-        public string Auth { get; set; }
-        public int ProductId { get; set; }
     }
 }
