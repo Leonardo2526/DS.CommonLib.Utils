@@ -6,10 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DS.ClassLib.LicensingModel
 {
@@ -27,6 +30,25 @@ namespace DS.ClassLib.LicensingModel
         }
 
         public string Message { get; private set; }
+
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        public static string LicensePath
+        {
+            get 
+            {
+                return AssemblyDirectory + "\\licensekey.skm";
+            }
+        }
 
         public bool Acitvate(string licenseKey)
         {
@@ -46,7 +68,7 @@ namespace DS.ClassLib.LicensingModel
             else
             {
                 Message = "The license is valid! Now you can use application.";
-                result.LicenseKey.SaveToFile();
+                result.LicenseKey.SaveToFile(LicensePath);
             }
 
             Debug.WriteLine(Message);
@@ -82,12 +104,12 @@ namespace DS.ClassLib.LicensingModel
             var machineCode = Helpers.GetMachineCodePI(v: 2);
 
             bool isValid;
-            if (isValid = licensefile.LoadFromFile()
+            if (isValid = licensefile.LoadFromFile(LicensePath)
                           .HasValidSignature(_rSAPubKey)
                           .IsValid() &&
                           Helpers.
                           IsOnRightMachine(licensefile.
-                          LoadFromFile(), machineCode))
+                          LoadFromFile(LicensePath), machineCode))
             {
                 Message = "The license is valid!";
             }
