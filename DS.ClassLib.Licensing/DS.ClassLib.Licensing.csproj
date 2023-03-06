@@ -67,13 +67,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DS.ClassLib.VarUtils\DS.ClassLib.VarUtils.csproj">
-      <Project>{97D2548B-BA7F-4C31-8F52-6BF929E0C37B}</Project>
-      <Name>DS.ClassLib.VarUtils</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\DS.ClassLib.VarUtils\DS.ClassLib.VarUtils.csproj">
+      <Project>{97d2548b-ba7f-4c31-8f52-6bf929e0c37b}</Project>
+      <Name>DS.ClassLib.VarUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
