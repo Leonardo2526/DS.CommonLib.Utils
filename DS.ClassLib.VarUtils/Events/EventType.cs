@@ -5,6 +5,6 @@
     /// </summary>
     public enum EventType
     {
-        Onward, Backward, Apply, Close
+        Onward, Backward, Apply, Close, Rollback
     }
 }
