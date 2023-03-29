@@ -16,9 +16,10 @@
     /// </summary>
     public abstract class Iterator<T>
     {
-        public abstract T First();
-        public abstract T Next();
-        public abstract bool IsDone();
-        public abstract T CurrentItem();
+        protected abstract T First();
+        protected abstract T Previous();
+        protected abstract T Next();
+        protected abstract bool IsDone();
+        protected abstract T CurrentItem();
     }
 }
