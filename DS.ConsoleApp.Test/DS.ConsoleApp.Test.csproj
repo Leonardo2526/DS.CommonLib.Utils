@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfoTest.cs" />
     <Compile Include="DirectoriesTest.cs" />
     <Compile Include="LicensingTest.cs" />
     <Compile Include="Program.cs" />
@@ -60,6 +61,10 @@
     <ProjectReference Include="..\DS.ClassLib.Licensing\DS.ClassLib.Licensing.csproj">
       <Project>{37411903-2a48-4d32-b23b-fc9c4535b44a}</Project>
       <Name>DS.ClassLib.Licensing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS.ClassLib.VarUtils\DS.ClassLib.VarUtils.csproj">
+      <Project>{97d2548b-ba7f-4c31-8f52-6bf929e0c37b}</Project>
+      <Name>DS.ClassLib.VarUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

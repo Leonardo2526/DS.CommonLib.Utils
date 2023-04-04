@@ -14,12 +14,8 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            //Task task = Task.Run(() => { LicensingTest.Run(); });
-
-            LicensingTest.Run();
+            AssemblyInfoTest.Run();
             Console.ReadLine();
-            //Task task = Task.Run(() => { Console.ReadLine(); });
-            //DialogFormUtils.OpenFormToRead();
         }
     }
 }
