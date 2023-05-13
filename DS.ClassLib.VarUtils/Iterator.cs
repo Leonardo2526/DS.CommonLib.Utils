@@ -1,4 +1,6 @@
-﻿namespace DS.ClassLib.VarUtils
+﻿using System.Threading.Tasks;
+
+namespace DS.ClassLib.VarUtils
 {
     /// <summary>
     /// The 'Iterator' abstract class.
@@ -21,5 +23,17 @@
         protected abstract T Next();
         protected abstract bool IsDone();
         protected abstract T CurrentItem();
+    }
+
+    /// <summary>
+    /// The 'Iterator' generic abstract class.
+    /// </summary>
+    public abstract class IteratorAsync<T>
+    {
+        public abstract T First();
+        public abstract T Previous();
+        public abstract Task<T> NextAsync();
+        public abstract bool IsDone();
+        public abstract T CurrentItem();
     }
 }
