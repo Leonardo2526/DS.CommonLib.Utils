@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using System.Windows.Shapes;
 
 namespace DS.ClassLib.VarUtils.Points
 {
@@ -88,7 +89,7 @@ namespace DS.ClassLib.VarUtils.Points
         public static Vector3D ConvertToSByte(this Vector3D vector)
         {
             return new Vector3D(Convert.ToSByte(vector.X), Convert.ToSByte(vector.Y), Convert.ToSByte(vector.Z));
-        }
+        }        
 
         /// <summary>
         /// Determines whether 2 vectors are the same within the given tolerance.
@@ -97,7 +98,7 @@ namespace DS.ClassLib.VarUtils.Points
         /// <param name="vector2"></param>
         /// <param name="tolerance"></param>
         /// <returns> True if the vectors are the same; otherwise, false.</returns>
-        public static bool IsAlmostEqual(this Vector3D vector1, Vector3D vector2, int tolerance = 5)
+        public static bool IsAlmostEqualTo(this Vector3D vector1, Vector3D vector2, int tolerance = 5)
         {
             vector1 = vector1.Round(tolerance);
             vector2 = vector2.Round(tolerance);
@@ -127,5 +128,22 @@ namespace DS.ClassLib.VarUtils.Points
             return new Vector3D(vector.X * multiplicator, vector.Y * multiplicator, vector.Z * multiplicator);
         }
 
+
+        public static bool IsBetweenPoints(this Point3D point, Point3D point1, Point3D point2, double tolerance = 3, bool canCoinsidence = true)
+        {          
+            var v1 = (point - point1);
+            v1.Normalize();
+            if (!canCoinsidence && Math.Round(v1.Length, 5) == 0) { return false; }
+            var v2 = (point - point2);
+            v2.Normalize();
+            v2.Negate();
+            if (!canCoinsidence && Math.Round(v2.Length, 5) == 0) { return false; }
+            if (v1.IsAlmostEqualTo(v2, (int)tolerance))
+            {
+                return true;
+            }
+            return false;
+        }
+     
     }
 }

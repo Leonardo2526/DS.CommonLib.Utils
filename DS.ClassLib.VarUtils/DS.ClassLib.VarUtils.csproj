@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
+    <Compile Include="Collisons\PointCollision.cs" />
+    <Compile Include="Collisons\PointCollisionDetector.cs" />
     <Compile Include="ConsoleMapDrawer.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\TaskComplition.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="GridMap\IMapDrawer.cs" />
     <Compile Include="Iterator.cs" />
     <Compile Include="Collisons\ITraceCollisionDetector.cs" />
+    <Compile Include="Points\VectorPointConverter.cs" />
     <Compile Include="Points\IPointConverter.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ExtensionMethods.cs" />
