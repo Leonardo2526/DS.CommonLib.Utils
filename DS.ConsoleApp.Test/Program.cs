@@ -14,7 +14,7 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            AssemblyInfoTest.Run();
+            MapTests.RunTest1();
             Console.ReadLine();
         }
     }

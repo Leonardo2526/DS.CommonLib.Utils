@@ -47,12 +47,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
+    <Compile Include="ConsoleMapDrawer.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\TaskComplition.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Agreagate.cs" />
+    <Compile Include="Collisons\ICollision.cs" />
+    <Compile Include="GridMap\MapBase.cs" />
+    <Compile Include="GridMap\d2\XY\IntMap.cs" />
+    <Compile Include="GridMap\IGraph.cs" />
+    <Compile Include="GridMap\IMap.cs" />
+    <Compile Include="GridMap\IMapDrawer.cs" />
     <Compile Include="Iterator.cs" />
+    <Compile Include="Collisons\ITraceCollisionDetector.cs" />
+    <Compile Include="Points\IPointConverter.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Points\MaxDistanceClient.cs" />
