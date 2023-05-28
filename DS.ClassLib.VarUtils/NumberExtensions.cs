@@ -54,7 +54,6 @@ namespace DS.ClassLib.VarUtils
             return (angleDeg * Math.PI) / 180;
         }
 
-
         /// <summary>
         /// Check if number and can be divided to devisibleNumber.
         /// </summary>
@@ -70,5 +69,29 @@ namespace DS.ClassLib.VarUtils
 
             return false;
         }
+
+        /// <summary>
+        /// Specifies if <paramref name="number"/> is natural number or not.
+        /// </summary>
+        /// <remarks>
+        /// <paramref name="includeZero"/> specifies if '0' can be included to natural number checker or not.
+        /// </remarks>
+        /// <param name="number"></param>
+        /// <param name="includeZero"></param>
+        /// <returns><see langword="true"/> if <paramref name="number"/> is natural number. Otherwise returns <see langword="false"/>.</returns>
+        public static bool IsNatural(this int number, bool includeZero = true)
+        {          
+            return CheckNumber(number, includeZero);
+
+            static bool CheckNumber(int number, bool includeZero)
+            {
+                if (!includeZero)
+                { if (number > 0) { return true; } }
+                else if (number >= 0) { return true; }
+
+                return false;
+            }
+        }
     }
+
 }

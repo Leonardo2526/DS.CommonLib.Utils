@@ -38,6 +38,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -64,6 +65,7 @@
     <Compile Include="GridMap\IMapDrawer.cs" />
     <Compile Include="Iterator.cs" />
     <Compile Include="Collisons\ITraceCollisionDetector.cs" />
+    <Compile Include="Points\NPoint3D.cs" />
     <Compile Include="Points\VectorPointConverter.cs" />
     <Compile Include="Points\IPointConverter.cs" />
     <Compile Include="RelayCommand.cs" />
