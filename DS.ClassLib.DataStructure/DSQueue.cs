@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DS.ClassLib.DataStructure
 {
-    public class Queue<T> : IEnumerable<T>
+    public class DSQueue<T> : IEnumerable<T>
     {
         Node<T> head; // головной/первый элемент
         Node<T> tail; // последний/хвостовой элемент
