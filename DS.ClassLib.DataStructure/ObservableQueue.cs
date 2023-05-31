@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Security.Policy;
 
 namespace DS.ClassLib.DataStructure
 {
@@ -10,6 +12,34 @@ namespace DS.ClassLib.DataStructure
     /// <typeparam name="TItem">Specifies the type of elements in the queue.</typeparam>
     public class ObservableQueue<TItem> : Queue<TItem>, INotifyCollectionChanged, INotifyPropertyChanged
     {
+
+        /// <summary>
+        /// Initializes a new instance of the objects that is empty and has the default initial capacity.
+        /// </summary>        
+        public ObservableQueue() { }
+
+        /// <summary>
+        /// Initializes a new instance of the object that
+        /// contains elements copied from the specified collection and has sufficient capacity
+        /// to accommodate the number of elements copied.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ObservableQueue(IEnumerable<TItem> collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (TItem item in collection)
+            {
+                Enqueue(item);
+            }
+        }
+
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
