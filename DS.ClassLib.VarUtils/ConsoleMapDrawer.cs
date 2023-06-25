@@ -37,16 +37,14 @@ namespace DS.ClassLib.VarUtils
                     }
                     else if (_map.Matrix[x, y, z] == 5)
                     {
-                        Console.Write("N ");
+                        Console.Write("* ");
                         continue;
                     }
-                    //else if (IfPathContainsPoint(x, y, z))
-                    //{
-                    //    Console.Write("* ");
-                    //    continue;
-                    //}
-
-                    if (_map.Matrix[x, y, z] == 1) { Console.Write("# "); continue; }
+                    else if (_map.Matrix[x, y, z] == 1) 
+                    {
+                        Console.Write("| "); 
+                        continue; 
+                    }
                     else { Console.Write("0 "); }
                 }
                 Console.WriteLine();
