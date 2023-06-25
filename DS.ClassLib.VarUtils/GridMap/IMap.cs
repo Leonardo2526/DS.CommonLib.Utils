@@ -6,7 +6,5 @@ namespace DS.ClassLib.VarUtils.GridMap
     {
         Point3D MinPoint { get;  }
         Point3D MaxPoint { get;  }
-
-        int[,,] Matrix { get; }
     }
 }

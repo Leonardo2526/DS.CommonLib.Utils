@@ -8,7 +8,7 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
     /// <summary>
     /// 2-dimensional grid map size 10x10 with 2 walls. Start and goal points by map's angles.
     /// </summary>
-    public class IntMap : MapBase
+    public class IntMap : MapBase<int>
     {
         public IntMap(Point3D minPoint, Point3D maxPoint, Vector3D stepVector) : base(minPoint, maxPoint, stepVector)
         {
@@ -28,7 +28,7 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
 
         public override void Show()
         {
-            var drawer = new ConsoleMapDrawer(this);
+            var drawer = new ConsoleIntMapDrawer(this);
             drawer.Draw();
         }
 
