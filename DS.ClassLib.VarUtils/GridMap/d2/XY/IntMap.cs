@@ -18,8 +18,7 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
             List<Point3D> path, List<Point3D> unpassiblePoints = null)
         {
             path.ForEach(p => { Matrix[(int)p.X, (int)p.Y, (int)p.Z] = 5; });
-            if (unpassiblePoints != null)
-            { unpassiblePoints.ForEach(p => { Matrix[(int)p.X, (int)p.Y, (int)p.Z] = 1; }); }
+            unpassiblePoints.ForEach(p => { Matrix[(int)p.X, (int)p.Y, (int)p.Z] = 1; });
 
             Matrix[(int)startPoint.X, (int)startPoint.Y, (int)startPoint.Z] = 8;
             Matrix[(int)endPoint.X, (int)endPoint.Y, (int)endPoint.Z] = 9;

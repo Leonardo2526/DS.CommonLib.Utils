@@ -13,20 +13,18 @@ namespace DS.ClassLib.VarUtils
     public class ConsoleFloatMapDrawer: IMapDrawer
     {
         private readonly MapBase<float> _map;
-        private readonly int _stepPrec;
 
         public ConsoleFloatMapDrawer(MapBase<float> map)
         {
             _map = map;
-            _stepPrec = map.StepPrec;
         }
 
         public void Draw()
         {
             int z = 0;
-            for (var y = 0; y <= (int)(_map.Matrix.GetUpperBound(1)); y++)
+            for (var y = 0; y <= _map.Matrix.GetUpperBound(1); y++)
             {
-                for (var x = 0; x <= (int)(_map.Matrix.GetUpperBound(0)); x++)
+                for (var x = 0; x <= _map.Matrix.GetUpperBound(0); x++)
                 {
                     if (_map.Matrix[x, y, z] == 8)
                     {

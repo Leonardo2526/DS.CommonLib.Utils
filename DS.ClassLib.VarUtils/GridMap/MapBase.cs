@@ -8,18 +8,16 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
     {
         protected readonly Vector3D _stepVector;
 
-        protected MapBase(Point3D minPoint, Point3D maxPoint, Vector3D stepVector, int stepPrec = 1)
+        protected MapBase(Point3D minPoint, Point3D maxPoint, Vector3D stepVector)
         {
             MinPoint = minPoint;
             MaxPoint = maxPoint;
             _stepVector = stepVector;
-            StepPrec = stepPrec;
             Matrix = GetMatrix();
         }
 
         public  Point3D MinPoint { get; private set; }
         public Point3D MaxPoint { get; private set; }
-        public int StepPrec { get; }
         public T[,,] Matrix { get; private set; }
 
         public abstract T[,,] Fill(Point3D startPoint, Point3D endPoint, 

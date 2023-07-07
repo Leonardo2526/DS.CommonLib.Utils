@@ -8,13 +8,13 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
     /// <summary>
     /// 2-dimensional grid map size 10x10 with 2 walls. Start and goal points by map's angles.
     /// </summary>
-    public class FloatMap : MapBase<int>
+    public class FloatMap : MapBase<float>
     {
+        public FloatMap(Point3D minPoint, Point3D maxPoint, Vector3D stepVector) : base(minPoint, maxPoint, stepVector)
+        {
+        }
 
-        public FloatMap(Point3D minPoint, Point3D maxPoint, Vector3D stepVector, int stepPrec) : base(minPoint, maxPoint, stepVector, stepPrec)
-        {}
-
-        public override int[,,] Fill(Point3D startPoint, Point3D endPoint,
+        public override float[,,] Fill(Point3D startPoint, Point3D endPoint,
             List<Point3D> path, List<Point3D> unpassiblePoints = null)
         {
 
@@ -37,7 +37,7 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
 
         public override void Show()
         {
-            var drawer = new ConsoleIntMapDrawer(this);
+            var drawer = new ConsoleFloatMapDrawer(this);
             drawer.Draw();
         }
 
@@ -49,13 +49,13 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
         //    return matrix;
         //}
 
-        protected override int[,,] GetMatrix()
+        protected override float[,,] GetMatrix()
         {
-            int maxXCount = (int)Math.Round(StepPrec * ((MaxPoint.X - MinPoint.X) / _stepVector.X));
-            int maxYCount = (int)Math.Round(StepPrec * ((MaxPoint.Y - MinPoint.Y) / _stepVector.Y));
-            int maxZCount = (int)Math.Round(StepPrec * ((MaxPoint.Z - MinPoint.Z) / _stepVector.Z));
+            int maxXCount = (int)Math.Round((MaxPoint.X - MinPoint.X) / _stepVector.X);
+            int maxYCount = (int)Math.Round((MaxPoint.Y - MinPoint.Y) / _stepVector.Y);
+            int maxZCount = (int)Math.Round((MaxPoint.Z - MinPoint.Z) / _stepVector.Z);
 
-            var matrix = new int[maxXCount + 1, maxYCount + 1, maxZCount + 1];
+            var matrix = new float[maxXCount + 1, maxYCount + 1, maxZCount + 1];
             return matrix;
         }
     }
