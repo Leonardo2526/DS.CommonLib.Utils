@@ -4,7 +4,7 @@ using System.Windows.Media.Media3D;
 
 namespace DS.ClassLib.VarUtils.GridMap.d2
 {
-    public abstract class MapBase<T> : IMap
+    public abstract class MapBase : IMap
     {
         protected readonly Vector3D _stepVector;
 
@@ -18,13 +18,13 @@ namespace DS.ClassLib.VarUtils.GridMap.d2
 
         public  Point3D MinPoint { get; private set; }
         public Point3D MaxPoint { get; private set; }
-        public T[,,] Matrix { get; private set; }
+        public int[,,] Matrix { get; private set; }
 
-        public abstract T[,,] Fill(Point3D startPoint, Point3D endPoint, 
+        public abstract int[,,] Fill(Point3D startPoint, Point3D endPoint, 
             List<Point3D> path, List<Point3D> unpassiblePoints = null);
 
 
-        protected abstract T[,,] GetMatrix();
+        protected abstract int[,,] GetMatrix();
 
         public abstract void Show();
     }
