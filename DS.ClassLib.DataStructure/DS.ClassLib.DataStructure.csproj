@@ -3,15 +3,13 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{17AD6675-969C-42B2-98C1-2F6B2CF0CBDE}</ProjectGuid>
+    <ProjectGuid>{17AABF89-AF9A-4DEF-973D-928975F4C660}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DS.ClassLib.FileSystemUtils</RootNamespace>
-    <AssemblyName>DS.ClassLib.FileSystemUtils</AssemblyName>
+    <RootNamespace>DS.ClassLib.DataStructure</RootNamespace>
+    <AssemblyName>DS.ClassLib.DataStructure</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,13 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,10 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryUtils.cs" />
-    <Compile Include="DirPathBuilder.cs" />
-    <Compile Include="FileUtils.cs" />
+    <Compile Include="Node.cs" />
+    <Compile Include="ObservableQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DSQueue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

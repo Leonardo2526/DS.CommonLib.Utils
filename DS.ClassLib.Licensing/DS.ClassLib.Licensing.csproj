@@ -2,16 +2,13 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{17AD6675-969C-42B2-98C1-2F6B2CF0CBDE}</ProjectGuid>
+    <ProjectGuid>{37411903-2A48-4D32-B23B-FC9C4535B44A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DS.ClassLib.FileSystemUtils</RootNamespace>
-    <AssemblyName>DS.ClassLib.FileSystemUtils</AssemblyName>
+    <RootNamespace>DS.ClassLib.Licensing</RootNamespace>
+    <AssemblyName>DS.ClassLib.Licensing</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,25 +30,50 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cryptolens.Licensing, Version=4.0.42.1, Culture=neutral, PublicKeyToken=30182975912ff1ef, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cryptolens.Licensing.4.0.42\lib\net48\Cryptolens.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectoryUtils.cs" />
-    <Compile Include="DirPathBuilder.cs" />
-    <Compile Include="FileUtils.cs" />
+    <Compile Include="ActivateDialog.xaml.cs">
+      <DependentUpon>ActivateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LicenseDialogBuilder.cs" />
+    <Compile Include="Model\CryptoLicense.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ActivateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DS.ClassLib.VarUtils\DS.ClassLib.VarUtils.csproj">
+      <Project>{97d2548b-ba7f-4c31-8f52-6bf929e0c37b}</Project>
+      <Name>DS.ClassLib.VarUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
