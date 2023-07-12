@@ -48,5 +48,14 @@ namespace DS.ClassLib.VarUtils.Strings
             return isNumeric;
         }
 
+        public static string GetFraction(this string strNumber)
+        {           
+            int index = strNumber.IndexOf(",");
+            if (index >= 0)
+            { strNumber = strNumber.Substring(index + 1); }
+
+            return strNumber;
+        }
+
     }
 }

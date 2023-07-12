@@ -25,6 +25,7 @@ namespace DS.ClassLib.VarUtils.Collisons
 
         public List<ICollision> GetCollisions(Point3D point1, Point3D point2)
         {
+            Collisions.Clear();
             var pointsBetween = GetPoints(point1, point2);
             pointsBetween.ForEach(p => { Collisions.Add(new PointCollision()); });
 
@@ -35,12 +36,11 @@ namespace DS.ClassLib.VarUtils.Collisons
         private List<Point3D> GetPoints(Point3D point1, Point3D point2)
         {
             var points = new List<Point3D>();
-
-            for (int x = 0; x < _matrix.GetUpperBound(0); x++)
+            for (int x = 0; x < _matrix.GetUpperBound(0) + 1; x++)
             {
-                for (int y = 0; y < _matrix.GetUpperBound(1); y++)
+                for (int y = 0; y < _matrix.GetUpperBound(1) + 1; y++)
                 {
-                    for (int z = 0; z < _matrix.GetUpperBound(2); z++)
+                    for (int z = 0; z < _matrix.GetUpperBound(2) + 1; z++)
                     {
                         var point = new Point3D(x, y, z);
                         if (point.IsBetweenPoints(point1, point2) && _matrix[x,y,z] == 1) 

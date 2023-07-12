@@ -130,14 +130,16 @@ namespace DS.ClassLib.VarUtils.Points
 
 
         public static bool IsBetweenPoints(this Point3D point, Point3D point1, Point3D point2, double tolerance = 3, bool canCoinsidence = true)
-        {          
+        {   
             var v1 = (point - point1);
+            if(canCoinsidence && Math.Round(v1.Length, 5) == 0) { return true; }
             v1.Normalize();
-            if (!canCoinsidence && Math.Round(v1.Length, 5) == 0) { return false; }
+
             var v2 = (point - point2);
+            if (canCoinsidence && Math.Round(v2.Length, 5) == 0) { return true; }
             v2.Normalize();
             v2.Negate();
-            if (!canCoinsidence && Math.Round(v2.Length, 5) == 0) { return false; }
+
             if (v1.IsAlmostEqualTo(v2, (int)tolerance))
             {
                 return true;
