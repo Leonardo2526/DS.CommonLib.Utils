@@ -15,8 +15,8 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            //new UserDirectionFactoryTest();
-            GetFractionTest.Run();
+            new UserDirectionFactoryTest();
+            //GetFractionTest.Run();
             Console.ReadLine();
         }
 

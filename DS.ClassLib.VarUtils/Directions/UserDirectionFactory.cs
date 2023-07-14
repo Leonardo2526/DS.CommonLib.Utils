@@ -1,59 +1,72 @@
-﻿using DS.ClassLib.VarUtils;
+﻿using DS.ClassLib.VarUtils.Points;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
-using Rhino.Geometry;
-using DS.ClassLib.VarUtils.Points;
 
 namespace DS.ClassLib.VarUtils.Directions
 {
+    /// <summary>
+    ///  An object that represents factory to get directions.
+    /// </summary>
     public class UserDirectionFactory : IDirectionFactory
     {
-        private  Vector3D _main;
-        private  Vector3d _main3d;
-        private  Vector3D _normal;
-        private  Vector3d _normal3d;
-        private  Vector3D _crossProduct;
-        private  Vector3d _crossProduct3d;
-        private  List<int> _angles;
+        private Vector3D _main;
+        private Vector3d _main3d;
+        private Vector3D _normal;
+        private Vector3d _normal3d;
+        private Vector3D _crossProduct;
+        private Vector3d _crossProduct3d;
+        private List<int> _angles;
         private List<Vector3D> _plane1_Directions;
         private List<Vector3D> _plane2_Directions;
         private List<Vector3D> _directions;
+        private List<Vector3D> _plane3_Directions;
+        private OrthoNormBasis _basis;
 
+        /// <summary>
+        /// Instantiate an object that represents factory to get directions.
+        /// </summary>
         public UserDirectionFactory()
         { }
 
-        public IDirectionFactory Build(Vector3D main, Vector3D normal, List<int> angles = null)
+        /// <inheritdoc/>
+        public IDirectionFactory Build(OrthoNormBasis basis, List<int> angles = null)
         {
-            _main = main;
-            _main.Normalize();
+            _basis = basis;
 
-            _normal = normal;
-            _normal.Normalize();
-
-            var angle = Math.Round(Vector3D.AngleBetween(_main, normal));
-            if (angle != 90) { throw new ArgumentException(); }
+            _main = basis.X;
+            _normal = basis.Y;
+            _crossProduct = basis.Z;
 
             _main3d = _main.Convert();
             _normal3d = _normal.Convert();
-            _crossProduct3d = Vector3d.CrossProduct(_main3d, _normal3d);
-            _crossProduct = _crossProduct3d.Convert();
+            _crossProduct3d = _crossProduct.Convert();
 
             _angles = angles;
 
             return this;
         }
 
-
+        /// <summary>
+        /// List of unit vectors in basis.X and Basis.Y plane.
+        /// </summary>
         public List<Vector3D> Plane1_Directions => _plane1_Directions ??= GetPlaneDirections(_main, _normal);
 
+        /// <summary>
+        /// List of unit vectors in basis.X and Basis.Z plane.
+        /// </summary>
         public List<Vector3D> Plane2_Directions => _plane2_Directions ??= GetPlaneDirections(_main, _crossProduct);
 
+        /// <summary>
+        /// List of unit vectors in basis.Y and Basis.Z plane.
+        /// </summary>
+        public List<Vector3D> Plane3_Directions => _plane3_Directions ??= GetPlaneDirections(_normal, _crossProduct);
+
+        /// <inheritdoc/>
         public List<Vector3D> Directions => _directions ??= GetDirections();
 
+        /// <inheritdoc/>
         public List<Vector3D> GetDirections()
         {
             _directions = new List<Vector3D>();
@@ -61,10 +74,16 @@ namespace DS.ClassLib.VarUtils.Directions
             _directions.AddRange(Plane1_Directions);
             Plane2_Directions.ForEach(x =>
             {
-                if (!_directions.Contains(x)) 
+                if (!_directions.Contains(x))
                 { _directions.Add(x); }
             });
-            return _directions; 
+
+            Plane3_Directions.ForEach(x =>
+            {
+                if (!_directions.Contains(x))
+                { _directions.Add(x); }
+            });
+            return _directions;
         }
 
         private List<Vector3D> GetPlaneDirections(Vector3D vector1, Vector3D vector2)
@@ -82,8 +101,6 @@ namespace DS.ClassLib.VarUtils.Directions
 
             var userDirections = GetUserDirections(vector1, vector2, _angles);
             directions.AddRange(userDirections);
-
-            //directions.ForEach(d => d = d.Round(5));
 
             return directions;
         }
@@ -129,11 +146,12 @@ namespace DS.ClassLib.VarUtils.Directions
 
             var base3dCopy = baseVector.DeepCopy();
             if (base3dCopy.Rotate(radAngle, normVector)) { vectors.Add(base3dCopy.Convert()); }
-            
+
             base3dCopy = baseVector.DeepCopy();
-            if (base3dCopy.Rotate( -radAngle, normVector)) { vectors.Add(base3dCopy.Convert()); }
+            if (base3dCopy.Rotate(-radAngle, normVector)) { vectors.Add(base3dCopy.Convert()); }
 
             return vectors;
         }
+      
     }
 }

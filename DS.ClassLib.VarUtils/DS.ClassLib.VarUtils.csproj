@@ -84,6 +84,9 @@
     <Compile Include="Iterator.cs" />
     <Compile Include="Collisons\ITraceCollisionDetector.cs" />
     <Compile Include="IVisualisator.cs" />
+    <Compile Include="Points\IBasis.cs" />
+    <Compile Include="Points\OrthoBasis.cs" />
+    <Compile Include="Points\OrthoNormBasis.cs" />
     <Compile Include="Points\NPoint3D.cs" />
     <Compile Include="Points\VectorPointConverter.cs" />
     <Compile Include="Points\IPointConverter.cs" />

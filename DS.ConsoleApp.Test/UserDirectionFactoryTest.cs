@@ -1,4 +1,6 @@
 ﻿using DS.ClassLib.VarUtils.Directions;
+using DS.ClassLib.VarUtils.Points;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,46 +12,54 @@ namespace DS.ConsoleApp.Test
 {
     internal class UserDirectionFactoryTest
     {
-        IDirectionFactory _factory;
+        UserDirectionFactory _factory;
+        private OrthoBasis _basisMultiplicator;
 
         public UserDirectionFactoryTest()
         {
             _factory = new UserDirectionFactory();
-            var dirs = Run();
-            Output();
+            Run();
+
+            var planeDir = _factory.Plane2_Directions;
+
+            Output(planeDir);
+
+            Console.WriteLine();
+            Console.WriteLine("\nMultiple: \n");
+
+            var mDirs = planeDir.Multiply(_basisMultiplicator);
+            foreach (var dir in mDirs)
+            { Console.WriteLine($"({dir})"); }
         }
 
         private List<Vector3D> Run()
         {
-            var angles = new List<int> { 30};
-            var main = new Vector3D(0, 1, 0);
+            var angles = new List<int> { 30 };
+            var main = new Vector3D(1, 0, 0);
+            main.Normalize();
             //var main = new Vector3D(1, 1, 0);
-            var normal = new Vector3D(0, 0, 1);
+            var normal = new Vector3D(0, 1, 0);
+            normal.Normalize();
+         
+            var crossProduct = Vector3D.CrossProduct(main, normal);
 
-            _factory.Build(main, normal, angles);
+            var basis = new OrthoNormBasis(main, normal, crossProduct);
+
+            _basisMultiplicator = new OrthoBasis(
+                Vector3D.Multiply(basis.X, 2),
+                Vector3D.Multiply(basis.Y, 3),
+                Vector3D.Multiply(basis.Z, 5)
+                );
+
+            _factory.Build(basis, angles);
 
             return _factory.Directions;
         }
 
-        private void Output()
+        private void Output(List<Vector3D> vectors)
         {
-            UserDirectionFactory userDirectionFactory = _factory as UserDirectionFactory;
-            if(userDirectionFactory == null) { return; }
-
-            var directions = userDirectionFactory.Plane1_Directions;
-            Console.WriteLine("Plane1_Directions: ");
-            foreach (var dir in directions)
+            foreach (var dir in vectors)
             {Console.WriteLine( $"({dir})" ); }
-
-            directions = userDirectionFactory.Plane2_Directions;
-            Console.WriteLine("\nPlane2_Directions: ");
-            foreach (var dir in directions)
-            { Console.WriteLine($"({dir})"); }
-
-            directions = userDirectionFactory.Directions;
-            Console.WriteLine("\nAll_Directions: ");
-            foreach (var dir in directions)
-            { Console.WriteLine($"({dir})"); }
         }
     }
 }
