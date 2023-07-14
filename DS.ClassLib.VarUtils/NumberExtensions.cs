@@ -100,12 +100,25 @@ namespace DS.ClassLib.VarUtils
         /// <returns>
         /// <paramref name="number"/> splitted on two int value.
         /// </returns>
-        public static (int wholeNumber, int fractNumber) Split(this double number)
+        public static (int wholeNumber, int fractNumber) IntSplit(this double number)
         {
             int mWhole = (int)Math.Truncate(number);
             int mFractNumber = number.FractionNumber();
 
             return (mWhole, mFractNumber);
+        }
+
+        /// <summary>
+        /// Split <paramref name="number"/> to whole and fraction parts.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns>
+        /// <paramref name="number"/> splitted on two double values.
+        /// </returns>
+        public static (double wholeNumber, double fractNumber) Split(this double number)
+        {
+            int mWhole = (int)Math.Truncate(number);
+            return (mWhole, number - mWhole);
         }
 
         public static int FractionNumber(this double number)
@@ -165,6 +178,25 @@ namespace DS.ClassLib.VarUtils
             }
 
             return (0,0);   
+        }
+
+        /// <summary>
+        /// Get <paramref name="number"/> sign.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns>
+        /// Returns 1 if <paramref name="number"/> sing is greater than zero. 
+        /// <para>
+        /// Otherwise returns -1.
+        /// </para>
+        /// <para>
+        /// If number value is zero returns 0.
+        /// </para>
+        /// </returns>
+        public static int Sign(this double number)
+        {
+            if(number == 0) return 0;
+            return (int)(number / (Math.Abs(number)));
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rhino.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,6 +68,54 @@ namespace DS.ClassLib.VarUtils.Points
         }
 
         /// <summary>
+        /// Specifies if <paramref name="point1"/> is less than <paramref name="point2"/>.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if each coordinate of <paramref name="point1"/> is less than <paramref name="point2"/>.
+        /// <para>
+        /// Otherwise returns <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsLess(this Point3D point1, Point3D point2) 
+           => point1.X < point2.X || point1.Y < point2.Y || point1.Z < point2.Z;
+
+        /// <summary>
+        /// Specifies if <paramref name="point1"/> is greater than <paramref name="point2"/>.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if each coordinate of <paramref name="point1"/> is greater than <paramref name="point2"/>.
+        /// <para>
+        /// Otherwise returns <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsGreater(this Point3D point1, Point3D point2)
+           => point1.X > point2.X || point1.Y > point2.Y || point1.Z > point2.Z;
+
+        /// <summary>
+        /// Convert <paramref name="vector"/> to <see cref="Vector3D"/>.
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns>
+        /// A new <see cref="Vector3D"/>.
+        /// </returns>
+        public static Vector3D Convert(this Vector3d vector)
+        {
+            return new Vector3D(vector.X, vector.Y, vector.Z);
+        }
+
+        /// <summary>
+        /// Convert <paramref name="vector"/> to <see cref="Vector3d"/>.
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns>
+        /// A new <see cref="Vector3d"/>.
+        /// </returns>
+        public static Vector3d Convert(this Vector3D vector)
+        {
+            return new Vector3d(vector.X, vector.Y, vector.Z);
+        }
+
+        /// <summary>
         ///  Rounds a <paramref name="vector"/> coordinate values to a specified number of fractional digits.
         /// </summary>
         /// <param name="vector"></param>
@@ -88,7 +137,7 @@ namespace DS.ClassLib.VarUtils.Points
         /// <returns>New vector with coordinates convered to <see cref="sbyte"/>.</returns>
         public static Vector3D ConvertToSByte(this Vector3D vector)
         {
-            return new Vector3D(Convert.ToSByte(vector.X), Convert.ToSByte(vector.Y), Convert.ToSByte(vector.Z));
+            return new Vector3D(System.Convert.ToSByte(vector.X), System.Convert.ToSByte(vector.Y), System.Convert.ToSByte(vector.Z));
         }        
 
         /// <summary>

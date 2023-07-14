@@ -136,19 +136,4 @@ namespace DS.ClassLib.VarUtils.Directions
             return vectors;
         }
     }
-
-    internal static class VectorExtenstions
-    {
-        public static Vector3D Convert(this Vector3d vector)
-        {
-            return new Vector3D(vector.X, vector.Y, vector.Z);
-        }
-
-        public static Vector3d Convert(this Vector3D vector)
-        {
-            return new Vector3d(vector.X, vector.Y, vector.Z);
-        }
-    }
-
-
 }

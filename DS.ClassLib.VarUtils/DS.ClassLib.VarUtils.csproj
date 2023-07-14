@@ -83,6 +83,7 @@
     <Compile Include="ITransferFactory.cs" />
     <Compile Include="Iterator.cs" />
     <Compile Include="Collisons\ITraceCollisionDetector.cs" />
+    <Compile Include="IVisualisator.cs" />
     <Compile Include="Points\NPoint3D.cs" />
     <Compile Include="Points\VectorPointConverter.cs" />
     <Compile Include="Points\IPointConverter.cs" />
