@@ -209,8 +209,6 @@ namespace DS.ClassLib.VarUtils.Points
             return multiDirections;
         }
 
-        
-
         /// <summary>
         /// Get angles between <paramref name="vector"/> and each one from <paramref name="vectors"/>.
         /// </summary>
@@ -220,7 +218,7 @@ namespace DS.ClassLib.VarUtils.Points
         /// List of angles.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        private static List<double> GetAngles(this Vector3D vector, List<Vector3D> vectors)
+        public static List<double> GetAngles(this Vector3D vector, List<Vector3D> vectors)
         {
             var angles = new List<double>();
             vectors.ForEach(v => angles.Add(Vector3D.AngleBetween(vector, v)));
@@ -233,10 +231,10 @@ namespace DS.ClassLib.VarUtils.Points
         /// <param name="vector"></param>
         /// <param name="vectors"></param>
         /// <returns>
-        /// <see cref="Vector3D"/> with mimimum angle and angle value.
+        /// <see cref="Vector3D"/> with mimimum angle and angle value in degrees.
         /// </returns>
         /// <exception cref="NotImplementedException"></exception>
-        private static (Vector3D vector, double angle) GetWithMinAngle(this Vector3D vector, List<Vector3D> vectors)
+        public static (Vector3D vector, double angle) GetWithMinAngle(this Vector3D vector, List<Vector3D> vectors)
         {
             Vector3D minVector = vectors.FirstOrDefault();
             double minAngle = 360;
@@ -244,11 +242,11 @@ namespace DS.ClassLib.VarUtils.Points
             {
                 var angle = Math.Abs(Vector3D.AngleBetween(vector, v));
 
-                var negate = vector.DeepCopy();
-                negate.Negate();
-                var negateangle = Math.Abs(Vector3D.AngleBetween(negate, v));
+                //var negate = vector.DeepCopy();
+                //negate.Negate();
+                //var negateangle = Math.Abs(Vector3D.AngleBetween(negate, v));
 
-                angle = Math.Min(angle, negateangle);
+                //angle = Math.Min(angle, negateangle);
 
                 if (angle < minAngle) { minAngle = angle; minVector = v; }
             }
@@ -271,6 +269,31 @@ namespace DS.ClassLib.VarUtils.Points
                 return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Project <paramref name="v1"/> on <paramref name="v2"/>.
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns>
+        /// A new <see cref="Vector3D"/> that is projection of <paramref name="v1"/> on <paramref name="v2"/>.      
+        /// </returns>
+        public static Vector3D ProjectOn(this Vector3D v1, Vector3D v2)
+        {
+            var projVector = v2.DeepCopy();
+            projVector.Normalize();
+
+            var angle = Math.Abs(Vector3D.AngleBetween(v1, v2));
+            if(angle > 90)
+            {
+                angle = 180 - angle;
+                projVector.Negate();
+            }
+            var mult = v1.Length * Math.Cos(angle.DegToRad());
+            projVector = Vector3D.Multiply(projVector, mult);
+
+            return projVector;
         }
 
     }

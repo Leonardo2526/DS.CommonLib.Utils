@@ -51,20 +51,18 @@ namespace DS.ClassLib.VarUtils.Points
         public Vector3D Result => _result;
 
         /// <summary>
-        /// Get <see cref="Result"/> vector projection on <paramref name="vector"/>.
+        /// Get negate basis.
         /// </summary>
-        /// <param name="vector"></param>
-        /// <returns>
-        /// <see cref="Result"/> vector projection.
-        /// </returns>
-        public Vector3D GetResult(Vector3D vector)
+        /// <returns></returns>
+        public OrthoBasis Negate()
         {
-            var projVector = vector.DeepCopy();
-            projVector.Normalize();
-            projVector = new Vector3D(Math.Ceiling(projVector.X), Math.Ceiling(projVector.Y), Math.Ceiling(projVector.Z));
-            var projResult = new Vector3D(_result.X * projVector.X , _result.Y * projVector.Y , _result.Z *  projVector.Z);
-
-            return projResult;
+            var nx = X.DeepCopy();
+            nx.Negate();
+            var ny = Y.DeepCopy();
+            ny.Negate();
+            var nz = Z.DeepCopy();
+            nz.Negate();
+            return new OrthoBasis(nx, ny, nz);
         }
     }
 }
