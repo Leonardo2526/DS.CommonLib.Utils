@@ -57,6 +57,7 @@
     <Compile Include="DirectoriesTest.cs" />
     <Compile Include="FractionConverter.cs" />
     <Compile Include="GetFractionTest.cs" />
+    <Compile Include="IntersectionTest.cs" />
     <Compile Include="LicensingTest.cs" />
     <Compile Include="MapTests.cs" />
     <Compile Include="NPoint3DTest.cs" />
