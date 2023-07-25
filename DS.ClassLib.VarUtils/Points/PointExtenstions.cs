@@ -69,6 +69,30 @@ namespace DS.ClassLib.VarUtils.Points
         }
 
         /// <summary>
+        /// Convert <paramref name="point"/> to <see cref="Point3D"/>.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns>
+        /// A new <see cref="Point3D"/>.
+        /// </returns>
+        public static Point3D Convert(this Point3d point)
+        {
+            return new Point3D(point.X, point.Y, point.Z);
+        }
+
+        /// <summary>
+        /// Convert <paramref name="point"/> to <see cref="Point3d"/>.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns>
+        /// A new <see cref="Point3d"/>.
+        /// </returns>
+        public static Point3d Convert(this Point3D point)
+        {
+            return new Point3d(point.X, point.Y, point.Z);
+        }
+
+        /// <summary>
         /// Specifies if <paramref name="point1"/> is less than <paramref name="point2"/>.
         /// </summary>
         /// <returns>

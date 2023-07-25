@@ -15,7 +15,7 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            new IntersectionTest();
+            new TransformTest();
             //GetFractionTest.Run();
             Console.ReadLine();
         }
