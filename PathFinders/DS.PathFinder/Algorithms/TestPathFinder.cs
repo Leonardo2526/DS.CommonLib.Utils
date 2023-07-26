@@ -11,10 +11,7 @@
 //
 #define DEBUGON
 
-using DS.PathSearch;
-using DS.PathSearch.GridMap;
 using DS.ClassLib.VarUtils.Points;
-using FrancoGustavo.CLZ;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -91,7 +88,7 @@ namespace FrancoGustavo
         /// <param name="nodeBuilder"></param>
         /// <param name="fractPrec">Precision to store data.</param>
         /// <param name="pointVisualisator"></param>
-        public TestPathFinder(Point3D upperBound, Point3D lowerBound, IDoublePathRequiment pathRequiment,
+        public TestPathFinder(Point3D upperBound, Point3D lowerBound, double minAngleDistance,
             ITraceCollisionDetector collisionDetector, INodeBuilder nodeBuilder, IPoint3dConverter pointConverter,
             int fractPrec = 7,
             IPointVisualisator<Point3D> pointVisualisator = null)
@@ -103,7 +100,7 @@ namespace FrancoGustavo
             _collisionDetector = collisionDetector;
             _nodeBuilder = nodeBuilder;
             _pointConverter = pointConverter;
-            mANGlength = Math.Round(pathRequiment.MinAngleDistance, _fractPrec);
+            mANGlength = Math.Round(minAngleDistance, _fractPrec);
         }
         #endregion
 

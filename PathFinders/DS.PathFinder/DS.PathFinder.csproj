@@ -8,8 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FrancoGustavo</RootNamespace>
-    <AssemblyName>FrancoGustavo</AssemblyName>
+    <RootNamespace>DS.PathFinder</RootNamespace>
+    <AssemblyName>DS.PathFinder</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\DS.PathFinder.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -66,30 +67,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\AuthorAttribute.cs" />
-    <Compile Include="Algorithm\Cheker\FloatElementPosition.cs" />
-    <Compile Include="Algorithm\Cheker\ElementPosition.cs" />
-    <Compile Include="Algorithm\Cheker\PointChecker.cs" />
-    <Compile Include="Algorithm\ComparePFNode.cs" />
-    <Compile Include="Algorithm\Enums.cs" />
-    <Compile Include="Algorithm\INodeBuilder.cs" />
-    <Compile Include="Algorithm\NodeBuilder.cs" />
-    <Compile Include="Algorithm\PathFinderNode.cs" />
-    <Compile Include="Algorithm\IPathFinder.cs" />
-    <Compile Include="Algorithm\NodesCheker.cs" />
-    <Compile Include="Algorithm\GridPathFinder.cs" />
-    <Compile Include="Algorithm\PointPathFinderNode.cs" />
-    <Compile Include="Algorithm\PriorityQueueB.cs" />
-    <Compile Include="Algorithm\Cheker\PunishChangeDirectionChecker.cs" />
-    <Compile Include="Algorithm\TestPathFinder.cs" />
-    <Compile Include="CLZ\RefCLZCreator.cs" />
-    <Compile Include="CLZ\CLZChecker.cs" />
+    <Compile Include="Algorithms\AuthorAttribute.cs" />
+    <Compile Include="Algorithms\ComparePFNode.cs" />
+    <Compile Include="Algorithms\Enums.cs" />
+    <Compile Include="Algorithms\INodeBuilder.cs" />
+    <Compile Include="Algorithms\NodeBuilder.cs" />
+    <Compile Include="Algorithms\PointPathFinderNode.cs" />
+    <Compile Include="Algorithms\PriorityQueueB.cs" />
+    <Compile Include="Algorithms\TestPathFinder.cs" />
     <Compile Include="FGAlgorythm.cs" />
-    <Compile Include="GridDrawer\GridDrawer.cs" />
-    <Compile Include="GridDrawer\IGridDrawer.cs" />
-    <Compile Include="Neighbor.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
