@@ -10,7 +10,7 @@ using System.Windows.Media.Media3D;
 
 namespace DS.ClassLib.VarUtils.Collisons
 {
-    public class PointCollisionDetector : ITraceCollisionDetector
+    public class PointCollisionDetector : ITraceCollisionDetector<Point3D>
     {
         private readonly IMap _map;
         private readonly int[,,] _matrix;

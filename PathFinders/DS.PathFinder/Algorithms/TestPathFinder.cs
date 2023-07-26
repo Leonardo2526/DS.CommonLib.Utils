@@ -36,9 +36,9 @@ namespace FrancoGustavo
         public unsafe static extern bool ZeroMemory(int* destination, int length);
 
         #region Variables Declaration
-        private readonly Point3D _upperBound;
-        private readonly Point3D _lowerBound;
-        private readonly ITraceCollisionDetector _collisionDetector;
+        private readonly Point3d _upperBound;
+        private readonly Point3d _lowerBound;
+        private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly INodeBuilder _nodeBuilder;
         private readonly IPoint3dConverter _pointConverter;
         private readonly List<Transform> _transforms;
@@ -70,7 +70,7 @@ namespace FrancoGustavo
         /// </summary>
         private int _fractPrec;
 
-        private readonly IPointVisualisator<Point3D> _pointVisualisator;
+        private readonly IPointVisualisator<Point3d> _pointVisualisator;
         private static int _tolerance = 2;
         private static double _dTolerance = Math.Pow(0.1, _tolerance);
 
@@ -88,10 +88,10 @@ namespace FrancoGustavo
         /// <param name="nodeBuilder"></param>
         /// <param name="fractPrec">Precision to store data.</param>
         /// <param name="pointVisualisator"></param>
-        public TestPathFinder(Point3D upperBound, Point3D lowerBound, double minAngleDistance,
-            ITraceCollisionDetector collisionDetector, INodeBuilder nodeBuilder, IPoint3dConverter pointConverter,
+        public TestPathFinder(Point3d upperBound, Point3d lowerBound, double minAngleDistance,
+            ITraceCollisionDetector<Point3d> collisionDetector, INodeBuilder nodeBuilder, IPoint3dConverter pointConverter,
             int fractPrec = 7,
-            IPointVisualisator<Point3D> pointVisualisator = null)
+            IPointVisualisator<Point3d> pointVisualisator = null)
         {
             _fractPrec = fractPrec;
             _pointVisualisator = pointVisualisator;
@@ -188,16 +188,16 @@ namespace FrancoGustavo
 
         #region Methods      
 
-        public List<PointPathFinderNode> FindPath(Point3D start, Point3D end, List<Vector3D> vectors)
+        public List<PointPathFinderNode> FindPath(Point3d start, Point3d end, List<Vector3d> vectors)
         {
             start = start.Round(_fractPrec);
             end = end.Round(_fractPrec);
 
-            var directions = new List<Vector3D>();
+            var directions = new List<Vector3d>();
             foreach (var dir in vectors)
             { directions.Add(dir.Round(_fractPrec)); }
 
-            var parentNode = new PointPathFinderNode(start, start, start, _pointVisualisator, _pointConverter);
+            var parentNode = new PointPathFinderNode(start, start, start, _pointVisualisator);
 
             bool found = false;
             mOpen.Clear();
@@ -211,8 +211,8 @@ namespace FrancoGustavo
                 { Debug.WriteLine("Path search time is up."); return null; }
                 //return null;
                 parentNode = mOpen.Pop();
-                var point3d = _pointConverter.ConvertToUCS1(parentNode.Point.Convert()).Convert();
-                _pointVisualisator?.Show(point3d);
+                var Point3d = _pointConverter.ConvertToUCS1(parentNode.Point);
+                _pointVisualisator?.Show(Point3d);
 
                 if (parentNode.Point.Round(_tolerance) == end.Round(_tolerance))
 
@@ -230,14 +230,14 @@ namespace FrancoGustavo
 
                 //specify available direction for nodes (successors)
                 var distToANP = parentNode.LengthToANP;
-                List<Vector3D> availableDirections = distToANP == 0 || distToANP >= mANGlength ?
+                List<Vector3d> availableDirections = distToANP == 0 || distToANP >= mANGlength ?
                    directions : parentNode.DirList;
 
                 //Lets calculate each successors
                 for (int i = 0; i < availableDirections.Count; i++)
                 {
-                    Vector3D nodeDir = availableDirections[i];
-                    var angle = Math.Round(Vector3D.AngleBetween(nodeDir, parentNode.Dir));
+                    Vector3d nodeDir = availableDirections[i];
+                    var angle = Math.Round(Vector3d.VectorAngle(nodeDir, parentNode.Dir).RadToDeg());
                     if (angle > 90 ||
                         _punishAngles is not null && _punishAngles.Any(a => a == (int)angle))
                     { continue; }
@@ -270,9 +270,9 @@ namespace FrancoGustavo
                         if (!_passableNodes.Contains(newNode))
                         {
                             //check collisions 
-                            var parentPoint3D = _pointConverter.ConvertToUCS1(parentNode.Point.Convert()).Convert();
-                            var newNodePoint3D = _pointConverter.ConvertToUCS1(newNode.Point.Convert()).Convert();
-                            _collisionDetector.GetCollisions(parentPoint3D, newNodePoint3D);
+                            var parentPoint3d = _pointConverter.ConvertToUCS1(parentNode.Point).Convert();
+                            var newNodePoint3d = _pointConverter.ConvertToUCS1(newNode.Point).Convert();
+                            _collisionDetector.GetCollisions(parentPoint3d, newNodePoint3d);
                             if (_collisionDetector.Collisions.Count > 0)
                             { _unpassableNodes.Add(newNode); continue; } //unpassable point
                             else { _passableNodes.Add(newNode); } // passable point                            

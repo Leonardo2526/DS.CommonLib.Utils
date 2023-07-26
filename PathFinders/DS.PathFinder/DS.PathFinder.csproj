@@ -74,8 +74,12 @@
     <Compile Include="Algorithms\NodeBuilder.cs" />
     <Compile Include="Algorithms\PointPathFinderNode.cs" />
     <Compile Include="Algorithms\PriorityQueueB.cs" />
-    <Compile Include="Algorithms\TestPathFinder.cs" />
-    <Compile Include="FGAlgorythm.cs" />
+    <Compile Include="AStarAlgorithmCDF.cs" />
+    <Compile Include="IPathFindAlgorithm.cs" />
+    <Compile Include="IPathFinder.cs" />
+    <Compile Include="IRefineFactory.cs" />
+    <Compile Include="PathFinderFactory.cs" />
+    <Compile Include="PathRefineFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

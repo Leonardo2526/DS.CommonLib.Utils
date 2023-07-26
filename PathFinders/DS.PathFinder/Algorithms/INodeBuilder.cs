@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Media3D;
+﻿using Rhino.Geometry;
+using System.Windows.Media.Media3D;
 
 namespace FrancoGustavo.Algorithm
 {
@@ -7,6 +8,6 @@ namespace FrancoGustavo.Algorithm
         PointPathFinderNode Node { get; }
 
         PointPathFinderNode BuildWithParameters();
-        PointPathFinderNode BuildWithPoint(PointPathFinderNode parentNode, Vector3D nodeDir);
+        PointPathFinderNode BuildWithPoint(PointPathFinderNode parentNode, Vector3d nodeDir);
     }
 }

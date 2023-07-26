@@ -6,20 +6,21 @@ using DS.ClassLib.VarUtils.Directions;
 using DS.ClassLib.VarUtils.GridMap;
 using DS.ClassLib.VarUtils.Points;
 using FrancoGustavo.Algorithm;
+using Rhino.Geometry;
 using IMap = DS.ClassLib.VarUtils.GridMap.IMap;
 
 namespace FrancoGustavo
 {
     public class FGAlgorythm
     {
-        public static List<PointPathFinderNode> GetFloatPathByMap(Point3D upperBound, Point3D lowerBound, Point3D startPoint, Point3D endPoint,
+        public static List<PointPathFinderNode> GetFloatPathByMap(Point3d upperBound, Point3d lowerBound, Point3d startPoint, Point3d endPoint,
           ITraceCollisionDetector collisionDetector,
           IDirectionFactory directionFactory, OrthoBasis stepBasis)
         {
             List<PointPathFinderNode> path = new List<PointPathFinderNode>();
 
             var negateBasis = stepBasis.Negate();
-            var orths = new List<Vector3D>() { stepBasis.X, stepBasis.Y, stepBasis.Z, negateBasis.X, negateBasis.Y, negateBasis.Z };
+            var orths = new List<Vector3d>() { stepBasis.X, stepBasis.Y, stepBasis.Z, negateBasis.X, negateBasis.Y, negateBasis.Z };
 
             var step = 1;
             var mHEstimate = 10;

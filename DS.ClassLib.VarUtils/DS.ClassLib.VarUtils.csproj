@@ -80,6 +80,7 @@
     <Compile Include="GridMap\IGraph.cs" />
     <Compile Include="GridMap\IMap.cs" />
     <Compile Include="GridMap\IMapDrawer.cs" />
+    <Compile Include="ITraceSettings.cs" />
     <Compile Include="ITransferFactory.cs" />
     <Compile Include="Iterator.cs" />
     <Compile Include="Collisons\ITraceCollisionDetector.cs" />

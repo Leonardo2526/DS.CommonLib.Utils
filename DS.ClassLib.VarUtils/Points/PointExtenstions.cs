@@ -105,6 +105,18 @@ namespace DS.ClassLib.VarUtils.Points
            => point1.X < point2.X || point1.Y < point2.Y || point1.Z < point2.Z;
 
         /// <summary>
+        /// Specifies if <paramref name="point1"/> is less than <paramref name="point2"/>.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if each coordinate of <paramref name="point1"/> is less than <paramref name="point2"/>.
+        /// <para>
+        /// Otherwise returns <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsLess(this Point3d point1, Point3d point2)
+           => point1.X < point2.X || point1.Y < point2.Y || point1.Z < point2.Z;
+
+        /// <summary>
         /// Specifies if <paramref name="point1"/> is greater than <paramref name="point2"/>.
         /// </summary>
         /// <returns>
@@ -114,6 +126,18 @@ namespace DS.ClassLib.VarUtils.Points
         /// </para>
         /// </returns>
         public static bool IsGreater(this Point3D point1, Point3D point2)
+           => point1.X > point2.X || point1.Y > point2.Y || point1.Z > point2.Z;
+
+        /// <summary>
+        /// Specifies if <paramref name="point1"/> is greater than <paramref name="point2"/>.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if each coordinate of <paramref name="point1"/> is greater than <paramref name="point2"/>.
+        /// <para>
+        /// Otherwise returns <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsGreater(this Point3d point1, Point3d point2)
            => point1.X > point2.X || point1.Y > point2.Y || point1.Z > point2.Z;
 
         /// <summary>
@@ -154,6 +178,37 @@ namespace DS.ClassLib.VarUtils.Points
 
             return new Vector3D(x, y, z);
         }
+
+        /// <summary>
+        ///  Rounds a <paramref name="vector"/> coordinate values to a specified number of fractional digits.
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="digits"></param>
+        /// <returns> The <see cref="Vector3d"/> nearest to coordinate value that contains a number of fractional digits equal to digits.</returns>
+        public static Vector3d Round(this Vector3d vector, int digits = 5)
+        {
+            var x = Math.Round(vector.X, digits);
+            var y = Math.Round(vector.Y, digits);
+            var z = Math.Round(vector.Z, digits);
+
+            return new Vector3d(x, y, z);
+        }
+
+        /// <summary>
+        ///  Rounds a <paramref name="point"/> coordinate values to a specified number of fractional digits.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="digits"></param>
+        /// <returns> The <see cref="Point3d"/> nearest to coordinate value that contains a number of fractional digits equal to digits.</returns>
+        public static Point3d Round(this Point3d point, int digits = 5)
+        {
+            var x = Math.Round(point.X, digits);
+            var y = Math.Round(point.Y, digits);
+            var z = Math.Round(point.Z, digits);
+
+            return new Point3d(x, y, z);
+        }
+
 
         /// <summary>
         /// Convert <paramref name="vector"/>'s coordinates from <see cref="double"/> to <see cref="sbyte"/>.
@@ -319,6 +374,5 @@ namespace DS.ClassLib.VarUtils.Points
 
             return projVector;
         }
-
     }
 }

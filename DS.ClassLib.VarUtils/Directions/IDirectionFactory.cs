@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Points;
+using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
@@ -13,15 +14,17 @@ namespace DS.ClassLib.VarUtils.Directions
         /// <summary>
         /// List of unit vectors in all planes.
         /// </summary>
-        List<Vector3D> Directions { get; }
+        List<Vector3d> Directions { get; }
 
         /// <summary>
-        /// Build object that represents factory to get directions in each plane by <paramref name="basis"/> and <paramref name="angles"/>.
+        /// Build object that represents factory to get directions in each plane by basis and <paramref name="angles"/>.
         /// </summary>
-        /// <param name="basis"></param>
+        /// <param name="basisX"></param>
+        /// <param name="basisY"></param>
+        /// <param name="basisZ"></param>    
         /// <param name="angles"></param>
         /// <returns></returns>
-        IDirectionFactory Build(OrthoNormBasis basis, List<int> angles = null);
+        IDirectionFactory Build(Vector3d basisX, Vector3d basisY, Vector3d basisZ, List<int> angles = null);
 
         /// <summary>
         /// Get directions in each plane.
@@ -29,6 +32,6 @@ namespace DS.ClassLib.VarUtils.Directions
         /// <returns>
         /// Get list of unit vectors in all planes.
         /// </returns>
-        List<Vector3D> GetDirections();
+        List<Vector3d> GetDirections();
     }
 }
