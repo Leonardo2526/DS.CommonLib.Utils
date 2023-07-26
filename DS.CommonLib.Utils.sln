@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.WpfApp.Licensing", "DS.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.Licensing", "DS.ClassLib.Licensing\DS.ClassLib.Licensing.csproj", "{37411903-2A48-4D32-B23B-FC9C4535B44A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PathFinders", "PathFinders", "{18EAFE24-3894-409E-9D54-65BF87483BCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder", "PathFinders\DS.PathFinder\DS.PathFinder.csproj", "{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,9 +67,16 @@ Global
 		{37411903-2A48-4D32-B23B-FC9C4535B44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37411903-2A48-4D32-B23B-FC9C4535B44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37411903-2A48-4D32-B23B-FC9C4535B44A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73} = {18EAFE24-3894-409E-9D54-65BF87483BCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47D7F73F-53A2-444C-9A3B-74C570C7E3B6}

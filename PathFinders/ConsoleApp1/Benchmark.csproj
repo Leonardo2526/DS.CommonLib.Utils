@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FrancoGustavo\FrancoGustavo.csproj" />
+    <ProjectReference Include="..\HPA\HPA.csproj" />
+    <ProjectReference Include="..\Implementation\Implementation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DS.PathSearch">
+      <HintPath>..\..\..\DS.CommonLib.Utils\DS.Utils\bin\Release\DS.PathSearch.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
