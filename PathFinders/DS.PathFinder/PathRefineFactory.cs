@@ -1,5 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Points;
-using FrancoGustavo;
+using DS.PathFinder.Algorithms.AStar;
 using Rhino.Geometry;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace DS.PathFinder
 
 
         /// <inheritdoc/>
-        public List<Point3d> Refine(List<PointPathFinderNode> path)
+        public List<Point3d> Refine(List<PathNode> path)
         {
             var points = new List<Point3d>();
             if (path == null || path.Count == 0)

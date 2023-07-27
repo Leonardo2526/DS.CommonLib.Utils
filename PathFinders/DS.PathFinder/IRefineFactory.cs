@@ -1,9 +1,5 @@
-﻿using FrancoGustavo;
-using System;
+﻿using DS.PathFinder.Algorithms.AStar;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DS.PathFinder
 {
@@ -20,6 +16,6 @@ namespace DS.PathFinder
         /// <returns>
         /// Path of <typeparamref name="T"/> points.
         /// </returns>
-        List<T> Refine(List<PointPathFinderNode> pathNodes);
+        List<T> Refine(List<PathNode> pathNodes);
     }
 }
