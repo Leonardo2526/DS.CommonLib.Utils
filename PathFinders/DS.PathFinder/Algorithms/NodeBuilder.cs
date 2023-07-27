@@ -10,32 +10,42 @@ namespace FrancoGustavo.Algorithm
     public class NodeBuilder : INodeBuilder
     {
         private readonly bool _mCompactPath;
-        private readonly bool _punishTurns;
+        private readonly bool _punishChangeDirection;
         private readonly HeuristicFormula _mFormula;
         private readonly double _mHEstimate;
+        private readonly List<Plane> _baseEndPointPlanes;
         private readonly Point3d _startPoint;
         private readonly Point3d _endPoint;
         private readonly double _step;
         private readonly List<Vector3d> _orths;
-        private readonly double _stepCost;
-        private PointPathFinderNode _node;
         private readonly int _tolerance = 3;
+        private readonly double _stepCost = 0.1;
+        private PointPathFinderNode _node;
         private PointPathFinderNode _parentNode;
         private Line _mainLine;
 
         public NodeBuilder(HeuristicFormula mFormula, int mHEstimate, Point3d startPoint, Point3d endPoint, double step,
-            List<Vector3d> orths, bool mCompactPath = true, bool punishTurns = true)
+            List<Vector3d> orths, bool mCompactPath = false, bool punishChangeDirection = false)
         {
             _mCompactPath = mCompactPath;
-            _punishTurns = punishTurns;
+            _punishChangeDirection = punishChangeDirection;
             _mFormula = mFormula;
             _startPoint = startPoint;
             _endPoint = endPoint;
             _mainLine = new Line(startPoint, endPoint);
             _step = step;
             _orths = orths;
-            _stepCost = step / 10;
             _mHEstimate = mHEstimate * _stepCost;
+            _baseEndPointPlanes = GetPlanes(orths, endPoint);
+        }
+
+        private List<Plane> GetPlanes(List<Vector3d> orths, Point3d endPoint)
+        {
+           var XY = new Plane(endPoint, orths[2]);
+           var XZ = new Plane(endPoint, orths[1]);
+           var YZ = new Plane(endPoint, orths[0]);
+
+            return new List<Plane>() { XY, XZ, YZ };
         }
 
         public PointPathFinderNode Node => _node;
@@ -47,7 +57,7 @@ namespace FrancoGustavo.Algorithm
             _node.Dir = nodeDir;
 
             if (Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg(), _tolerance) != 0)
-            { _node.UpdateStep(_endPoint, _orths, _step); }
+            { _node.UpdateStep(_endPoint,_baseEndPointPlanes, _step); }
 
             _node.Point += _node.StepVector;
 
@@ -97,10 +107,11 @@ namespace FrancoGustavo.Algorithm
                     break;
             }
 
-            if (_punishTurns &&
-                Math.Round(Vector3d.VectorAngle(_node.Dir, _parentNode.Dir).RadToDeg(), _tolerance) != 0)
+            if (_punishChangeDirection && _parentNode.Dir.Length !=0
+                && Math.Round(Vector3d.VectorAngle(_node.Dir, _parentNode.Dir).RadToDeg(), _tolerance) != 0
+                )
             {
-                var cost = 2 * _stepCost;
+                var cost = 50 * _stepCost;
                 h += cost;
             }
 

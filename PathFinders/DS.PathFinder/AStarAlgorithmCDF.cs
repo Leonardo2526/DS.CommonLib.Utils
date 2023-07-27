@@ -29,9 +29,10 @@ namespace DS.PathFinder
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly IRefineFactory<Point3d> _refineFactory;
         private readonly List<Vector3d> _searchDirections = new List<Vector3d>();
-        private readonly bool _mReopenCloseNodes = true;
+        private readonly bool _mReopenNodes = false;
         private readonly int _fractPrec = 7;
         private readonly int _tolerance = 2;
+        private readonly double _mTolerance = 0.1;
         private readonly PriorityQueueB<PointPathFinderNode> _mOpen = new PriorityQueueB<PointPathFinderNode>(new ComparePFNode());
         private readonly List<PointPathFinderNode> _mClose = new List<PointPathFinderNode>();
         private readonly List<PointPathFinderNode> _passableNodes = new List<PointPathFinderNode>();
@@ -147,7 +148,7 @@ namespace DS.PathFinder
                         if (angle == 0) { }
                         else if (angle > 90)
                         //else if (angle > 90 || !_traceSettings.AList.Contains((int)angle))
-                                { continue; }
+                        { continue; }
                     }
 
                     var newNode = _nodeBuilder.BuildWithPoint(parentNode, nodeDir);
@@ -155,19 +156,24 @@ namespace DS.PathFinder
                     if (newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound))
                     { continue; }
 
-                    var mOpenInd = _mOpen.InnerList.IndexOf(newNode);
-                    var mCloseInd = _mClose.IndexOf(newNode);
+                    //var checkPoint = new Point3d(10.335828058516039, -7.41881388825947, 0);
+                    //if (newNode.Point.DistanceTo(checkPoint) < 0.001)
+                    //{
 
-                    if (mOpenInd != -1 || mCloseInd != -1) { continue; }
+                    //}                 
+
+                    var foundInOpen = _mOpen.InnerList.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);
+                    var foundInClose = _mClose.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);
+
+                    if (!_mReopenNodes && foundInOpen.G != 0 || foundInClose.G != 0)
+                    { continue; }
 
                     newNode = _nodeBuilder.BuildWithParameters();
 
-                    if (mOpenInd != -1 && _mOpen[mOpenInd].G <= newNode.G ||
-                        mCloseInd != -1 && (_mReopenCloseNodes || _mClose[mCloseInd].G <= newNode.G))
+                    if (foundInOpen.G != 0 && foundInOpen.G <= newNode.G)
                     { continue; }
 
-                    if (newNode.Point.Round(_tolerance) == endPoint.Round(_tolerance)
-                        && newNode.LengthToANP < _traceSettings.F)
+                    if (foundInClose.G != 0 && foundInClose.G <= newNode.G)
                     { continue; }
 
                     //collisions check
@@ -190,6 +196,7 @@ namespace DS.PathFinder
                 _mClose.Add(parentNode);
             }
 
+            Debug.WriteLine("Close nodes count: " + _mClose.Count);
             var pathNodes = RestorePath(found, _mClose);
             var path = _refineFactory.Refine(pathNodes);
 

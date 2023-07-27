@@ -12,6 +12,7 @@ namespace FrancoGustavo
     public struct PointPathFinderNode
     {
         private static int _tolerance = 2;
+        //private static double _dTolerance = 0.03;
         private static double _dTolerance = Math.Pow(0.1, _tolerance);
         private static Point3d ZeroPoint= new Point3d(0,0,0);
 
@@ -47,10 +48,10 @@ namespace FrancoGustavo
 
         public double LengthToANP => Math.Round(ANP.DistanceTo(Point), _tolerance);
 
-        public void UpdateStep( Point3d endPoint, List<Vector3d> normOrths, double step)
+        public void UpdateStep( Point3d endPoint, List<Plane> baseEndPointPlanes, double step)
         {
             //get intersection point
-            Point3d intersecioinPoint = GetIntersectionPoint(this, endPoint, normOrths);
+            Point3d intersecioinPoint = GetIntersectionPoint(this, endPoint, baseEndPointPlanes);
             //_pointVisualisator?.Show(intersecioinPoint);
 
             //get real calculation step
@@ -69,23 +70,21 @@ namespace FrancoGustavo
 
             StepVector = Vector3d.Multiply(Dir, calcStep);
 
-            Point3d GetIntersectionPoint(PointPathFinderNode node, Point3d endPoint, List<Vector3d> normOrths)
+            Point3d GetIntersectionPoint(PointPathFinderNode node, Point3d endPoint, List<Plane> baseEndPointPlanes)
             {
                 Point3d intersecioinPoint = new Point3d();
                 var line1 = new Line(node.Point, node.Point + node.Dir);
 
                 List<Point3d> foundPoints = new List<Point3d>();
-                foreach (var nOrth in normOrths)
+                foreach (var plane in baseEndPointPlanes)
                 {
-                    var line2 = new Line(endPoint, (endPoint + nOrth));
-                    var intersection = Intersection.LineLine(line1, line2, out double a, out double b, _dTolerance, false);
+                    var intersection = Intersection.LinePlane(line1, plane, out double lineParam);
                     if (intersection)
                     {
-                        var pointAtLine1 = line1.PointAt(a);
+                        var pointAtLine1 = line1.PointAt(lineParam);
                         if (pointAtLine1.Round(_tolerance) == node.Point.Round(_tolerance)) { continue; }
                         else
                         { foundPoints.Add(pointAtLine1); }
-                        //{ intersecioinPoint = pointAtLine1; break; }
                     }
                 }
 
