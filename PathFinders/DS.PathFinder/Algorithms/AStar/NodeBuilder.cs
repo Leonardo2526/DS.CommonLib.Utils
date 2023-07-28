@@ -23,6 +23,7 @@ namespace DS.PathFinder.Algorithms.AStar
         private readonly double _step;
         private readonly List<Vector3d> _orths;
         private int _tolerance = 3;
+        private int _cTolerance = 3;
         private readonly double _stepCost = 0.1;
         private PathNode _node;
         private PathNode _parentNode;
@@ -54,6 +55,11 @@ namespace DS.PathFinder.Algorithms.AStar
         /// Path find tolerance.
         /// </summary>
         public int Tolerance { get => _tolerance; set => _tolerance = value; }
+
+        /// <summary>
+        /// Compound numbers tolerance.
+        /// </summary>
+        public int CTolerance { get => _cTolerance; set => _cTolerance = value; }
 
         /// <inheritdoc/>
         public PathNode Node => _node;
@@ -122,8 +128,14 @@ namespace DS.PathFinder.Algorithms.AStar
                 && Math.Round(Vector3d.VectorAngle(_node.Dir, _parentNode.Dir).RadToDeg(), _tolerance) != 0
                 )
             {
-                var cost = 50 * _stepCost;
-                h += cost;
+                var length = point.DistanceTo(endPoint);
+                var moveVector = Vector3d.Multiply(_node.Dir, length);
+                var nodeMovePoint = (point + moveVector).Round(_cTolerance);
+                if (nodeMovePoint != endPoint.Round(_cTolerance))
+                { 
+                    var cost = 20 * _stepCost;
+                    h += cost;
+                }
             }
 
             return h;

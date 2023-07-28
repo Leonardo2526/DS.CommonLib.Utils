@@ -68,6 +68,7 @@
     <Compile Include="Collisons\PointCollision.cs" />
     <Compile Include="Collisons\PointCollisionDetector.cs" />
     <Compile Include="ConsoleMapDrawer.cs" />
+    <Compile Include="PlaneType.cs" />
     <Compile Include="Directions\IDirectionFactory.cs" />
     <Compile Include="Directions\UserDirectionFactory.cs" />
     <Compile Include="Events\EventType.cs" />
