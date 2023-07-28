@@ -8,6 +8,11 @@ namespace DS.PathFinder.Algorithms.AStar
     public interface INodeBuilder
     {
         /// <summary>
+        /// Current step.
+        /// </summary>
+        public double Step { get; set; }
+
+        /// <summary>
         /// Specifies built <see cref="PathNode"/>.
         /// </summary>
         PathNode Node { get; }

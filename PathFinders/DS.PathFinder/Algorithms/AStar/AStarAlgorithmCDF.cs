@@ -19,16 +19,16 @@ namespace DS.PathFinder.Algorithms.AStar
         #region Fields
 
         private readonly ITraceSettings _traceSettings;
-        private readonly INodeBuilder _nodeBuilder;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly IRefineFactory<Point3d> _refineFactory;
         private readonly List<Vector3d> _searchDirections = new List<Vector3d>();
         private readonly bool _mReopenNodes = true;
-        private readonly double _mTolerance = 0.1;
+        private double _mTolerance;
         private readonly PriorityQueueB<PathNode> _mOpen = new PriorityQueueB<PathNode>(new ComparePFNode());
         private readonly List<PathNode> _mClose = new List<PathNode>();
         private readonly List<Point3d> _unpassablePoints = new List<Point3d>();
 
+        private INodeBuilder _nodeBuilder;
         private Point3d _upperBound;
         private Point3d _lowerBound;
         private int _tolerance = 3;
@@ -67,6 +67,16 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public int CTolerance { get => _cTolerance; set => _cTolerance = value; }
 
+        private double MTolerance 
+        { 
+            get => _mTolerance;
+            set 
+            { 
+                _mTolerance = value/10;
+            }
+        }
+
+
         /// <summary>
         /// Token to cancel finding path operation.
         /// </summary>
@@ -89,6 +99,18 @@ namespace DS.PathFinder.Algorithms.AStar
         {
             _lowerBound = lowerBound.Round(_tolerance);
             _upperBound = upperBound.Round(_tolerance);
+            return this;
+        }
+
+        /// <summary>
+        /// Build with <paramref name="nodeBuilder"/>.
+        /// </summary>
+        /// <param name="nodeBuilder"></param>
+        /// <returns></returns>
+        public AStarAlgorithmCDF WithNodeBuilder(INodeBuilder nodeBuilder)
+        {
+            _nodeBuilder = nodeBuilder;
+            MTolerance = nodeBuilder.Step;
             return this;
         }
 
@@ -146,14 +168,15 @@ namespace DS.PathFinder.Algorithms.AStar
                         if (angle == 0) { }
                         else if (angle > 90)
                         { continue; }
-                        else if (!_traceSettings.AList.Contains(angle))
+                        else if (!_traceSettings.AList.Contains(angle) && !_traceSettings.AList.Contains(90 -angle))
                         { continue; }
                     }
 
                     var newNode = _nodeBuilder.Build(parentNode, nodeDir);
-
+                    //PointVisualisator?.Show(newNode.Point);
                     if (newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound)
-                        || _unpassablePoints.Contains(newNode.Point))
+                        //|| _unpassablePoints.Contains(newNode.Point)
+                        )
                     { continue; }
 
                     var foundInOpen = _mOpen.InnerList.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);

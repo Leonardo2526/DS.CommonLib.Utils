@@ -20,11 +20,10 @@ namespace DS.PathFinder.Algorithms.AStar
         private readonly List<Plane> _baseEndPointPlanes;
         private readonly Point3d _startPoint;
         private readonly Point3d _endPoint;
-        private readonly double _step;
-        private readonly List<Vector3d> _orths;
         private int _tolerance = 3;
         private int _cTolerance = 3;
         private readonly double _stepCost = 0.1;
+
         private PathNode _node;
         private PathNode _parentNode;
 
@@ -39,8 +38,7 @@ namespace DS.PathFinder.Algorithms.AStar
             _mFormula = mFormula;
             _startPoint = startPoint;
             _endPoint = endPoint;
-            _step = step;
-            _orths = orths;
+            Step = step;
             _mHEstimate = mHEstimate * _stepCost;
 
             _baseEndPointPlanes = new List<Plane>()
@@ -50,6 +48,9 @@ namespace DS.PathFinder.Algorithms.AStar
                 new Plane(endPoint, orths[0])
             };
         }
+
+        /// <inheritdoc/>
+        public double Step { get; set; }
 
         /// <summary>
         /// Path find tolerance.
@@ -72,7 +73,7 @@ namespace DS.PathFinder.Algorithms.AStar
             _node.Dir = nodeDir;
 
             if (Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg()) != 0)
-            { _node.StepVector = GetStep(_node, _endPoint, _baseEndPointPlanes, _step); }
+            { _node.StepVector = GetStep(_node, _endPoint, _baseEndPointPlanes, Step); }
 
             _node.StepVector = _node.StepVector.Round(_tolerance);
             _node.Point += _node.StepVector;
@@ -97,6 +98,17 @@ namespace DS.PathFinder.Algorithms.AStar
 
             return _node;
         }
+
+        /// <summary>
+        /// Build with <paramref name="step"/>.
+        /// </summary>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        public NodeBuilder WithStep(double step)
+        {
+            Step = step; return this;
+        }
+
 
         private double GetH(Point3d point, Point3d endPoint, double mHEstimate)
         {
@@ -157,7 +169,7 @@ namespace DS.PathFinder.Algorithms.AStar
             {
                 var vectorLength = (intersecioinPoint - node.Point).Length;
                 int stepsCount = (int)Math.Round(vectorLength / step);
-                calcStep = vectorLength / stepsCount;
+                calcStep = stepsCount ==0 ? vectorLength : vectorLength / stepsCount;
             }
 
 

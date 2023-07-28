@@ -68,6 +68,9 @@
     <Compile Include="Algorithms\AStar\INodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
+    <Compile Include="IAlgorithmFactory.cs" />
+    <Compile Include="IPathFindIterator.cs" />
+    <Compile Include="PathFindIteratorByStep.cs" />
     <Compile Include="PriorityQueueB.cs" />
     <Compile Include="Algorithms\AStar\AStarAlgorithmCDF.cs" />
     <Compile Include="IPathFindAlgorithm.cs" />
