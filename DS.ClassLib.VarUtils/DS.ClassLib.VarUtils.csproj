@@ -68,6 +68,10 @@
     <Compile Include="Collisons\PointCollision.cs" />
     <Compile Include="Collisons\PointCollisionDetector.cs" />
     <Compile Include="ConsoleMapDrawer.cs" />
+    <Compile Include="Enumerables\AngleEnumerable.cs" />
+    <Compile Include="Enumerables\PlaneEnumerable.cs" />
+    <Compile Include="Enumerables\PlaneIterator.cs" />
+    <Compile Include="Enumerables\DirectionIterator.cs" />
     <Compile Include="PlaneType.cs" />
     <Compile Include="Directions\IDirectionFactory.cs" />
     <Compile Include="Directions\UserDirectionFactory.cs" />
