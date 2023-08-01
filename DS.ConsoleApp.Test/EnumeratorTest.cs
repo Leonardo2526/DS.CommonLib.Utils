@@ -68,13 +68,15 @@ namespace DS.ConsoleApp.Test
         {
             var angles = new List<int>()
             {
-                15, 30 , 45 ,60, 90
+                30
+                //15, 30 , 45 ,60, 90
             };
 
             var planeEnum = new AngleEnumerable(angles, 360);
 
             return planeEnum;
         }
+
         private void AngleOutput(IEnumerator enumerator)
         {
             while (enumerator.MoveNext())   // пока не будет возвращено false
@@ -88,14 +90,14 @@ namespace DS.ConsoleApp.Test
         private DirectionIterator CreateDirectionIterator()
         {
             var planes = new List<Plane>();
-            var plane1 = new Plane(new Point3d(0, 0, 0), new Vector3d(0, 0, 1));
-            var plane2 = new Plane(new Point3d(0, 0, 0), new Vector3d(1, 0, 0));
-            planes.Add(plane1);
-            planes.Add(plane2);
+            var planeXY = new Plane(new Point3d(0, 0, 0), new Vector3d(0, 0, 1));
+            var planeYZ = new Plane(new Point3d(0, 0, 0), new Vector3d(1, 0, 0));
+            planes.Add(planeXY);
+            planes.Add(planeYZ);
 
             var angles = new List<int>()
             {
-               30
+              30
             };
 
             //var parentDir = new Vector3d(1, 0, 0);

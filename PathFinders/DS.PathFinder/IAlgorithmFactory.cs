@@ -1,4 +1,5 @@
 ﻿using Rhino.Geometry;
+using System.Threading;
 
 namespace DS.PathFinder
 {
@@ -6,7 +7,7 @@ namespace DS.PathFinder
     /// The interface that represents factory to create a new path find algorythm.
     /// </summary>
     public interface IAlgorithmFactory
-    {
+    { 
         /// <summary>
         /// Created algorithm.
         /// </summary>
@@ -16,6 +17,6 @@ namespace DS.PathFinder
         /// Build algorithm with <paramref name="step"/>.
         /// </summary>
         /// <param name="step"></param>
-        void WithStep(double step);
+        void Reset(double step);
     }
 }

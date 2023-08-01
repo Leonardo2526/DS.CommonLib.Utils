@@ -72,7 +72,7 @@ namespace DS.PathFinder.Algorithms.AStar
             _node = parentNode;
             _node.Dir = nodeDir;
 
-            if (Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg()) != 0)
+            if (_node.StepVector.Length == 0 || Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg()) != 0)
             { _node.StepVector = GetStep(_node, _endPoint, _baseEndPointPlanes, Step); }
 
             _node.StepVector = _node.StepVector.Round(_tolerance);
@@ -168,8 +168,8 @@ namespace DS.PathFinder.Algorithms.AStar
             else
             {
                 var vectorLength = (intersecioinPoint - node.Point).Length;
-                int stepsCount = (int)Math.Round(vectorLength / step);
-                calcStep = stepsCount ==0 ? vectorLength : vectorLength / stepsCount;
+                int stepsCount = (int)Math.Ceiling(vectorLength / step);
+                calcStep = vectorLength / stepsCount;
             }
 
 

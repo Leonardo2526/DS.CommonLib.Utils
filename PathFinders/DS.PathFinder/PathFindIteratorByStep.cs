@@ -62,10 +62,9 @@ namespace DS.PathFinder
                 { Debug.WriteLine("Path search iteration time is up."); return path; }
 
                 Debug.WriteLine($"Start {i++} from {_stepsCount} pathFinding with step = {currentStep}");
-                _algorithmFactory.WithStep(currentStep);
-                path = _algorithm?.FindPath(_startPoint, _endPoint);
+                _algorithmFactory.Reset(currentStep);
+                path = _algorithm?.FindPath(_startPoint, _endPoint) ?? path;
                 currentStep -= _stepTemp;
-                if (path == null) { break; }
             }
 
             return path;
