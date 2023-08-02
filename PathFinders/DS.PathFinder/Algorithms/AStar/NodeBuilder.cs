@@ -20,10 +20,10 @@ namespace DS.PathFinder.Algorithms.AStar
         private readonly List<Plane> _baseEndPointPlanes;
         private readonly Point3d _startPoint;
         private readonly Point3d _endPoint;
+        private readonly double _stepCost = 0.1;
         private int _tolerance = 3;
         private int _cTolerance = 3;
-        private readonly double _stepCost = 0.1;
-
+        private double _gcost = 1;
         private PathNode _node;
         private PathNode _parentNode;
 
@@ -65,6 +65,11 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public PathNode Node => _node;
 
+        /// <summary>
+        /// Specifies visualisator to show points.
+        /// </summary>
+        public IPointVisualisator<Point3d> PointVisualisator { get; set; }
+
         /// <inheritdoc/>
         public PathNode Build(PathNode parentNode, Vector3d nodeDir)
         {
@@ -87,14 +92,28 @@ namespace DS.PathFinder.Algorithms.AStar
         {
             _node.Parent = _parentNode.Point;
 
-            _node.G += _node.StepVector.Length;
+            //set ANP for new node
+            if(_parentNode.Dir == _node.Dir)
+            {
+                _node.ANP = _parentNode.ANP;
+            }
+            else
+            {
+                _node.ANP = _parentNode.Point;
+                if(_punishChangeDirection)
+                {
+                    //_gcost++;
+                    //_gcost += 50;
+                    //_gcost += _stepCost;
+                    _node.G += _stepCost;
+                }
+            }
+
+            _node.G += _gcost * _node.StepVector.Length;
             _node.H = GetH(_node.Point, _endPoint, _mHEstimate);
             _node.F = _node.G + _node.H;
             //_node.B = _mCompactPath ? 1 * _mainLine.DistanceTo(_node.Point, true) : 0;
 
-            //set ANP for new node
-            _node.ANP = _parentNode.Dir == _node.Dir ?
-            _parentNode.ANP : _parentNode.Point;
 
             return _node;
         }
@@ -136,28 +155,18 @@ namespace DS.PathFinder.Algorithms.AStar
                     break;
             }
 
-            if (_punishChangeDirection && _parentNode.Dir.Length != 0
-                && Math.Round(Vector3d.VectorAngle(_node.Dir, _parentNode.Dir).RadToDeg(), _tolerance) != 0
-                )
-            {
-                var length = point.DistanceTo(endPoint);
-                var moveVector = Vector3d.Multiply(_node.Dir, length);
-                var nodeMovePoint = (point + moveVector).Round(_cTolerance);
-                if (nodeMovePoint != endPoint.Round(_cTolerance))
-                { 
-                    var cost = 20 * _stepCost;
-                    h += cost;
-                }
-            }
-
             return h;
         }
 
         private Vector3d GetStep(PathNode node, Point3d endPoint, List<Plane> baseEndPointPlanes, double step)
         {
+            bool b = false;
             //get intersection point
             Point3d intersecioinPoint = GetIntersectionPoint(node, endPoint, baseEndPointPlanes);
-            //_pointVisualisator?.Show(intersecioinPoint);
+            if (b)
+            {
+                PointVisualisator?.Show(intersecioinPoint);                
+            }
 
             //get real calculation step
             double calcStep;
@@ -187,7 +196,7 @@ namespace DS.PathFinder.Algorithms.AStar
                     if (intersection)
                     {
                         var pointAtLine1 = line1.PointAt(lineParam).Round(_tolerance);
-                        if (pointAtLine1 == node.Point) { continue; }
+                        if (pointAtLine1.Round(_cTolerance) == node.Point.Round(_cTolerance)) { continue; }
                         else
                         { foundPoints.Add(pointAtLine1); }
                     }

@@ -32,7 +32,7 @@ namespace DS.PathFinder
             _endPoint = endPoint;
             _algorithm = algorithmFactory.Algorithm;
 
-            if (minStep <= 0 || minStep > maxStep || stepTemp > (maxStep - minStep))
+            if (minStep <= 0 || minStep > maxStep)
             { throw new ArgumentOutOfRangeException(); }
 
             _minStep = minStep;
@@ -55,13 +55,14 @@ namespace DS.PathFinder
 
 
             var currentStep = _maxStep;
-            int i = 1;
+            int i = 0;
             while (currentStep >= _minStep && path.Count == 0)
             {
                 if (TokenSource is not null && TokenSource.Token.IsCancellationRequested)
                 { Debug.WriteLine("Path search iteration time is up."); return path; }
 
-                Debug.WriteLine($"Start {i++} from {_stepsCount} pathFinding with step = {currentStep}");
+                Debug.WriteLineIf(i ==0, $"Start pathFinding with step weight = {currentStep}");
+                Debug.WriteLineIf(i > 0, $"Start pathFinding with {i++} step from {_stepsCount} steps with weight = {currentStep}");
                 _algorithmFactory.Reset(currentStep);
                 path = _algorithm?.FindPath(_startPoint, _endPoint) ?? path;
                 currentStep -= _stepTemp;

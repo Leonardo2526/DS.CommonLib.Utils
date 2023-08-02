@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading;
 
 namespace DS.PathFinder.Algorithms.AStar
@@ -34,6 +35,8 @@ namespace DS.PathFinder.Algorithms.AStar
         private Point3d _lowerBound;
         private int _tolerance = 3;
         private int _cTolerance = 2;
+        private Point3d _startPoint;
+        private Point3d _endPoint;
 
         #endregion
 
@@ -73,7 +76,7 @@ namespace DS.PathFinder.Algorithms.AStar
             get => _mTolerance;
             set
             {
-                _mTolerance = value / 10;
+                _mTolerance = value / 20;
             }
         }
 
@@ -90,7 +93,7 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <summary>
         /// Direction at start point.
         /// </summary>
-        public Vector3d StartDirection { get; set; } 
+        public Vector3d StartDirection { get; set; }
 
         /// <summary>
         /// Angle point at start.
@@ -100,12 +103,12 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <summary>
         /// Direction at end point.
         /// </summary>
-        public Vector3d EndDirection { get; set; } 
+        public Vector3d EndDirection { get; set; }
 
         /// <summary>
         /// Angle point at end.
         /// </summary>
-        public Point3d EndANP { get; set; } 
+        public Point3d EndANP { get; set; }
 
         #endregion
 
@@ -137,8 +140,8 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public List<Point3d> FindPath(Point3d startPoint, Point3d endPoint)
         {
-            startPoint = startPoint.Round(_tolerance);
-            endPoint = endPoint.Round(_tolerance);
+            _startPoint = startPoint.Round(_tolerance);
+            _endPoint = endPoint.Round(_tolerance);
 
             //initiate a new search
             var parentNode = new PathNode()
@@ -158,27 +161,27 @@ namespace DS.PathFinder.Algorithms.AStar
             {
                 //return null;
                 if (TokenSource is not null && TokenSource.Token.IsCancellationRequested)
-                { Debug.WriteLine("Path search time is up."); return null; }
+                {
+                    Debug.WriteLine("Path search time is up.");
+                    Debug.WriteLine("Close nodes count is: " + _mClose.Count);
+                    return null;
+                }
 
                 parentNode = _mOpen.Pop();
                 PointVisualisator?.Show(parentNode.Point);
 
+                //var checkPoint = new Point3d(-181.97306, -147.24647, 0);
+                //if (parentNode.Point.DistanceTo(checkPoint) < 0.001)
+                //{
+
+                //}
+
                 if (parentNode.Point.Round(_cTolerance) == endPoint.Round(_cTolerance))
                 {
-                    var endAngle = EndDirection.Length == 0 ? 
-                        0 :
-                        (int)Math.Round(Vector3d.VectorAngle(EndDirection, parentNode.Dir).RadToDeg());
-                    if (endAngle == 0
-                        || endAngle % 180 == 0
-                        || _traceSettings.AList.Contains(endAngle)
-                        || _traceSettings.AList.Contains(-endAngle)
-                        && parentNode.Point.DistanceTo(EndANP) >= _traceSettings.F)
-                    {
-                        parentNode.Point = endPoint;
-                        _mClose.Add(parentNode);
-                        found = true;
-                        break;
-                    }
+                    parentNode.Point = endPoint;
+                    _mClose.Add(parentNode);
+                    found = true;
+                    break;
                 }
 
                 var distToANP = parentNode.ANP.DistanceTo(parentNode.Point);
@@ -212,7 +215,7 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public void ResetToken()
         {
-            TokenSource = new CancellationTokenSource(5000);
+            TokenSource = new CancellationTokenSource(1000);
         }
 
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
@@ -221,6 +224,18 @@ namespace DS.PathFinder.Algorithms.AStar
             //PointVisualisator?.Show(newNode.Point);
             if (newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound))
             { return false; }
+
+            if (newNode.Point.Round(_cTolerance) == _endPoint.Round(_cTolerance) && EndDirection.Length != 0)
+            {
+                var endAngle =
+                        (int)Math.Round(Vector3d.VectorAngle(EndDirection, nodeDir).RadToDeg());
+                if (endAngle % 180 != 0
+                    && !_traceSettings.AList.Contains(endAngle)
+                    && !_traceSettings.AList.Contains(-endAngle))
+                { return false; }
+                else if (EndANP != default && newNode.Point.DistanceTo(EndANP) < _traceSettings.F)
+                { return false; }
+            }
 
             var foundInOpen = _mOpen.InnerList.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);
             var foundInClose = _mClose.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);
@@ -271,7 +286,7 @@ namespace DS.PathFinder.Algorithms.AStar
         }
 
 
-        //var checkPoint = new Point3d(10.335828058516039, -7.41881388825947, 0);
+        //var checkPoint = new Point3d(-79.60393, -110.97724, 0);
         //if (newNode.Point.DistanceTo(checkPoint) < 0.001)
         //{
 
