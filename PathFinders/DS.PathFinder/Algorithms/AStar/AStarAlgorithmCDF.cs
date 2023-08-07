@@ -170,7 +170,7 @@ namespace DS.PathFinder.Algorithms.AStar
                 parentNode = _mOpen.Pop();
                 PointVisualisator?.Show(parentNode.Point);
 
-                //var checkPoint = new Point3d(-181.97306, -147.24647, 0);
+                //var checkPoint = new Point3d(124.51497, 163.50836, 0);
                 //if (parentNode.Point.DistanceTo(checkPoint) < 0.001)
                 //{
 
@@ -215,7 +215,7 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public void ResetToken()
         {
-            TokenSource = new CancellationTokenSource(1000);
+            TokenSource = new CancellationTokenSource(5000);
         }
 
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
@@ -223,13 +223,15 @@ namespace DS.PathFinder.Algorithms.AStar
             var newNode = _nodeBuilder.Build(parentNode, nodeDir);
             //PointVisualisator?.Show(newNode.Point);
             if (newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound))
-            { return false; }
+            {
+                return false;
+            }
 
             if (newNode.Point.Round(_cTolerance) == _endPoint.Round(_cTolerance) && EndDirection.Length != 0)
             {
                 var endAngle =
                         (int)Math.Round(Vector3d.VectorAngle(EndDirection, nodeDir).RadToDeg());
-                if (endAngle % 180 != 0
+                if (endAngle != 0
                     && !_traceSettings.AList.Contains(endAngle)
                     && !_traceSettings.AList.Contains(-endAngle))
                 { return false; }
@@ -240,16 +242,13 @@ namespace DS.PathFinder.Algorithms.AStar
             var foundInOpen = _mOpen.InnerList.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);
             var foundInClose = _mClose.FirstOrDefault(n => n.Point.DistanceTo(newNode.Point) < _mTolerance);
 
-            if (!_mReopenNodes && foundInOpen.G != 0 || foundInClose.G != 0)
-            { return false; }
+            if (!_mReopenNodes)
+            {
+                if (foundInOpen.G != 0 || foundInClose.G != 0)
+                { return false; }
+            }
 
             newNode = _nodeBuilder.BuildWithParameters();
-
-            //reopen closed node only if it has G value less than was in found list.
-            if (foundInOpen.G != 0 && foundInOpen.G <= newNode.G)
-            { return false; }
-            if (foundInClose.G != 0 && foundInClose.G <= newNode.G)
-            { return false; }
 
             if (foundInOpen.G == 0 || foundInClose.G == 0)
             {

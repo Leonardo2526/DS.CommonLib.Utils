@@ -16,14 +16,15 @@ namespace DS.PathFinder.Algorithms.AStar
         private readonly bool _mCompactPath;
         private readonly bool _punishChangeDirection;
         private readonly HeuristicFormula _mFormula;
-        private readonly double _mHEstimate;
+        private double _mHEstimate;
         private readonly List<Plane> _baseEndPointPlanes;
         private readonly Point3d _startPoint;
         private readonly Point3d _endPoint;
         private readonly double _stepCost = 0.1;
         private int _tolerance = 3;
-        private int _cTolerance = 3;
-        private double _gcost = 1;
+        private int _cTolerance = 2;
+        private double _cfTolerance = 0.03;
+        private double _gcost = 20;
         private PathNode _node;
         private PathNode _parentNode;
 
@@ -40,6 +41,7 @@ namespace DS.PathFinder.Algorithms.AStar
             _endPoint = endPoint;
             Step = step;
             _mHEstimate = mHEstimate * _stepCost;
+            _gcost *= _stepCost;
 
             _baseEndPointPlanes = new List<Plane>()
             {
@@ -77,10 +79,16 @@ namespace DS.PathFinder.Algorithms.AStar
             _node = parentNode;
             _node.Dir = nodeDir;
 
-            if (_node.StepVector.Length == 0 || Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg()) != 0)
+            if (Math.Round(_node.StepVector.Length, _cTolerance) == 0 || 
+                Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg()) != 0)
             { _node.StepVector = GetStep(_node, _endPoint, _baseEndPointPlanes, Step); }
 
-            _node.StepVector = _node.StepVector.Round(_tolerance);
+            if(Math.Round(_node.StepVector.Length, _cTolerance) == 0)
+            {
+                throw new InvalidOperationException("StepVector length is less than tolerance.");
+            }
+
+                _node.StepVector = _node.StepVector.Round(_tolerance);
             _node.Point += _node.StepVector;
             _node.Point = _node.Point.Round(_tolerance);
 
@@ -92,8 +100,9 @@ namespace DS.PathFinder.Algorithms.AStar
         {
             _node.Parent = _parentNode.Point;
 
+            var gValue = _node.StepVector.Length;
             //set ANP for new node
-            if(_parentNode.Dir == _node.Dir)
+            if (_parentNode.Dir == _node.Dir)
             {
                 _node.ANP = _parentNode.ANP;
             }
@@ -105,11 +114,14 @@ namespace DS.PathFinder.Algorithms.AStar
                     //_gcost++;
                     //_gcost += 50;
                     //_gcost += _stepCost;
-                    _node.G += _stepCost;
+                    //_node.G += _stepCost;
+                    //_node.G += 10 * _stepCost;
+                    //_node.G += _gcost;
+                    gValue *= _gcost;
                 }
             }
 
-            _node.G += _gcost * _node.StepVector.Length;
+            _node.G += gValue;
             _node.H = GetH(_node.Point, _endPoint, _mHEstimate);
             _node.F = _node.G + _node.H;
             //_node.B = _mCompactPath ? 1 * _mainLine.DistanceTo(_node.Point, true) : 0;
@@ -128,6 +140,17 @@ namespace DS.PathFinder.Algorithms.AStar
             Step = step; return this;
         }
 
+        public NodeBuilder NextHestimate()
+        {
+            _mHEstimate += 5 * _stepCost;
+            return this;
+        }
+
+        public NodeBuilder ResetHestimate(int initialHestimate)
+        {
+            _mHEstimate = initialHestimate * _stepCost;
+            return this;
+        }
 
         private double GetH(Point3d point, Point3d endPoint, double mHEstimate)
         {
@@ -196,7 +219,7 @@ namespace DS.PathFinder.Algorithms.AStar
                     if (intersection)
                     {
                         var pointAtLine1 = line1.PointAt(lineParam).Round(_tolerance);
-                        if (pointAtLine1.Round(_cTolerance) == node.Point.Round(_cTolerance)) { continue; }
+                        if (pointAtLine1.DistanceTo(node.Point) < _cfTolerance) { continue; }
                         else
                         { foundPoints.Add(pointAtLine1); }
                     }

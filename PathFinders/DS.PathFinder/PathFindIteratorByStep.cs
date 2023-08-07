@@ -56,18 +56,44 @@ namespace DS.PathFinder
 
             var currentStep = _maxStep;
             int i = 0;
+            DateTime totalTime1 = DateTime.Now;
             while (currentStep >= _minStep && path.Count == 0)
             {
+                DateTime stepDate1 = DateTime.Now;
                 if (TokenSource is not null && TokenSource.Token.IsCancellationRequested)
                 { Debug.WriteLine("Path search iteration time is up."); return path; }
 
                 Debug.WriteLineIf(i ==0, $"Start pathFinding with step weight = {currentStep}");
                 Debug.WriteLineIf(i > 0, $"Start pathFinding with {i++} step from {_stepsCount} steps with weight = {currentStep}");
+
                 _algorithmFactory.Reset(currentStep);
                 path = _algorithm?.FindPath(_startPoint, _endPoint) ?? path;
-                currentStep -= _stepTemp;
-            }
 
+                //try find path with hEstimate iterator.
+                if(path.Count ==0)
+                {
+                    int hEstStep = 0;
+                    while(path.Count == 0 && hEstStep < 3)
+                    {
+                        hEstStep++;
+                        _algorithmFactory.NextHestimate();
+                        path = _algorithm?.FindPath(_startPoint, _endPoint) ?? path;
+                    }
+                }
+
+                currentStep -= _stepTemp;
+
+                DateTime stepDate2 = DateTime.Now;
+                TimeSpan interval = stepDate2 - stepDate1;
+                Debug.WriteLine("{0} {1,0:N0} ms", "Search time is :", interval.TotalMilliseconds);
+                Debug.WriteLine("");
+            }
+            DateTime totalTime2 = DateTime.Now;
+            TimeSpan totalInterval = totalTime2 - totalTime1;
+            Debug.WriteLineIf(path.Count > 0, "Path was found! Length is: " + path.Count);
+            Debug.WriteLineIf(path.Count == 0, "Failed to found path.");
+            Debug.WriteLine("{0} {1,0:N0} ms", "Total search time is :", totalInterval.TotalMilliseconds);
+            Debug.WriteLine("Total steps count is: " + i);
             return path;
         }
     }

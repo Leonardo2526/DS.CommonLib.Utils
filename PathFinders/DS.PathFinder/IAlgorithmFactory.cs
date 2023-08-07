@@ -18,5 +18,7 @@ namespace DS.PathFinder
         /// </summary>
         /// <param name="step"></param>
         void Reset(double step);
+
+        void NextHestimate();
     }
 }
