@@ -8,6 +8,11 @@ namespace DS.PathFinder.Algorithms.AStar
     public interface INodeBuilder
     {
         /// <summary>
+        /// Heuristic in percentages.
+        /// </summary>
+        public int Heuristic { get; set; }
+
+        /// <summary>
         /// Current step.
         /// </summary>
         public double Step { get; set; }

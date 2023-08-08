@@ -16,22 +16,22 @@ namespace DS.PathFinder.Algorithms.AStar
         private readonly bool _mCompactPath;
         private readonly bool _punishChangeDirection;
         private readonly HeuristicFormula _mFormula;
-        private double _mHEstimate;
+        private int _heuristic;
         private readonly List<Plane> _baseEndPointPlanes;
         private readonly Point3d _startPoint;
         private readonly Point3d _endPoint;
-        private readonly double _stepCost = 0.1;
+        private readonly double _stepCost = 0.01;
         private int _tolerance = 3;
         private int _cTolerance = 2;
         private double _cfTolerance = 0.03;
-        private double _gcost = 20;
+        private double _gcost = 200;
         private PathNode _node;
         private PathNode _parentNode;
 
         /// <summary>
         /// Instansiate an object to build for <see cref="PathNode"/>.
         /// </summary>
-        public NodeBuilder(HeuristicFormula mFormula, int mHEstimate, Point3d startPoint, Point3d endPoint, double step,
+        public NodeBuilder(HeuristicFormula mFormula, Point3d startPoint, Point3d endPoint, double step,
             List<Vector3d> orths, bool mCompactPath = false, bool punishChangeDirection = false)
         {
             _mCompactPath = mCompactPath;
@@ -40,7 +40,6 @@ namespace DS.PathFinder.Algorithms.AStar
             _startPoint = startPoint;
             _endPoint = endPoint;
             Step = step;
-            _mHEstimate = mHEstimate * _stepCost;
             _gcost *= _stepCost;
 
             _baseEndPointPlanes = new List<Plane>()
@@ -73,22 +72,25 @@ namespace DS.PathFinder.Algorithms.AStar
         public IPointVisualisator<Point3d> PointVisualisator { get; set; }
 
         /// <inheritdoc/>
+        public int Heuristic { get => _heuristic; set => _heuristic = value; }
+
+        /// <inheritdoc/>
         public PathNode Build(PathNode parentNode, Vector3d nodeDir)
         {
             _parentNode = parentNode;
             _node = parentNode;
             _node.Dir = nodeDir;
 
-            if (Math.Round(_node.StepVector.Length, _cTolerance) == 0 || 
+            if (Math.Round(_node.StepVector.Length, _cTolerance) == 0 ||
                 Math.Round(Vector3d.VectorAngle(_parentNode.Dir, _node.Dir).RadToDeg()) != 0)
             { _node.StepVector = GetStep(_node, _endPoint, _baseEndPointPlanes, Step); }
 
-            if(Math.Round(_node.StepVector.Length, _cTolerance) == 0)
+            if (Math.Round(_node.StepVector.Length, _cTolerance) == 0)
             {
                 throw new InvalidOperationException("StepVector length is less than tolerance.");
             }
 
-                _node.StepVector = _node.StepVector.Round(_tolerance);
+            _node.StepVector = _node.StepVector.Round(_tolerance);
             _node.Point += _node.StepVector;
             _node.Point = _node.Point.Round(_tolerance);
 
@@ -109,20 +111,12 @@ namespace DS.PathFinder.Algorithms.AStar
             else
             {
                 _node.ANP = _parentNode.Point;
-                if(_punishChangeDirection)
-                {
-                    //_gcost++;
-                    //_gcost += 50;
-                    //_gcost += _stepCost;
-                    //_node.G += _stepCost;
-                    //_node.G += 10 * _stepCost;
-                    //_node.G += _gcost;
-                    gValue *= _gcost;
-                }
+                if (_punishChangeDirection)
+                { gValue *= _gcost; }
             }
 
             _node.G += gValue;
-            _node.H = GetH(_node.Point, _endPoint, _mHEstimate);
+            _node.H = GetH(_node.Point, _endPoint, _heuristic * _stepCost);
             _node.F = _node.G + _node.H;
             //_node.B = _mCompactPath ? 1 * _mainLine.DistanceTo(_node.Point, true) : 0;
 
@@ -140,19 +134,7 @@ namespace DS.PathFinder.Algorithms.AStar
             Step = step; return this;
         }
 
-        public NodeBuilder NextHestimate()
-        {
-            _mHEstimate += 5 * _stepCost;
-            return this;
-        }
-
-        public NodeBuilder ResetHestimate(int initialHestimate)
-        {
-            _mHEstimate = initialHestimate * _stepCost;
-            return this;
-        }
-
-        private double GetH(Point3d point, Point3d endPoint, double mHEstimate)
+        private double GetH(Point3d point, Point3d endPoint, double _heuristic)
         {
             double h = 0;
 
@@ -160,21 +142,21 @@ namespace DS.PathFinder.Algorithms.AStar
             {
                 default:
                 case HeuristicFormula.Manhattan:
-                    h = mHEstimate * (Math.Abs(point.X - endPoint.X) + Math.Abs(point.Y - endPoint.Y) + Math.Abs(point.Z - endPoint.Z));
+                    h = _heuristic * (Math.Abs(point.X - endPoint.X) + Math.Abs(point.Y - endPoint.Y) + Math.Abs(point.Z - endPoint.Z));
                     break;
                 case HeuristicFormula.MaxDXDY:
-                    h = mHEstimate * (Math.Max(Math.Abs(point.X - endPoint.X), Math.Abs(point.Y - endPoint.Y)));
+                    h = _heuristic * (Math.Max(Math.Abs(point.X - endPoint.X), Math.Abs(point.Y - endPoint.Y)));
                     break;
                 case HeuristicFormula.Euclidean:
-                    h = (int)(mHEstimate * Math.Sqrt(
+                    h = (int)(_heuristic * Math.Sqrt(
                         Math.Pow((point.X - endPoint.X), 2) + Math.Pow((point.Y - endPoint.Y), 2) + Math.Pow((point.Z - endPoint.Z), 2))
                         );
                     break;
                 case HeuristicFormula.EuclideanNoSQR:
-                    h = (int)(mHEstimate * (Math.Pow((point.X - endPoint.X), 2) + Math.Pow((point.Y - endPoint.Y), 2)));
+                    h = (int)(_heuristic * (Math.Pow((point.X - endPoint.X), 2) + Math.Pow((point.Y - endPoint.Y), 2)));
                     break;
                 case HeuristicFormula.DiagonalShortCut:
-                    h = mHEstimate * point.DistanceTo(endPoint);
+                    h = _heuristic * point.DistanceTo(endPoint);
                     break;
             }
 
@@ -188,7 +170,7 @@ namespace DS.PathFinder.Algorithms.AStar
             Point3d intersecioinPoint = GetIntersectionPoint(node, endPoint, baseEndPointPlanes);
             if (b)
             {
-                PointVisualisator?.Show(intersecioinPoint);                
+                PointVisualisator?.Show(intersecioinPoint);
             }
 
             //get real calculation step

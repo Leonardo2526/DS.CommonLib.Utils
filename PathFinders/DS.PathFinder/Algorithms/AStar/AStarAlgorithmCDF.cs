@@ -19,7 +19,6 @@ namespace DS.PathFinder.Algorithms.AStar
     public class AStarAlgorithmCDF : IPathFindAlgorithm<Point3d>
     {
         #region Fields
-
         private readonly ITraceSettings _traceSettings;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly IRefineFactory<Point3d> _refineFactory;
@@ -71,12 +70,18 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public int CTolerance { get => _cTolerance; set => _cTolerance = value; }
 
+        /// <summary>
+        /// Tolerance coefficient to compare exist nodes.
+        /// </summary>
+        public int MToleranceCoef { get; set; }
+
+
         private double MTolerance
         {
             get => _mTolerance;
             set
             {
-                _mTolerance = value / 20;
+                _mTolerance = value / MToleranceCoef;
             }
         }
 
@@ -125,23 +130,13 @@ namespace DS.PathFinder.Algorithms.AStar
             return this;
         }
 
-        /// <summary>
-        /// Build with <paramref name="nodeBuilder"/>.
-        /// </summary>
-        /// <param name="nodeBuilder"></param>
-        /// <returns></returns>
-        public AStarAlgorithmCDF WithNodeBuilder(INodeBuilder nodeBuilder)
-        {
-            _nodeBuilder = nodeBuilder;
-            MTolerance = nodeBuilder.Step;
-            return this;
-        }
-
         /// <inheritdoc/>
         public List<Point3d> FindPath(Point3d startPoint, Point3d endPoint)
         {
             _startPoint = startPoint.Round(_tolerance);
             _endPoint = endPoint.Round(_tolerance);
+
+            MTolerance = _nodeBuilder.Step;
 
             //initiate a new search
             var parentNode = new PathNode()
@@ -168,7 +163,7 @@ namespace DS.PathFinder.Algorithms.AStar
                 }
 
                 parentNode = _mOpen.Pop();
-                PointVisualisator?.Show(parentNode.Point);
+                //PointVisualisator?.Show(parentNode.Point);
 
                 //var checkPoint = new Point3d(124.51497, 163.50836, 0);
                 //if (parentNode.Point.DistanceTo(checkPoint) < 0.001)
@@ -215,7 +210,7 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public void ResetToken()
         {
-            TokenSource = new CancellationTokenSource(5000);
+            TokenSource = new CancellationTokenSource(3000);
         }
 
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
@@ -247,16 +242,21 @@ namespace DS.PathFinder.Algorithms.AStar
                 if (foundInOpen.G != 0 || foundInClose.G != 0)
                 { return false; }
             }
+            else
+            {
+                if (foundInOpen.G != 0 && foundInClose.G < newNode.G)
+                { return false; }
+                if (foundInClose.G != 0 && foundInClose.G < newNode.G)
+                { return false; }
+            }
 
             newNode = _nodeBuilder.BuildWithParameters();
 
-            if (foundInOpen.G == 0 || foundInClose.G == 0)
-            {
-                //check collisions 
-                _collisionDetector.GetCollisions(parentNode.Point, newNode.Point);
-                if (_collisionDetector.Collisions.Count > 0)
-                { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
-            }
+            //check collisions 
+            _collisionDetector.GetCollisions(parentNode.Point, newNode.Point);
+            if (_collisionDetector.Collisions.Count > 0)
+            { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
+
 
             _mOpen.Push(newNode);
 

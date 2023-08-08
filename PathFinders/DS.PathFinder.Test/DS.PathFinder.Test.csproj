@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\DS.RevitApp.Tests\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props" Condition="Exists('..\..\..\DS.RevitApp.Tests\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -40,6 +43,18 @@
       <HintPath>..\..\..\DS.CommonLib.Utils\DS.Utils\bin\Debug\DS.PathSearch.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Rhino3dm.7.15.0\lib\net45\Rhino3dm.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.3.0.1\lib\net471\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=4.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.Sinks.Console.4.1.0\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Debug, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.Sinks.Debug.2.0.0\lib\net46\Serilog.Sinks.Debug.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,12 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FrancoGustavoFloatTest.cs" />
+    <Compile Include="DummyAlgorithmFactory.cs" />
+    <Compile Include="PathFindEnumeratorTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HeuristicEnumeratorTest.cs" />
+    <Compile Include="StepEnumeratorTest.cs" />
+    <Compile Include="TestNodeBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DS.PathFinder\DS.PathFinder.csproj">
@@ -64,4 +84,10 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\DS.RevitApp.Tests\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\DS.RevitApp.Tests\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props'))" />
+  </Target>
 </Project>

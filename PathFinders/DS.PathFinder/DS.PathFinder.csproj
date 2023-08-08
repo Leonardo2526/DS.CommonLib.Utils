@@ -48,8 +48,20 @@
       <HintPath>..\..\..\DS.CommonLib.Utils\DS.ClassLib.VarUtils\bin\Debug\DS.ClassLib.VarUtils.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rhino3dm.7.15.0\lib\net45\Rhino3dm.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.3.0.1\lib\net471\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=4.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.Sinks.Console.4.1.0\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Debug, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.Sinks.Debug.2.0.0\lib\net46\Serilog.Sinks.Debug.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,13 +76,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\AStar\ComparePFNode.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\ToleranceEnumerator.cs" />
     <Compile Include="Algorithms\AStar\Enums.cs" />
     <Compile Include="Algorithms\AStar\INodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\HeuristicEnumerator.cs" />
     <Compile Include="IAlgorithmFactory.cs" />
     <Compile Include="IPathFindIterator.cs" />
-    <Compile Include="PathFindIteratorByStep.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\PathFindEnumerator.cs" />
     <Compile Include="PriorityQueueB.cs" />
     <Compile Include="Algorithms\AStar\AStarAlgorithmCDF.cs" />
     <Compile Include="IPathFindAlgorithm.cs" />
@@ -79,6 +93,7 @@
     <Compile Include="PathFinderFactory.cs" />
     <Compile Include="PathRefineFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\StepEnumerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

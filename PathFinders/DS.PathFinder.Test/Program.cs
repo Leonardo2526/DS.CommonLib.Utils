@@ -1,5 +1,4 @@
-﻿using PathFindTest;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,10 @@ namespace ConsoleApp.PathFindTest
     {
         static void Main(string[] args)
         {
-            FrancoGustavoFloatTest.Run();
+            new PathFindEnumeratorTest();
+            //new HeuristicEnumeratorTest();
+            //new StepEnumeratorTest();
+            //FrancoGustavoFloatTest.Run();
             Console.ReadLine();
         }
     }
