@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DS.ClassLib.VarUtils.Basis;
+using System;
 using System.Windows.Media.Media3D;
 
 namespace DS.ClassLib.VarUtils.Points
@@ -6,7 +7,7 @@ namespace DS.ClassLib.VarUtils.Points
     /// <summary>
     /// An object that represents orthonormal basis of unit vectors.
     /// </summary>
-    public readonly struct OrthoNormBasis : IBasis
+    public readonly struct OrthoNormBasis : IBasis3D
     {
         private readonly int _tolerance = 5;
 
