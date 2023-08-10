@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils;
+using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Points;
 using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
@@ -27,15 +28,17 @@ namespace DS.PathFinder.Algorithms.AStar
         private double _gcost = 200;
         private PathNode _node;
         private PathNode _parentNode;
+        private readonly IPoint3dConverter _pointConverter;
 
         /// <summary>
         /// Instansiate an object to build for <see cref="PathNode"/>.
         /// </summary>
         public NodeBuilder(HeuristicFormula mFormula, Point3d startPoint, Point3d endPoint, double step,
-            List<Vector3d> orths, bool mCompactPath = false, bool punishChangeDirection = false)
+            List<Vector3d> orths, IPoint3dConverter pointConverter, bool mCompactPath = false, bool punishChangeDirection = false)
         {
             _mCompactPath = mCompactPath;
             _punishChangeDirection = punishChangeDirection;
+            _pointConverter = pointConverter;
             _mFormula = mFormula;
             _startPoint = startPoint;
             _endPoint = endPoint;
@@ -120,6 +123,9 @@ namespace DS.PathFinder.Algorithms.AStar
             _node.F = _node.G + _node.H;
             //_node.B = _mCompactPath ? 1 * _mainLine.DistanceTo(_node.Point, true) : 0;
 
+            var basis = _parentNode.Basis.GetBasis(_node.Dir);
+            basis.Origin = _node.Point;
+            _node.Basis = basis;
 
             return _node;
         }

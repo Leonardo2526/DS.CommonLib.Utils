@@ -1,4 +1,6 @@
-﻿namespace DS.ClassLib.VarUtils
+﻿using DS.ClassLib.VarUtils.Basis;
+
+namespace DS.ClassLib.VarUtils
 {
     public interface IVisualisator
     {
@@ -35,5 +37,11 @@
         /// <param name="origin"></param>
         /// <param name="direction"></param>
         public void ShowVectorByDirection(T origin, T direction);
+
+        /// <summary>
+        /// Show basis.
+        /// </summary>
+        /// <param name="basis"></param>
+        public void Show(Basis3d basis);
     }
 }

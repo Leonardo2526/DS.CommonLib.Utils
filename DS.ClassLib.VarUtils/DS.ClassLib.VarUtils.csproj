@@ -68,7 +68,6 @@
     <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
     <Compile Include="Collisons\PointCollision.cs" />
-    <Compile Include="Collisons\PointCollisionDetector.cs" />
     <Compile Include="ConsoleMapDrawer.cs" />
     <Compile Include="Enumerables\AngleEnumerable.cs" />
     <Compile Include="Enumerables\PlaneEnumerable.cs" />

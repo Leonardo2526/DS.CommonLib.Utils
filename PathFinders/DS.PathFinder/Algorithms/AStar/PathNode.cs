@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using DS.ClassLib.VarUtils.Basis;
+using Rhino.Geometry;
 using System;
 
 namespace DS.PathFinder.Algorithms.AStar
@@ -47,6 +48,11 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <see cref="Vector3d"/> that specifies relative position of <see cref="Point"/> with respect to <see cref="Parent"/> point.
         /// </summary>
         public Vector3d StepVector { get; set; }
+
+        /// <summary>
+        /// Basis at <see cref="Point"/> of node.
+        /// </summary>
+        public Basis3d Basis { get; set; }
 
         /// <summary>
         /// 

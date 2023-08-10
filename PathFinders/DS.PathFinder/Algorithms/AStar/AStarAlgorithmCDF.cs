@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils;
+using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Directions;
 using DS.ClassLib.VarUtils.Enumerables;
@@ -115,6 +116,11 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public Point3d EndANP { get; set; }
 
+        /// <summary>
+        /// Source basis.
+        /// </summary>
+        public Basis3d SourceBasis { get; set; }
+
         #endregion
 
 
@@ -144,7 +150,8 @@ namespace DS.PathFinder.Algorithms.AStar
                 Point = startPoint,
                 Parent = startPoint,
                 Dir = StartDirection,
-                ANP = StartANP
+                ANP = StartANP, 
+                Basis = SourceBasis
             };
             bool found = false;
             _mOpen.Clear();
@@ -253,10 +260,11 @@ namespace DS.PathFinder.Algorithms.AStar
             newNode = _nodeBuilder.BuildWithParameters();
 
             //check collisions 
-            _collisionDetector.GetCollisions(parentNode.Point, newNode.Point);
+            _collisionDetector.GetCollisions(parentNode.Point, newNode.Point, newNode.Basis);
             if (_collisionDetector.Collisions.Count > 0)
             { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
 
+            //PointVisualisator?.Show(newNode.Basis);
             //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             _mOpen.Push(newNode);
 

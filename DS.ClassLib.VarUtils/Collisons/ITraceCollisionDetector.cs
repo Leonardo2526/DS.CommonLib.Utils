@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using DS.ClassLib.VarUtils.Basis;
+using Rhino.Geometry;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
@@ -14,11 +15,12 @@ namespace DS.ClassLib.VarUtils.Collisions
         /// </summary>
         /// <param name="point1"></param>
         /// <param name="point2"></param>
+        /// <param name="basis"></param>
         /// <returns>Collisions between points.
         /// <para>
         /// Returns empty list if no collisions was detected.
         /// </para>
         /// </returns>
-        List<ICollision> GetCollisions(T point1, T point2);
+        List<ICollision> GetCollisions(T point1, T point2, Basis3d basis);
     }
 }
