@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basis\BasisExtensions.cs" />
+    <Compile Include="Basis\IBasis3D.cs" />
     <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
     <Compile Include="Collisons\PointCollision.cs" />
@@ -90,9 +92,10 @@
     <Compile Include="Iterator.cs" />
     <Compile Include="Collisons\ITraceCollisionDetector.cs" />
     <Compile Include="IVisualisator.cs" />
-    <Compile Include="Points\IBasis.cs" />
-    <Compile Include="Points\OrthoBasis.cs" />
-    <Compile Include="Points\OrthoNormBasis.cs" />
+    <Compile Include="Basis\Basis3d.cs" />
+    <Compile Include="Basis\IBasis.cs" />
+    <Compile Include="Basis\OrthoBasis.cs" />
+    <Compile Include="Basis\OrthoNormBasis.cs" />
     <Compile Include="Points\NPoint3D.cs" />
     <Compile Include="Points\Point3dConverter.cs" />
     <Compile Include="Points\VectorPointConverter.cs" />

@@ -21,5 +21,19 @@
         /// </summary>
         /// <param name="point"></param>
         public void Show(T point);
+
+        /// <summary>
+        /// Show vector between <paramref name="point1"/> and <paramref name="point2"/>.   
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// </summary>
+        public void ShowVector(T point1, T point2);
+
+        /// <summary>
+        /// Show vector from <paramref name="origin"/> by <paramref name="direction"/>.
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="direction"></param>
+        public void ShowVectorByDirection(T origin, T direction);
     }
 }

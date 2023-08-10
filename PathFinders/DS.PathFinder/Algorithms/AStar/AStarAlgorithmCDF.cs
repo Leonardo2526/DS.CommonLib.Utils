@@ -257,7 +257,7 @@ namespace DS.PathFinder.Algorithms.AStar
             if (_collisionDetector.Collisions.Count > 0)
             { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
 
-
+            //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             _mOpen.Push(newNode);
 
             return true;
