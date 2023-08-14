@@ -32,11 +32,12 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         /// </summary>
         /// <param name="algorithmFactory"></param>
         /// <param name="inverse"></param>
-        public ToleranceEnumerator(IAlgorithmFactory algorithmFactory, bool inverse = false)
+        /// <param name="isIterationAvailable"></param>
+        public ToleranceEnumerator(IAlgorithmFactory algorithmFactory, bool inverse = false, bool isIterationAvailable = true)
         {
             _algorithmFactory = algorithmFactory;
-            
-            var count = (int)Math.Floor((double)(_max - _min) / _stepWeight);
+
+            var count = isIterationAvailable ? (int)Math.Floor((double)(_max - _min) / _stepWeight) : 1;
             for (int i = 0; i <= count; i++)
             {
                 if (inverse) 

@@ -10,6 +10,11 @@ namespace DS.PathFinder
     public interface IPathFindAlgorithm<T, P>
     {
         /// <summary>
+        /// Token to cancel finding path operation.
+        /// </summary>
+        public CancellationTokenSource ExternalTokenSource { get; set; }
+
+        /// <summary>
         /// Find path between <paramref name="startPoint"/> and <paramref name="endPoint"/>.
         /// </summary>
         /// <param name="startPoint"></param>

@@ -13,6 +13,11 @@ namespace DS.ClassLib.VarUtils
         double A { get; set; }
 
         /// <summary>
+        /// Elbow radius.
+        /// </summary>
+        double R { get; set; }
+
+        /// <summary>
         /// Distance between elements.
         /// </summary>
         double B { get; set; }
@@ -41,5 +46,10 @@ namespace DS.ClassLib.VarUtils
         /// Available elbows angles.
         /// </summary>
         public List<int> AList { get; }
+
+        /// <summary>
+        /// PathFind step
+        /// </summary>
+        double Step { get; set; }
     }
 }

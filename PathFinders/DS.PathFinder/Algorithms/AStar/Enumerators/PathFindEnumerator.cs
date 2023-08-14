@@ -40,6 +40,11 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         /// <inheritdoc/>
         public List<Point3d> Current => _path;
 
+        /// <summary>
+        /// Outer token.
+        /// </summary>
+        public CancellationTokenSource TokenSource { get; set; }
+
         /// <inheritdoc/>
         public void Dispose()
         {
@@ -56,16 +61,19 @@ namespace DS.PathFinder.Algorithms.Enumeratos
                 Log.Information("Path was found! Length is " + _path.Count);
                 Log.Information($"Step is {(double)_stepEnumerator.Current} mm.");
                 Log.Information($"Heuristic is {(int)_heuristicEnumerator.Current} %.");
+                Log.Information($"Tolerance is {(int)_toleranceEnumerator.Current}");
                 TotalTimeOutput();
                 return false;
             }
 
             if (_totalTokenSource is not null && _totalTokenSource.Token.IsCancellationRequested)
             { Log.Information("Path search iteration time is up."); return false; }
+            if (TokenSource is not null && TokenSource.Token.IsCancellationRequested)
+            { Log.Information("Path search iteration time is up."); return false; }
 
             if (!_heuristicEnumerator.MoveNext())
             {
-                if(!_toleranceEnumerator.MoveNext())
+                if (!_toleranceEnumerator.MoveNext())
                 {
                     if (!_stepEnumerator.MoveNext())
                     {

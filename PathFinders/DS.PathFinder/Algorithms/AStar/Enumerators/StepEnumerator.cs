@@ -19,7 +19,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         private readonly List<double> _steps = new List<double>();
 
         private double _minStep = 50;
-        private double _maxStep = 1000;
+        private double _maxStep;
         private int _count = 5;
         private int _index = -1;
 
@@ -35,9 +35,11 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         /// </summary>
         /// <param name="nodeBuilder"></param>
         /// <param name="maxModelStep"></param>
+        /// <param name="maxStep"></param>
         /// <param name="inverse"></param>
-        public StepEnumerator(INodeBuilder nodeBuilder, double maxModelStep, bool inverse = false)
+        public StepEnumerator(INodeBuilder nodeBuilder, double maxModelStep, double maxStep, bool inverse = false)
         {
+            _maxStep = maxStep;
             _maxStep = _maxStep > maxModelStep ? maxModelStep : _maxStep;
             _maxStep = Math.Round(_maxStep, _tolerance);
             _indexWeight = _count == 0 ? _maxStep : (_maxStep - _minStep) / _count;
