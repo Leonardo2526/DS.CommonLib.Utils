@@ -22,5 +22,8 @@ namespace DS.ClassLib.VarUtils.Collisions
         /// </para>
         /// </returns>
         List<ICollision> GetCollisions(T point1, T point2, Basis3d basis);
+
+        List<ICollision> GetFirstCollisions(T point2, Basis3d basis);
+        List<ICollision> GetLastCollisions(T point1, Basis3d basis);
     }
 }

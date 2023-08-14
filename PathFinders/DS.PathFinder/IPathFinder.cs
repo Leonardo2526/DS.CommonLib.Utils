@@ -6,12 +6,12 @@ namespace DS.PathFinder
     /// <summary>
     /// The interface is used to find path between <typeparamref name="T"/> points.
     /// </summary>
-    public interface IPathFinder<T>
+    public interface IPathFinder<T, P>
     {
         /// <summary>
         /// Path coordinates.
         /// </summary>
-        List<T> Path { get; }
+        List<P> Path { get; }
 
         /// <summary>
         /// Find path between <paramref name="startPoint"/> and <paramref name="endPoint"/>.
@@ -21,7 +21,7 @@ namespace DS.PathFinder
         /// <returns>
         /// Path coordinates.
         /// </returns>
-        List<T> FindPath(T startPoint, T endPoint);
+        List<P> FindPath(T startPoint, T endPoint);
 
         /// <summary>
         /// Find path between <paramref name="startPoint"/> and <paramref name="endPoint"/> asyncrounously.
@@ -31,6 +31,6 @@ namespace DS.PathFinder
         /// <returns>
         /// Path coordinates.
         /// </returns>
-        Task<List<T>> FindPathAsync(T startPoint, T endPoint);
+        Task<List<P>> FindPathAsync(T startPoint, T endPoint);
     }
 }

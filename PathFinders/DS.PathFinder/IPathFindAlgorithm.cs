@@ -7,7 +7,7 @@ namespace DS.PathFinder
     /// <summary>
     /// An object that represents algorithm to find path between <typeparamref name="T"/> points.
     /// </summary>
-    public interface IPathFindAlgorithm<T>
+    public interface IPathFindAlgorithm<T, P>
     {
         /// <summary>
         /// Find path between <paramref name="startPoint"/> and <paramref name="endPoint"/>.
@@ -17,6 +17,6 @@ namespace DS.PathFinder
         /// <returns>
         /// Path coordinates.
         /// </returns>
-        List<T> FindPath(T startPoint, T endPoint);
+        List<P> FindPath(T startPoint, T endPoint);
     }
 }

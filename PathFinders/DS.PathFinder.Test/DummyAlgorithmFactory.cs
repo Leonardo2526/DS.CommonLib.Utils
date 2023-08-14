@@ -10,7 +10,7 @@ namespace ConsoleApp.PathFindTest
 {
     internal class DummyAlgorithmFactory : IAlgorithmFactory
     {
-        public IPathFindAlgorithm<Point3d> Algorithm { get; set; }
+        public IPathFindAlgorithm<Point3d, Point3d> Algorithm { get; set; }
 
         public List<Point3d> FindPath()
         {

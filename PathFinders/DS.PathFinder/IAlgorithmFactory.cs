@@ -12,7 +12,7 @@ namespace DS.PathFinder
         /// <summary>
         /// Created algorithm.
         /// </summary>
-        public IPathFindAlgorithm<Point3d> Algorithm { get; }
+        public IPathFindAlgorithm<Point3d, Point3d> Algorithm { get; }
 
         /// <summary>
         /// Update <see cref="Algorithm"/> with new tolerance.

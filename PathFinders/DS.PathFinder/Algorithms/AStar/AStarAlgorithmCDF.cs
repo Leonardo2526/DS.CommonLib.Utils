@@ -17,7 +17,7 @@ namespace DS.PathFinder.Algorithms.AStar
     /// <summary>
     /// An algorithm to find path between <see cref="Point3d"/> points in continuous data field.
     /// </summary>
-    public class AStarAlgorithmCDF : IPathFindAlgorithm<Point3d>
+    public class AStarAlgorithmCDF : IPathFindAlgorithm<Point3d, Point3d>
     {
         #region Fields
         private readonly ITraceSettings _traceSettings;
@@ -150,7 +150,7 @@ namespace DS.PathFinder.Algorithms.AStar
                 Point = startPoint,
                 Parent = startPoint,
                 Dir = StartDirection,
-                ANP = StartANP, 
+                ANP = StartANP,
                 Basis = SourceBasis
             };
             bool found = false;
@@ -223,13 +223,16 @@ namespace DS.PathFinder.Algorithms.AStar
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
         {
             var newNode = _nodeBuilder.Build(parentNode, nodeDir);
+            //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             //PointVisualisator?.Show(newNode.Point);
             if (newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound))
             {
                 return false;
             }
 
-            if (newNode.Point.Round(_cTolerance) == _endPoint.Round(_cTolerance) && EndDirection.Length != 0)
+            bool endNode = newNode.Point.Round(_cTolerance) == _endPoint.Round(_cTolerance);
+
+            if (endNode && EndDirection.Length != 0)
             {
                 var endAngle =
                         (int)Math.Round(Vector3d.VectorAngle(EndDirection, nodeDir).RadToDeg());
@@ -251,21 +254,29 @@ namespace DS.PathFinder.Algorithms.AStar
             }
             else
             {
-                if (foundInOpen.G != 0 && foundInClose.G < newNode.G)
-                { return false; }
-                if (foundInClose.G != 0 && foundInClose.G < newNode.G)
-                { return false; }
+                if (!endNode)
+                {
+                    if (foundInOpen.G != 0 && foundInOpen.G < newNode.G)
+                    { return false; }
+                    if (foundInClose.G != 0 && foundInClose.G < newNode.G)
+                    { return false; }
+                }
             }
 
             newNode = _nodeBuilder.BuildWithParameters();
 
             //check collisions 
-            _collisionDetector.GetCollisions(parentNode.Point, newNode.Point, newNode.Basis);
+            if (_mOpen.Count == 0 && _mClose.Count == 0)
+            { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }
+            else if (endNode)
+            { _collisionDetector.GetLastCollisions(parentNode.Point, newNode.Basis); }
+            else
+            { _collisionDetector.GetCollisions(parentNode.Point, newNode.Point, newNode.Basis); }
+            //_collisionDetector.GetCollisions(parentNode.Point, newNode.Point, newNode.Basis);
             if (_collisionDetector.Collisions.Count > 0)
             { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
 
             //PointVisualisator?.Show(newNode.Basis);
-            //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             _mOpen.Push(newNode);
 
             return true;
