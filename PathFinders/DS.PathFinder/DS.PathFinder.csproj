@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props" Condition="Exists('..\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>DS.PathFinder</RootNamespace>
+    <AssemblyName>DS.PathFinder</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\DS.PathFinder.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DS.ClassLib.VarUtils, Version=2.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DS.CommonLib.Utils\DS.ClassLib.VarUtils\bin\Debug\DS.ClassLib.VarUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2020\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rhino3dm.7.15.0\lib\net45\Rhino3dm.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.3.0.1\lib\net471\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=4.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.Sinks.Console.4.1.0\lib\net45\Serilog.Sinks.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Debug, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DS.RevitApp.Tests\packages\Serilog.Sinks.Debug.2.0.0\lib\net46\Serilog.Sinks.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithms\AStar\ComparePFNode.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\ToleranceEnumerator.cs" />
+    <Compile Include="Algorithms\AStar\Enums.cs" />
+    <Compile Include="Algorithms\AStar\INodeBuilder.cs" />
+    <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
+    <Compile Include="Algorithms\AStar\PathNode.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\HeuristicEnumerator.cs" />
+    <Compile Include="IAlgorithmFactory.cs" />
+    <Compile Include="IPathFindIterator.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\PathFindEnumerator.cs" />
+    <Compile Include="PriorityQueueB.cs" />
+    <Compile Include="Algorithms\AStar\AStarAlgorithmCDF.cs" />
+    <Compile Include="IPathFindAlgorithm.cs" />
+    <Compile Include="IPathFinder.cs" />
+    <Compile Include="IRefineFactory.cs" />
+    <Compile Include="PathFinderFactory.cs" />
+    <Compile Include="PathRefineFactory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Algorithms\AStar\Enumerators\StepEnumerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Rhino3dm.7.15.0\build\net45\Rhino3dm.props'))" />
+  </Target>
+</Project>
