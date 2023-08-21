@@ -297,6 +297,9 @@ namespace DS.PathFinder.Algorithms.AStar
             if (_collisionDetector.Collisions.Count > 0)
             { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
 
+            //add punishment to nodes throught traversable walls.
+            newNode.F += _collisionDetector.Punishment * newNode.StepVector.Length;
+
             //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             //PointVisualisator?.Show(newNode.Basis);
             _mOpen.Push(newNode);

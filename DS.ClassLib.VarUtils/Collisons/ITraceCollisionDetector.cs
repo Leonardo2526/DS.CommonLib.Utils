@@ -10,6 +10,8 @@ namespace DS.ClassLib.VarUtils.Collisions
     /// </summary>
     public interface ITraceCollisionDetector<T> : ICollisionDetector<object, object>
     {
+        int Punishment { get; set; }
+
         /// <summary>      
         /// Get collisions between points.
         /// </summary>
