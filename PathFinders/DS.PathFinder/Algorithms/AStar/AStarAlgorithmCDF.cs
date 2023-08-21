@@ -1,4 +1,5 @@
-﻿using DS.ClassLib.VarUtils;
+﻿using Autodesk.Revit.DB;
+using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Directions;
@@ -157,9 +158,12 @@ namespace DS.PathFinder.Algorithms.AStar
                 Basis = SourceBasis
             };
             bool found = false;
+            bool start = true;
             _mOpen.Clear();
             _mClose.Clear();
             _mOpen.Push(parentNode);
+
+            double minDistToANP = _traceSettings.R + _traceSettings.D;
 
             //iterate over open list.
             while (_mOpen.Count > 0)
@@ -202,12 +206,14 @@ namespace DS.PathFinder.Algorithms.AStar
                     }
                     _dirIterator.Reset();
                 }
-                Action pushNode = parentNode.ANP == default || distToANP >= _traceSettings.F ?
+                Action pushNode = parentNode.ANP == default || distToANP >= minDistToANP ?
              pushNodeWithIterator : pushNodeWithParent;
 
                 //get and add nodes (successors)
                 pushNode.Invoke();
                 _mClose.Add(parentNode);
+
+                if(start) { start = false; minDistToANP = _traceSettings.F; }
             }
 
             Debug.WriteLine("Close nodes count: " + _mClose.Count);
@@ -246,7 +252,7 @@ namespace DS.PathFinder.Algorithms.AStar
                     && _traceSettings.A != -endAngle)
                 // && !_traceSettings.AList.Contains(endAngle)
                 //&& !_traceSettings.AList.Contains(-endAngle))
-                { return false; }              
+                { return false; }
                 else if (EndANP != default && newNode.Point.DistanceTo(EndANP) < _traceSettings.R + _traceSettings.D)
                 { return false; }
             }
@@ -272,8 +278,13 @@ namespace DS.PathFinder.Algorithms.AStar
 
             newNode = _nodeBuilder.BuildWithParameters();
 
-             if (endNode && newNode.ANP.DistanceTo(_endPoint) < _traceSettings.R + _traceSettings.D)
-            { return false; }
+            if (endNode)
+            {
+                var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 ?
+                    _traceSettings.R + _traceSettings.D : _traceSettings.F;
+                if (newNode.ANP.DistanceTo(_endPoint) < minDist)
+                { return false; }
+            }
 
             //check collisions 
             if (_mOpen.Count == 0 && _mClose.Count == 0)
