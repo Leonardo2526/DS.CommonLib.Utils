@@ -19,7 +19,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         private int _max = 10;
         private int _stepWeight = 8;
         private readonly List<int> _tolerances = new List<int>();
-        private readonly IAlgorithmFactory _algorithmFactory;
+        private readonly IToleranceUpdater _toleranceUpdater;
 
         /// <summary>
         /// Instansiate enummerator to iterate through heuristic.
@@ -33,9 +33,9 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         /// <param name="algorithmFactory"></param>
         /// <param name="inverse"></param>
         /// <param name="isIterationAvailable"></param>
-        public ToleranceEnumerator(IAlgorithmFactory algorithmFactory, bool inverse = false, bool isIterationAvailable = true)
+        public ToleranceEnumerator(IToleranceUpdater toleranceUpdater, bool inverse = false, bool isIterationAvailable = true)
         {
-            _algorithmFactory = algorithmFactory;
+            _toleranceUpdater = toleranceUpdater;
 
             var count = isIterationAvailable ? (int)Math.Floor((double)(_max - _min) / _stepWeight) : 1;
             for (int i = 0; i <= count; i++)
@@ -75,7 +75,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
             if (_index < _tolerances.Count - 1)
             {
                 _index++;
-                _algorithmFactory.Update(Current);
+                _toleranceUpdater.Update(Current);
                 Log.Information($"Start pathFinding with tolerance coef {Current}.");
                 return true;
             }
@@ -86,7 +86,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         public void Reset()
         {
             _index = 0;
-            _algorithmFactory.Update(_tolerances.FirstOrDefault());
+            _toleranceUpdater.Update(_tolerances.FirstOrDefault());
             Log.Information("Tolerance coef is set to default value " + _tolerances.FirstOrDefault()); 
         }
     }

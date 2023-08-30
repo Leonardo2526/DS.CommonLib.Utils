@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.DB;
-using DS.ClassLib.VarUtils;
+﻿using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Directions;
@@ -60,6 +59,10 @@ namespace DS.PathFinder.Algorithms.AStar
             _dirIterator = dirIterator;
             _collisionDetector = collisionDetector;
             _refineFactory = refineFactory;
+        }
+
+        public AStarAlgorithmCDF()
+        {
         }
 
         #region Properties
