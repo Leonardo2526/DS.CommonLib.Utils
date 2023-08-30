@@ -62,6 +62,10 @@ namespace DS.PathFinder.Algorithms.AStar
             _refineFactory = refineFactory;
         }
 
+        public AStarAlgorithmCDF()
+        {
+        }
+
         #region Properties
 
         /// <summary>

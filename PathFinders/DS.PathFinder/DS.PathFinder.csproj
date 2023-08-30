@@ -82,9 +82,10 @@
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\HeuristicEnumerator.cs" />
-    <Compile Include="IAlgorithmFactory.cs" />
+    <Compile Include="IAlgorithmBuilder.cs" />
     <Compile Include="IPathFindIterator.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\PathFindEnumerator.cs" />
+    <Compile Include="IToleranceUpdater.cs" />
     <Compile Include="PriorityQueueB.cs" />
     <Compile Include="Algorithms\AStar\AStarAlgorithmCDF.cs" />
     <Compile Include="IPathFindAlgorithm.cs" />
