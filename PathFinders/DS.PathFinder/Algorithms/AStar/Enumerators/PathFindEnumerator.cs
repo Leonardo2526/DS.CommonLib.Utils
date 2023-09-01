@@ -16,7 +16,9 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         private readonly IEnumerator _stepEnumerator;
         private readonly IEnumerator _heuristicEnumerator;
         private readonly IEnumerator<int> _toleranceEnumerator;
-        private readonly IAlgorithmFactory _algorithmFactory;
+        private readonly IPathFindAlgorithm<Point3d, Point3d> _algorithm;
+        private readonly Point3d _startPoint;
+        private readonly Point3d _endPoint;
         private int _index;
         private CancellationTokenSource _totalTokenSource;
         private DateTime _totalTime1;
@@ -25,13 +27,18 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         /// <summary>
         /// Instansiate enumerator to iterate through path find values.
         /// </summary>
-        public PathFindEnumerator(IEnumerator stepEnumerator, IEnumerator heuristicEnumerator, IEnumerator<int> toleranceEnumerator,
-            IAlgorithmFactory algorithmFactory)
+        public PathFindEnumerator(IEnumerator stepEnumerator, 
+            IEnumerator heuristicEnumerator, 
+            IEnumerator<int> toleranceEnumerator,
+            IPathFindAlgorithm<Point3d, Point3d> algorithmFactory, 
+            Point3d startPoint, Point3d endPoint)
         {
             _stepEnumerator = stepEnumerator;
             _heuristicEnumerator = heuristicEnumerator;
             _toleranceEnumerator = toleranceEnumerator;
-            _algorithmFactory = algorithmFactory;
+            _algorithm = algorithmFactory;
+            _startPoint = startPoint;
+            _endPoint = endPoint;
             Reset();
         }
 
@@ -87,7 +94,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
             }
 
             DateTime stepDate1 = DateTime.Now;
-            _path = _algorithmFactory.FindPath() ?? _path;
+            _path = _algorithm.FindPath(_startPoint, _endPoint) ?? _path;
             DateTime stepDate2 = DateTime.Now;
 
             TimeSpan interval = stepDate2 - stepDate1;

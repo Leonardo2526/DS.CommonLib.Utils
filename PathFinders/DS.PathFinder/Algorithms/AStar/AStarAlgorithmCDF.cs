@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.DB;
-using DS.ClassLib.VarUtils;
+﻿using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Directions;
@@ -60,6 +59,10 @@ namespace DS.PathFinder.Algorithms.AStar
             _dirIterator = dirIterator;
             _collisionDetector = collisionDetector;
             _refineFactory = refineFactory;
+        }
+
+        public AStarAlgorithmCDF()
+        {
         }
 
         #region Properties
@@ -296,6 +299,9 @@ namespace DS.PathFinder.Algorithms.AStar
             //_collisionDetector.GetCollisions(parentNode.Point, newNode.Point, newNode.Basis);
             if (_collisionDetector.Collisions.Count > 0)
             { _unpassablePoints.Add(newNode.Point); return false; } //unpassable point
+
+            //add punishment to nodes throught traversable walls.
+            newNode.F += _collisionDetector.Punishment * newNode.StepVector.Length;
 
             //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             //PointVisualisator?.Show(newNode.Basis);
