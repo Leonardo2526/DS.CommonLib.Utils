@@ -15,7 +15,19 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            new EnumeratorTest();
+            var test = new GraphTest();
+
+            Console.WriteLine("Links");
+            var graph = test.RunNodesTest();
+
+            Console.WriteLine("\nNodes");
+            graph = test.RunLinksTest(graph.Links);
+            _ = graph.Links;
+            _ = graph.Nodes;
+
+            _ = graph.Nodes;
+            _ = graph.Links;
+
             //GetFractionTest.Run();
             Console.ReadLine();
         }
