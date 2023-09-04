@@ -1,5 +1,6 @@
 ﻿using DS.ClassLib.FileSystemUtils;
 using DS.ClassLib.VarUtils;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,19 +16,16 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            var test = new GraphTest();
+            var points = new List<Point3d>()
+            {
+                new Point3d(0, 0, 0),
+                new Point3d(1, 0, 0),
+                new Point3d(2, 1, 0),
+                new Point3d(3, 0, 0),
+            };
 
-            Console.WriteLine("Links");
-            var graph = test.RunNodesTest();
-
-            Console.WriteLine("\nNodes");
-            graph = test.RunLinksTest(graph.Links);
-            _ = graph.Links;
-            _ = graph.Nodes;
-
-            _ = graph.Nodes;
-            _ = graph.Links;
-
+            var plane = new Plane(points[0], points[1], points[2]);
+            Console.WriteLine(plane.IsValid);
             //GetFractionTest.Run();
             Console.ReadLine();
         }

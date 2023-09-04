@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils;
+using DS.ClassLib.VarUtils.Graphs;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace DS.ConsoleApp.Test
 {
     internal class GraphTest
     {
-        public Graph RunNodesTest()
+        public TraceGraph RunNodesTest()
         {
             //var nodes = new List<Point3d>()
             //{
@@ -34,7 +35,7 @@ namespace DS.ConsoleApp.Test
                 new Point3d(3,0,0),
             };
 
-            var graph = new Graph(nodes);
+            var graph = new TraceGraph(nodes);
             foreach (var link in graph.Links)
             {
                 Console.WriteLine(link.ToString());
@@ -43,9 +44,9 @@ namespace DS.ConsoleApp.Test
             return graph;
         }
 
-        public Graph RunLinksTest(List<Line> links)
+        public TraceGraph RunLinksTest(List<Line> links)
         {
-            var graph = new Graph(links);
+            var graph = new TraceGraph(links);
             foreach (var node in graph.Nodes)
             {
                 Console.WriteLine(node.ToString());

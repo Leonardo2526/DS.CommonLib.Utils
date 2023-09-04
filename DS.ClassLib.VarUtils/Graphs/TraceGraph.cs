@@ -2,22 +2,22 @@
 using System;
 using System.Collections.Generic;
 
-namespace DS.ClassLib.VarUtils
+namespace DS.ClassLib.VarUtils.Graphs
 {
     /// <summary>
-    /// An object that represents graph.
+    /// An object that represents trace graph to get from first point to last.
     /// </summary>
-    public class Graph
+    public class TraceGraph : IGraph
     {
         private static readonly int _tolerance = 5;
         private List<Point3d> _nodes;
         private List<Line> _links;
 
         /// <summary>
-        /// Instansiate an object that represents graph.
+        /// Instansiate an object that represents trace graph to get from first point to last.
         /// </summary>
         /// <param name="nodes"></param>
-        public Graph(List<Point3d> nodes)
+        public TraceGraph(List<Point3d> nodes)
         {
             _nodes = nodes;
         }
@@ -26,19 +26,15 @@ namespace DS.ClassLib.VarUtils
         /// Instansiate an object that represents graph.
         /// </summary>
         /// <param name="links"></param>
-        public Graph(List<Line> links)
+        public TraceGraph(List<Line> links)
         {
             _links = links;
         }
 
-        /// <summary>
-        /// Nodes.
-        /// </summary>
+        /// <inheritdoc/>
         public List<Point3d> Nodes => _nodes ??= _nodes = GetNodes(_links);
 
-        /// <summary>
-        /// Links
-        /// </summary>
+        /// <inheritdoc/>
         public List<Line> Links => _links ??= _links = GetLinks(_nodes);
 
         private List<Line> GetLinks(List<Point3d> nodes)
