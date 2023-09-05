@@ -5,19 +5,19 @@ using System.Collections.Generic;
 namespace DS.ClassLib.VarUtils.Graphs
 {
     /// <summary>
-    /// An object that represents trace graph to get from first point to last.
+    /// An object that represents a simple graph.
     /// </summary>
-    public class TraceGraph : IGraph
+    public class SimpleGraph : IGraph
     {
         private static readonly int _tolerance = 5;
         private List<Point3d> _nodes;
         private List<Line> _links;
 
         /// <summary>
-        /// Instansiate an object that represents trace graph to get from first point to last.
+        /// Instansiate an object that represents a simple graph.
         /// </summary>
         /// <param name="nodes"></param>
-        public TraceGraph(List<Point3d> nodes)
+        public SimpleGraph(List<Point3d> nodes)
         {
             _nodes = nodes;
         }
@@ -26,7 +26,7 @@ namespace DS.ClassLib.VarUtils.Graphs
         /// Instansiate an object that represents graph.
         /// </summary>
         /// <param name="links"></param>
-        public TraceGraph(List<Line> links)
+        public SimpleGraph(List<Line> links)
         {
             _links = links;
         }

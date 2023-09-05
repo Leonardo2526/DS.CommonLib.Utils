@@ -31,37 +31,44 @@ namespace DS.ClassLib.VarUtils.Graphs
 
             var at = 3.DegToRad();
             var origin = graph.Nodes[0];
-            var xLink = new Line(graph.Nodes[1], origin);
+            var xLink = new Line(origin, graph.Nodes[1]);
             var xDirection = xLink.Direction;
 
             for (int i = 1; i < graph.Nodes.Count; i++)
             {
                 var n = graph.Nodes[i];
-                var yDirection = new Line(n, origin).Direction;
+                var yDirection = new Line(origin, n).Direction;
                 if (xDirection.IsParallelTo(yDirection, at) == 0)
                 {
                     var plane = new Plane(origin, xDirection, yDirection);
-                    if (plane.IsValid && planes.Exists(p => p.Normal.IsParallelTo(plane.Normal, at) == 0))
-                    { planes.Add(plane); }
+                    if (plane.IsValid)
+                    {
+                        if (planes.Count == 0 || planes.Exists(p => p.Normal.IsParallelTo(plane.Normal, at) == 0))
+                        { planes.Add(plane); }
+                    }
                 }
             }
 
             return planes;
         }
+
         /// <summary>
-        /// Specifies if all <paramref name="graph"/> nodes are coplanar.
+        /// Specifies if all <paramref name="graph"/>'s nodes are at same <see cref="Plane"/>.
         /// </summary>
         /// <param name="graph"></param>
+        /// <param name="plane"></param>
         /// <returns>
-        /// <see langword="true"/> if all <paramref name="graph"/> nodes are in the same plane.
+        /// <see langword="true"/> if all <paramref name="graph"/>'s nodes are at the same <see cref="Plane"/>.
         /// <para>
         /// Otherwise returns <see langword="false"/>.
         /// </para>
         /// </returns>
-        public static bool IsCoplanar(this IGraph graph)
+        public static bool IsPlane(this IGraph graph, out Plane plane)
         {
-            var planesCount = graph.GetPlanes().Count;
-            return planesCount == 0 || planesCount == 1;
+            var planes = graph.GetPlanes();
+            plane = planes.FirstOrDefault();
+            return planes.Count == 0 || planes.Count == 1;
         }
+
     }
 }

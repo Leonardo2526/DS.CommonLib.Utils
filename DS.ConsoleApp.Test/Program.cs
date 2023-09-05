@@ -1,6 +1,8 @@
 ﻿using DS.ClassLib.FileSystemUtils;
 using DS.ClassLib.VarUtils;
+using DS.ClassLib.VarUtils.Graphs;
 using Rhino.Geometry;
+using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,29 +18,27 @@ namespace DS.ConsoleApp.Test
         [STAThread]
         static void Main(string[] args)
         {
-            var points = new List<Point3d>()
-            {
-                new Point3d(0, 0, 0),
-                new Point3d(1, 0, 0),
-                new Point3d(2, 1, 0),
-                new Point3d(3, 0, 0),
-            };
+            var test = new GraphTest();
 
-            var plane = new Plane(points[0], points[1], points[2]);
-            Console.WriteLine(plane.IsValid);
-            //GetFractionTest.Run();
+            SimpleGraph graph = test.CreatePlanarGraph90();
+            //var graph = test.CreateNotPlanarGraph();
+
+            var nodes = test.MinimizeNodes(graph).Nodes;
+
+            Console.WriteLine(nodes.Count);
+            foreach (var node in nodes)
+            {
+                Console.WriteLine(node.ToString());
+            }
             Console.ReadLine();
         }
 
-        //static void Main(string[] args)
-        //{
-        //    var number1 = -0.01;
-        //    var number2 = 3460.1;
-        //    (string num1, string num2) = number1.SetEqualFractLength(number2);
-        //    Console.WriteLine(num1);
-        //    Console.WriteLine(num2);
-        //    Console.ReadLine();
-        //}
+        static void Main0(string[] args)
+        {
+            new LinesIntersectionTest();
+            //new EnumeratorTest();
+            Console.ReadLine();
+        }
 
 
         //static void Main(string[] args)
