@@ -58,6 +58,8 @@
     <Compile Include="FractionConverter.cs" />
     <Compile Include="GetFractionTest.cs" />
     <Compile Include="EnumeratorTest.cs" />
+    <Compile Include="GraphTest.cs" />
+    <Compile Include="LinesIntersectionTest.cs" />
     <Compile Include="TransformTest.cs" />
     <Compile Include="IntersectionTest.cs" />
     <Compile Include="LicensingTest.cs" />

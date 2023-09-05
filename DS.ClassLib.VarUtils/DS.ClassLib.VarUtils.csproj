@@ -73,6 +73,10 @@
     <Compile Include="Enumerables\PlaneEnumerable.cs" />
     <Compile Include="Enumerables\PlaneIterator.cs" />
     <Compile Include="Enumerables\DirectionIterator.cs" />
+    <Compile Include="Graphs\NodesMinimizator.cs" />
+    <Compile Include="Graphs\IGraph.cs" />
+    <Compile Include="Graphs\SimpleGraph.cs" />
+    <Compile Include="Graphs\GraphExtensions.cs" />
     <Compile Include="PlaneType.cs" />
     <Compile Include="Directions\IDirectionFactory.cs" />
     <Compile Include="Directions\UserDirectionFactory.cs" />
