@@ -129,7 +129,7 @@ namespace DS.ConsoleApp.Test
 
             var nm = new NodesMinimizator(angles, collisionDetector);
             nm.MinLinkLength = 0;
-            nm.MaxEdgeLinkLength = 2;
+            nm.MaxLinkLength = 5;
 
             return nm.ReduceNodes(graph);
         }

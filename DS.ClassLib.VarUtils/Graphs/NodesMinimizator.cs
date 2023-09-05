@@ -1,45 +1,69 @@
 ﻿using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Enumerables;
-using DS.ClassLib.VarUtils.GridMap;
 using DS.ClassLib.VarUtils.Points;
 using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Xml;
 
 namespace DS.ClassLib.VarUtils.Graphs
 {
+    /// <summary>
+    /// An object to minimize graph nodes.
+    /// </summary>
     public class NodesMinimizator
     {
         private static readonly int _cTolerance = 3;
         private static readonly int _tolerance = 5;
         private static readonly double _ct = Math.Pow(0.1, _cTolerance);
-        private static readonly Basis3d  _defaultBasis = new(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis);
+        private static readonly Basis3d _defaultBasis = new(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis);
         private readonly List<int> _angles;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly double _rayLength = 10000;
 
-    public NodesMinimizator(List<int> angles, ITraceCollisionDetector<Point3d> collisionDetector = null)
+        /// <summary>
+        /// Instansiate an object to minimize graph nodes.
+        /// </summary>
+        /// <remarks>
+        /// It tries to erase graph nodes between first and last to minimize them by splitting graph on 4-nodes subgraph.
+        /// </remarks>
+        /// <param name="angles"></param>
+        /// <param name="collisionDetector"></param>
+        public NodesMinimizator(List<int> angles, ITraceCollisionDetector<Point3d> collisionDetector = null)
         {
             _angles = angles;
             _collisionDetector = collisionDetector;
         }
 
-        public double MaxEdgeLinkLength { get; set; }
+        /// <summary>
+        /// Maximum link length of 4-node graph. 
+        /// </summary>
+        public double MaxLinkLength { get; set; }
+
+        /// <summary>
+        /// Minimum link length of 4-node graph. 
+        /// </summary>
         public double MinLinkLength { get; set; }
+
+        /// <summary>
+        /// <see cref="Basis3d"/> at first initial graph node.
+        /// </summary>
         public Basis3d InitialBasis { get; set; }
 
-
+        /// <summary>
+        /// Reduce <paramref name="initialGraph"/> nodes.
+        /// </summary>
+        /// <param name="initialGraph"></param>
+        /// <returns></returns>
         public SimpleGraph ReduceNodes(SimpleGraph initialGraph)
         {
-            var graph = new SimpleGraph(initialGraph.Nodes);
-            var graph4Basis = InitialBasis.X.Length == 0 && InitialBasis.Y.Length ==0 && InitialBasis.Z.Length == 0 ? 
+            var initialNodes = new List<Point3d>();
+            initialNodes.AddRange(initialGraph.Nodes);
+            var graph = new SimpleGraph(initialNodes);
+            var graph4Basis = InitialBasis.X.Length == 0 && InitialBasis.Y.Length == 0 && InitialBasis.Z.Length == 0 ?
                 _defaultBasis.GetBasis(initialGraph.Links.First().UnitTangent) : InitialBasis;
 
             for (int i = 0; i <= graph.Nodes.Count - 4; i++)
@@ -47,7 +71,7 @@ namespace DS.ClassLib.VarUtils.Graphs
                 var graph4 = GetFourNodesGraph(graph, i);
                 graph4Basis = graph4Basis.GetBasis(graph4.Links.First().UnitTangent);
 
-                if (graph4.IsPlane(out Plane plane) && HasValidLinks(initialGraph, graph4, i))
+                if (graph4.IsPlane(out Plane plane) && HasValidLinks(graph4))
                 {
                     Vector3d firstNodeParentDir = i == 0 ?
                         default(Vector3d) :
@@ -60,6 +84,9 @@ namespace DS.ClassLib.VarUtils.Graphs
                 }
             }
 
+            if (initialGraph.Nodes.Count > graph.Nodes.Count)
+            { Debug.WriteLine($"Path nodes minimized from {initialGraph.Nodes.Count} to {graph.Nodes.Count}"); }
+
             return graph;
         }
 
@@ -69,7 +96,7 @@ namespace DS.ClassLib.VarUtils.Graphs
             return new SimpleGraph(nodes4);
         }
 
-        private void TryReduceNodes4(SimpleGraph graph4, Plane plane, 
+        private void TryReduceNodes4(SimpleGraph graph4, Plane plane,
             Vector3d firstNodeParentDir, Vector3d lastNodeParentDir, Basis3d graph4Basis)
         {
             var fisrstNodeIterator = new DirectionIterator(new List<Plane>() { plane }, _angles)
@@ -145,23 +172,10 @@ namespace DS.ClassLib.VarUtils.Graphs
             graphNodes.InsertRange(startIndex, graph4Nodes);
         }
 
-        private bool HasValidLinks(SimpleGraph initialGraph, SimpleGraph graph4, int i)
+        private bool HasValidLinks(SimpleGraph graph4)
         {
-            if (MaxEdgeLinkLength == 0) { return true; }
-
-
-            if (i == 0)
-            {
-                return graph4.Links.First().Length < MaxEdgeLinkLength;
-            }
-            else if (i == initialGraph.Nodes.Count - 4)
-            {
-                return graph4.Links.Last().Length < MaxEdgeLinkLength;
-            }
-            else
-            {
-                return true;
-            }
+            if (MaxLinkLength == 0) { return true; }
+            return graph4.Links.TrueForAll(l => l.Length < MaxLinkLength);
         }
     }
 }
