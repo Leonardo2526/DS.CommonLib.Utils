@@ -15,8 +15,19 @@ namespace DS.ConsoleApp.Test
 {
     internal class Program
     {
-        [STAThread]
+
         static void Main(string[] args)
+        {
+            new QuadrantModelTest();
+            //new BoxOriginTest();
+            //new BoundingBoxTest();
+            //new LinesIntersectionTest();
+            //new EnumeratorTest();
+            Console.ReadLine();
+        }
+
+        [STAThread]
+        static void Main_Graph(string[] args)
         {
             var test = new GraphTest();
 
@@ -32,14 +43,6 @@ namespace DS.ConsoleApp.Test
             }
             Console.ReadLine();
         }
-
-        static void Main0(string[] args)
-        {
-            new LinesIntersectionTest();
-            //new EnumeratorTest();
-            Console.ReadLine();
-        }
-
 
         //static void Main(string[] args)
         //{
