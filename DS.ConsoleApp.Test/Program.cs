@@ -17,8 +17,13 @@ namespace DS.ConsoleApp.Test
     {
 
         static void Main(string[] args)
-        {
-            new QuadrantModelTest();
+        {            
+           var test =  new QuadrantModelTest();
+            test.Disable();
+            //test.Enable();
+            test.EnableByVector();
+            //test.SetPriority1();
+
             //new BoxOriginTest();
             //new BoundingBoxTest();
             //new LinesIntersectionTest();
