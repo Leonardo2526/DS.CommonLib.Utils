@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DS.ClassLib.VarUtils
 {
-    public class QuadrantOriginModel
+    public class QuadrantOriginModel : IDirectionValidator
     {
         private static readonly int _cTolerance = 3;
         private static readonly double _cT = Math.Pow(0.1, _cTolerance);
@@ -15,6 +15,7 @@ namespace DS.ClassLib.VarUtils
         private Rectangle3d _priorityQuadrant;
         private Point3d _origin = Point3d.Origin;
         private readonly (Rectangle3d, bool)[] _quadrants = new (Rectangle3d, bool)[12];
+        private readonly (BoundingBox, bool)[] _octants = new (BoundingBox, bool)[8];
 
         public QuadrantOriginModel()
         {
@@ -35,6 +36,12 @@ namespace DS.ClassLib.VarUtils
                 var q = BoxOrigin.YZquadrants[i];
                 YZquadrants[i] = (q, _defaultAvailability);
             }
+
+            for (int i = 0; i < BoxOrigin.Octants.Length; i++)
+            {
+                var o = BoxOrigin.Octants[i];
+                _octants[i] = (o, _defaultAvailability);
+            }
         }
 
         #region Properties
@@ -45,6 +52,16 @@ namespace DS.ClassLib.VarUtils
         public (Rectangle3d, bool)[] XYquadrants = new (Rectangle3d, bool)[4];
         public (Rectangle3d, bool)[] XZquadrants = new (Rectangle3d, bool)[4];
         public (Rectangle3d, bool)[] YZquadrants = new (Rectangle3d, bool)[4];
+
+        public bool IsOctantEnable { get; set; } = true;
+
+        public (BoundingBox, bool)[] Octants => _octants;
+
+        public IEnumerable<BoundingBox> ActiveOctants => 
+            Octants.
+            ToList().
+            Where(o => o.Item2).
+            Select(o => o.Item1);
 
         private (Rectangle3d, bool)[] _Quadrants
         {
@@ -75,6 +92,7 @@ namespace DS.ClassLib.VarUtils
 
         private IEnumerable<(Rectangle3d, bool)> _ActiveYZquadrants => 
             GetActiveQuadrants(OrthoPlane.YZ);
+
 
         #endregion
 
@@ -112,7 +130,7 @@ namespace DS.ClassLib.VarUtils
 
         }
 
-        public bool IsEnable(Vector3d vector, OrthoPlane orthoPlane = 0)
+        public bool IsValid(Vector3d vector, OrthoPlane orthoPlane = 0)
         {
             var activeQuadrants = orthoPlane switch
             {
@@ -122,6 +140,24 @@ namespace DS.ClassLib.VarUtils
                 _ => _ActiveQuadrants,
             };
             return activeQuadrants.Any(q => q.Item1.ContainsStrict(_origin + vector));
+        }
+
+        public bool IsValid(Point3d point, OrthoPlane orthoPlane = 0)
+        {
+            var activeQuadrants = orthoPlane switch
+            {
+                OrthoPlane.XY => _ActiveXYquadrants,
+                OrthoPlane.XZ => _ActiveXZquadrants,
+                OrthoPlane.YZ => _ActiveYZquadrants,
+                _ => _ActiveQuadrants,
+            };
+
+            //var foundInQaudrants = activeQuadrants.Any(q => q.Item1.ContainsStrict(point));
+            //var foundInOctants = ActiveOctants.Any(o => o.Contains(point, true));
+
+            return activeQuadrants.Any(q => q.Item1.ContainsStrict(point)) || 
+                ActiveOctants.Any(o => o.Contains(point, true));
+
         }
 
         public void DisableQuadrants(OrthoPlane orthoPlane = 0)
@@ -177,6 +213,24 @@ namespace DS.ClassLib.VarUtils
                 ChangeActivity(vector, XYquadrants, true);
                 ChangeActivity(vector, XZquadrants, true);
                 ChangeActivity(vector, YZquadrants, true);
+            }
+        }
+
+        public void DisableQuadrants(Vector3d vector, OrthoPlane orthoPlane = 0)
+        {
+            var quadrants = orthoPlane switch
+            {
+                OrthoPlane.XY => XYquadrants,
+                OrthoPlane.XZ => XZquadrants,
+                OrthoPlane.YZ => YZquadrants,
+                _ => _Quadrants,
+            };
+            if (quadrants.Length == 4) { ChangeActivity(vector, quadrants, false); }
+            else
+            {
+                ChangeActivity(vector, XYquadrants, false);
+                ChangeActivity(vector, XZquadrants, false);
+                ChangeActivity(vector, YZquadrants, false);
             }
         }
 

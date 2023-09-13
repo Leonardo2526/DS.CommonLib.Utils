@@ -1,6 +1,7 @@
 ﻿using DS.ClassLib.FileSystemUtils;
 using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Graphs;
+using Rhino;
 using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
 using System;
@@ -17,11 +18,11 @@ namespace DS.ConsoleApp.Test
     {
 
         static void Main(string[] args)
-        {            
-           var test =  new QuadrantModelTest();
-            test.Disable();
+        {
+            var test =  new PointConverterTest();
+            //test.Disable();
             //test.Enable();
-            test.EnableByVector();
+            //test.EnableByVector();
             //test.SetPriority1();
 
             //new BoxOriginTest();
