@@ -66,8 +66,13 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="CoordinateSystem\CCS.cs" />
+    <Compile Include="CoordinateSystem\CCSModel.cs" />
     <Compile Include="IDirectionValidator.cs" />
-    <Compile Include="OrthoPlane.cs" />
+    <Compile Include="CoordinateSystem\IOctantModel.cs" />
+    <Compile Include="CoordinateSystem\Octant.cs" />
+    <Compile Include="CoordinateSystem\OctantModel.cs" />
+    <Compile Include="CoordinateSystem\OrthoPlane.cs" />
     <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
     <Compile Include="Collisons\PointCollision.cs" />
@@ -82,9 +87,7 @@
     <Compile Include="Graphs\SimpleGraph.cs" />
     <Compile Include="Graphs\GraphExtensions.cs" />
     <Compile Include="Directions\IDirectionSettings.cs" />
-    <Compile Include="BoxOrigin.cs" />
     <Compile Include="PlaneExtensions.cs" />
-    <Compile Include="PlaneType.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\TaskComplition.cs" />
     <Compile Include="Events\IEvent.cs" />
@@ -108,7 +111,6 @@
     <Compile Include="Points\Point3dConverter.cs" />
     <Compile Include="Points\VectorPointConverter.cs" />
     <Compile Include="Points\IPointConverter.cs" />
-    <Compile Include="QuadrantOriginModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Points\MaxDistanceClient.cs" />

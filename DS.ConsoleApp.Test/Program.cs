@@ -1,6 +1,7 @@
 ﻿using DS.ClassLib.FileSystemUtils;
 using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Graphs;
+using DS.ConsoleApp.Test.RhinoTests;
 using Rhino;
 using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
@@ -19,7 +20,7 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            var test =  new PointConverterTest();
+            var test = new CCSModelTest();
             //test.Disable();
             //test.Enable();
             //test.EnableByVector();
