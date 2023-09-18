@@ -60,6 +60,16 @@
     <Compile Include="EnumeratorTest.cs" />
     <Compile Include="GraphTest.cs" />
     <Compile Include="LinesIntersectionTest.cs" />
+    <Compile Include="RhinoTests\CCSTest.cs" />
+    <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
+    <Compile Include="RhinoTests\CCSModelTest.cs" />
+    <Compile Include="RhinoTests\PointConverterTest.cs" />
+    <Compile Include="RhinoTests\QuadrantModelTest.cs" />
+    <Compile Include="RhinoTests\BoxOriginTest.cs" />
+    <Compile Include="RhinoTests\PlaneSurfaceTest.cs" />
+    <Compile Include="RhinoTests\BoundingBoxTest.cs" />
+    <Compile Include="RhinoTests\Rectangle3dTest.cs" />
+    <Compile Include="RhinoTests\RhinoMathTest.cs" />
     <Compile Include="TransformTest.cs" />
     <Compile Include="IntersectionTest.cs" />
     <Compile Include="LicensingTest.cs" />

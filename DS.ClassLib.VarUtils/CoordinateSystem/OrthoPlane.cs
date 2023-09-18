@@ -3,7 +3,7 @@
     /// <summary>
     /// Represent plane type by it's orths.
     /// </summary>
-    public enum PlaneType
+    public enum OrthoPlane
     {
         /// <summary>
         /// Plane in x and y coordinates.

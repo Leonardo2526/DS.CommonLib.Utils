@@ -1,6 +1,8 @@
 ﻿using DS.ClassLib.FileSystemUtils;
 using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Graphs;
+using DS.ConsoleApp.Test.RhinoTests;
+using Rhino;
 using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
 using System;
@@ -15,8 +17,24 @@ namespace DS.ConsoleApp.Test
 {
     internal class Program
     {
-        [STAThread]
+
         static void Main(string[] args)
+        {
+            var test = new CCSModelTest();
+            //test.Disable();
+            //test.Enable();
+            //test.EnableByVector();
+            //test.SetPriority1();
+
+            //new BoxOriginTest();
+            //new BoundingBoxTest();
+            //new LinesIntersectionTest();
+            //new EnumeratorTest();
+            Console.ReadLine();
+        }
+
+        [STAThread]
+        static void Main_Graph(string[] args)
         {
             var test = new GraphTest();
 
@@ -32,14 +50,6 @@ namespace DS.ConsoleApp.Test
             }
             Console.ReadLine();
         }
-
-        static void Main0(string[] args)
-        {
-            new LinesIntersectionTest();
-            //new EnumeratorTest();
-            Console.ReadLine();
-        }
-
 
         //static void Main(string[] args)
         //{
