@@ -64,11 +64,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basis\BasisExtensions.cs" />
+    <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="CoordinateSystem\CCS.cs" />
+    <Compile Include="CoordinateSystem\CCSModel.cs" />
+    <Compile Include="IDirectionValidator.cs" />
+    <Compile Include="CoordinateSystem\IOctantModel.cs" />
+    <Compile Include="CoordinateSystem\Octant.cs" />
+    <Compile Include="CoordinateSystem\OctantModel.cs" />
+    <Compile Include="CoordinateSystem\OrthoPlane.cs" />
     <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
     <Compile Include="Collisons\PointCollision.cs" />
     <Compile Include="ConsoleMapDrawer.cs" />
+    <Compile Include="Directions\DirectionSettings.cs" />
     <Compile Include="Enumerables\AngleEnumerable.cs" />
     <Compile Include="Enumerables\PlaneEnumerable.cs" />
     <Compile Include="Enumerables\PlaneIterator.cs" />
@@ -77,9 +86,8 @@
     <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Graphs\SimpleGraph.cs" />
     <Compile Include="Graphs\GraphExtensions.cs" />
-    <Compile Include="PlaneType.cs" />
-    <Compile Include="Directions\IDirectionFactory.cs" />
-    <Compile Include="Directions\UserDirectionFactory.cs" />
+    <Compile Include="Directions\IDirectionSettings.cs" />
+    <Compile Include="PlaneExtensions.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\TaskComplition.cs" />
     <Compile Include="Events\IEvent.cs" />

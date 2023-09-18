@@ -1,9 +1,9 @@
 ﻿using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
-using DS.ClassLib.VarUtils.Directions;
 using DS.ClassLib.VarUtils.Enumerables;
 using DS.ClassLib.VarUtils.Points;
+using Rhino;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -39,6 +39,7 @@ namespace DS.PathFinder.Algorithms.AStar
         private Point3d _endPoint;
         private CancellationTokenSource _internalTokenSource;
         private CancellationTokenSource _linkedTokenSource;
+        private Line _line;
 
         #endregion
 
@@ -126,6 +127,8 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public Basis3d SourceBasis { get; set; }
 
+        public IDirectionValidator DirectionValidator { get; set; }
+
         #endregion
 
 
@@ -148,6 +151,8 @@ namespace DS.PathFinder.Algorithms.AStar
 
             _startPoint = startPoint.Round(_tolerance);
             _endPoint = endPoint.Round(_tolerance);
+            _line = (_endPoint - _startPoint).IsParallelTo(Vector3d.XAxis, RhinoMath.ToRadians(3)) == 0 ?
+               default : new Line(_startPoint, _endPoint);
 
             MTolerance = _nodeBuilder.Step;
 
@@ -236,6 +241,7 @@ namespace DS.PathFinder.Algorithms.AStar
 
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
         {
+
             var newNode = _nodeBuilder.Build(parentNode, nodeDir);
             //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             //PointVisualisator?.Show(newNode.Point);
@@ -243,6 +249,12 @@ namespace DS.PathFinder.Algorithms.AStar
             {
                 return false;
             }
+
+            if (_line != default
+                && !DirectionValidator.IsValid(newNode.Point)
+                //&& !DirectionValidator.IsValid(nodeDir)
+                )
+            { return false; }
 
             bool endNode = newNode.Point.Round(_cTolerance) == _endPoint.Round(_cTolerance);
 
