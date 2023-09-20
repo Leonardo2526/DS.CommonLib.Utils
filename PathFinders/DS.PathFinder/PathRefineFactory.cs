@@ -71,7 +71,12 @@ namespace DS.PathFinder
             }
             points.Add(basePoint);
 
-            return MinNodes ? MinimizeNodes(points) : points;
+            points = MinNodes ? MinimizeNodes(points) : points;
+
+            //double minimizator to fix path find issues
+            points = MinNodes ? MinimizeNodes(points) : points;
+
+            return points;
         }
 
         private List<Point3d> MinimizeNodes(List<Point3d> points)
