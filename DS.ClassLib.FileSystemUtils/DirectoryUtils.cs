@@ -50,14 +50,13 @@ namespace DS.ClassLib.FileSystemUtils
             //Check rules
             foreach (FileSystemAccessRule rule in accessRules)
             {
-                if ((FileSystemRights.Write & rule.FileSystemRights) != FileSystemRights.Write) continue;
-
-                if (rule.AccessControlType == AccessControlType.Allow)
-                    writeAllow = true;
-                else if (rule.AccessControlType == AccessControlType.Deny)
-                    writeDeny = true;
+                if (rule.FileSystemRights == FileSystemRights.FullControl 
+                    || rule.FileSystemRights == FileSystemRights.Write 
+                    || rule.FileSystemRights == FileSystemRights.Modify)
+                { writeAllow = rule.AccessControlType == AccessControlType.Allow; }
+                if(writeAllow) { return true; }
             }
-            return writeAllow && !writeDeny;
+            return false;
         }
 
         /// <summary>

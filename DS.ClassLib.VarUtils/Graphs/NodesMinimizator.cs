@@ -18,6 +18,7 @@ namespace DS.ClassLib.VarUtils.Graphs
     {
         private static readonly int _cTolerance = 3;
         private static readonly int _tolerance = 5;
+        private static readonly double _at = 3.DegToRad();
         private static readonly double _ct = Math.Pow(0.1, _cTolerance);
         private static readonly Basis3d _defaultBasis = new(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis);
         private readonly List<int> _angles;
@@ -122,6 +123,12 @@ namespace DS.ClassLib.VarUtils.Graphs
                 {
                     var item2 = (Vector3d)lastNodeIterator.Current;
                     var line2 = new Line(lastNode, item2, _rayLength);
+
+                    //check angle between lines
+                    var a1 = (int)Vector3d.VectorAngle(line1.UnitTangent, - line2.UnitTangent).RadToDeg();
+                    if (line1.UnitTangent.IsParallelTo(line2.UnitTangent, _at) == 0
+                        && !_angles.Contains(a1))
+                    { continue; }
 
                     if (Intersection.LineLine(line1, line2, out double a, out double b, _ct, true))
                     {
