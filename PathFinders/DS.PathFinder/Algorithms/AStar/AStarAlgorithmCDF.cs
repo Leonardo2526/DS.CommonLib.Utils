@@ -245,7 +245,7 @@ namespace DS.PathFinder.Algorithms.AStar
             var newNode = _nodeBuilder.Build(parentNode, nodeDir);
             //PointVisualisator?.ShowVector(parentNode.Point, newNode.Point);
             //PointVisualisator?.Show(newNode.Point);
-            if (newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound))
+            if (newNode.Equals(default(PathNode)) || newNode.Point.IsLess(_lowerBound) || newNode.Point.IsGreater(_upperBound))
             {
                 return false;
             }
