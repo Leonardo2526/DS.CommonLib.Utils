@@ -187,8 +187,8 @@ namespace DS.PathFinder.Algorithms.AStar
                 parentNode = _mOpen.Pop();
                 //PointVisualisator?.Show(parentNode.Point);
 
-                //var checkPoint = new Point3d(-25.497, 6.245, 0);
-                //if (parentNode.Point.DistanceTo(checkPoint) < 0.001)
+                //var checkPoint1 = new Point3d(25.497, -6.245, 0);
+                //if (parentNode.Point.DistanceTo(checkPoint1) < 0.001)
                 //{
 
                 //}
@@ -330,9 +330,19 @@ namespace DS.PathFinder.Algorithms.AStar
 
             path.AddRange(closeNodes);
             var fNode = path[path.Count - 1];
+
+            var firstANP = path.First().ANP;
+            var lastANP = path.Last(p => p.ANP != _startPoint).ANP;
+
+
             for (int i = path.Count - 1; i >= 0; i--)
             {
-                if (fNode.Parent == path[i].Point || i == path.Count - 1)
+                if(fNode.ANP != firstANP 
+                    && fNode.ANP != lastANP 
+                    && fNode.ANP.DistanceTo(path[i].ANP) < _traceSettings.F)
+                    { path.RemoveAt(i); continue; }
+
+                if (fNode.ANP == path[i].Point || i == path.Count - 1)
                 {
                     fNode = path[i];
                 }
