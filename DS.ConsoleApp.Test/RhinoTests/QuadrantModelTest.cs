@@ -101,7 +101,7 @@ namespace DS.ConsoleApp.Test
 
         private void Run()
         {
-            _model = new QuadrantOriginModel();
+            //_model = new QuadrantOriginModel();
         }
 
         private void Output()

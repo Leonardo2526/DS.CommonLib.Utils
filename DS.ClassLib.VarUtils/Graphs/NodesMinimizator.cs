@@ -24,6 +24,8 @@ namespace DS.ClassLib.VarUtils.Graphs
         private readonly List<int> _angles;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly double _rayLength = 10000;
+        private Point3d _firstNode;
+        private Point3d _lastNode;
 
         /// <summary>
         /// Instansiate an object to minimize graph nodes.
@@ -63,7 +65,10 @@ namespace DS.ClassLib.VarUtils.Graphs
         {
             var initialNodes = new List<Point3d>();
             initialNodes.AddRange(initialGraph.Nodes);
-            var graph = new SimpleGraph(initialNodes);
+            _firstNode = initialNodes.First();
+            _lastNode = initialNodes.Last();
+
+         var graph = new SimpleGraph(initialNodes);
             var graph4Basis = InitialBasis.X.Length == 0 && InitialBasis.Y.Length == 0 && InitialBasis.Z.Length == 0 ?
                 _defaultBasis.GetBasis(initialGraph.Links.First().UnitTangent) : InitialBasis;
 
@@ -109,20 +114,20 @@ namespace DS.ClassLib.VarUtils.Graphs
                 ParentDir = -lastNodeParentDir
             };
 
-            var firstNode = graph4.Nodes.First();
-            var lastNode = graph4.Nodes.Last();
+            var node1 = graph4.Nodes.First();
+            var node2 = graph4.Nodes.Last();
 
             Point3d intersectionPoint = default;
             double s = double.MaxValue;
             while (fisrstNodeIterator.MoveNext())
             {
-                var item1 = (Vector3d)fisrstNodeIterator.Current;
-                var line1 = new Line(firstNode, item1, _rayLength);
+                var item1 = (Vector3d)fisrstNodeIterator.Current.Round(_cTolerance);
+                var line1 = new Line(node1, item1, _rayLength);
                 lastNodeIterator.Reset();
                 while (lastNodeIterator.MoveNext())
                 {
-                    var item2 = (Vector3d)lastNodeIterator.Current;
-                    var line2 = new Line(lastNode, item2, _rayLength);
+                    var item2 = (Vector3d)lastNodeIterator.Current.Round(_cTolerance);
+                    var line2 = new Line(node2, item2, _rayLength);
 
                     //check angle between lines
                     var a1 = (int)Vector3d.VectorAngle(line1.UnitTangent, - line2.UnitTangent).RadToDeg();
@@ -134,8 +139,8 @@ namespace DS.ClassLib.VarUtils.Graphs
                     {
                         var p = line1.PointAt(a);
 
-                        var d1 = firstNode.DistanceTo(p);
-                        var d2 = lastNode.DistanceTo(p);
+                        var d1 = node1.DistanceTo(p);
+                        var d2 = node2.DistanceTo(p);
                         var sum = d1 + d2;
                         if (d1 > MinLinkLength && d2 > MinLinkLength && sum < s)
                         {
@@ -143,13 +148,13 @@ namespace DS.ClassLib.VarUtils.Graphs
                             { intersectionPoint = p; s = sum; }
                             else
                             {
-                                var firstBasis = graph4Basis.GetBasis(line1.UnitTangent);
-                                var lastBasis = graph4Basis.GetBasis(line2.UnitTangent);
+                                var basis1 = graph4Basis.GetBasis(line1.UnitTangent);
+                                var basis2 = graph4Basis.GetBasis(line2.UnitTangent);
 
-                                var firstCollisions = _collisionDetector.GetCollisions(firstNode, p, firstBasis);
-                                var lastCollisions = _collisionDetector.GetCollisions(lastNode, p, lastBasis);
+                                var collisions1 = _collisionDetector.GetCollisions(node1, p, basis1, _firstNode, _lastNode, _cTolerance);
+                                var collisions2 = _collisionDetector.GetCollisions(node2, p, basis2, _firstNode, _lastNode, _cTolerance);
 
-                                if (firstCollisions.Count == 0 && lastCollisions.Count == 0)
+                                if (collisions1.Count == 0 && collisions2.Count == 0)
                                 { intersectionPoint = p; s = sum; }
                             }
                         }
@@ -160,11 +165,11 @@ namespace DS.ClassLib.VarUtils.Graphs
             {
                 graph4.Nodes.Clear();
 
-                graph4.Nodes.Add(firstNode);
+                graph4.Nodes.Add(node1);
                 var p = intersectionPoint.Round(_tolerance);
-                if (p.DistanceTo(firstNode) > _ct && p.DistanceTo(lastNode) > _ct)
+                if (p.DistanceTo(node1) > _ct && p.DistanceTo(node2) > _ct)
                 { graph4.Nodes.Add(p); }
-                graph4.Nodes.Add(lastNode);
+                graph4.Nodes.Add(node2);
             }
         }
 
@@ -184,5 +189,7 @@ namespace DS.ClassLib.VarUtils.Graphs
             if (MaxLinkLength == 0) { return true; }
             return graph4.Links.TrueForAll(l => l.Length < MaxLinkLength);
         }
+
+
     }
 }
