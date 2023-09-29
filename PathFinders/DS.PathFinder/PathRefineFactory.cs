@@ -14,7 +14,7 @@ namespace DS.PathFinder
     /// </summary>
     public class PathRefineFactory : IRefineFactory<Point3d>
     {
-        private readonly int _tolerance = 5;
+        private readonly int _tolerance = 3;
         private readonly ITraceSettings _traceSettings;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly Basis3d _sourceBasis;
@@ -53,7 +53,7 @@ namespace DS.PathFinder
             var basePoint = firstNode.Point;
             var baseDir = firstNode.Dir;
 
-            points.Add(basePoint);
+            points.Add(basePoint.Round(_tolerance));
 
             for (int i = 1; i < path.Count; i++)
             {
@@ -64,12 +64,12 @@ namespace DS.PathFinder
                 if (baseDir.Length == 0 || currentDir.Round(_tolerance) != baseDir.Round(_tolerance))
                 {
                     if (i != 1)
-                    { points.Add(basePoint); }
+                    { points.Add(basePoint.Round(_tolerance)); }
                     baseDir = currentDir;
                 }
                 basePoint = currentPoint;
             }
-            points.Add(basePoint);
+            points.Add(basePoint.Round(_tolerance));
 
             points = MinNodes ? MinimizeNodes(points) : points;
 

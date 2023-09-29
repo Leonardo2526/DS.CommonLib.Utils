@@ -187,7 +187,7 @@ namespace DS.PathFinder.Algorithms.AStar
                 parentNode = _mOpen.Pop();
                 //PointVisualisator?.Show(parentNode.Point);
 
-                //var checkPoint = new Point3d(124.51497, 163.50836, 0);
+                //var checkPoint = new Point3d(-25.497, 6.245, 0);
                 //if (parentNode.Point.DistanceTo(checkPoint) < 0.001)
                 //{
 
@@ -214,7 +214,7 @@ namespace DS.PathFinder.Algorithms.AStar
                     }
                     _dirIterator.Reset();
                 }
-                Action pushNode = parentNode.ANP == default || distToANP >= minDistToANP ?
+                Action pushNode = parentNode.ANP == StartANP || distToANP >= minDistToANP ?
              pushNodeWithIterator : pushNodeWithParent;
 
                 //get and add nodes (successors)
@@ -251,7 +251,7 @@ namespace DS.PathFinder.Algorithms.AStar
             }
 
             if (_line != default
-                && !DirectionValidator.IsValid(newNode.Point)
+                && !DirectionValidator.IsValid(newNode.Point.Round(_cTolerance))
                 //&& !DirectionValidator.IsValid(nodeDir)
                 )
             { return false; }
@@ -303,7 +303,7 @@ namespace DS.PathFinder.Algorithms.AStar
 
             //check collisions 
             if (_mOpen.Count == 0 && _mClose.Count == 0)
-            { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }
+                { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }
             else if (endNode)
             { _collisionDetector.GetLastCollisions(parentNode.Point, newNode.Basis); }
             else

@@ -20,7 +20,7 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            var test = new CCSModelTest();
+            var test = new LineTest();
             //test.Disable();
             //test.Enable();
             //test.EnableByVector();
