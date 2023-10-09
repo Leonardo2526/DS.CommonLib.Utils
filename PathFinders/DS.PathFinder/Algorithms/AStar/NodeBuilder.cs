@@ -5,6 +5,7 @@ using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DS.PathFinder.Algorithms.AStar
@@ -90,7 +91,8 @@ namespace DS.PathFinder.Algorithms.AStar
 
             if (Math.Round(_node.StepVector.Length, _cTolerance) == 0)
             {
-                throw new InvalidOperationException("StepVector length is less than tolerance.");
+                Debug.WriteLine("StepVector length is less than tolerance.");
+                return default;
             }
 
             _node.StepVector = _node.StepVector.Round(_tolerance);
