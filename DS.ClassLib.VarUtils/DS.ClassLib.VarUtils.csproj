@@ -66,6 +66,8 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="Collisons\IBestCollisionDetector.cs" />
+    <Compile Include="Collisons\IIntersectionFactory.cs" />
     <Compile Include="CoordinateSystem\CCS.cs" />
     <Compile Include="CoordinateSystem\CCSModel.cs" />
     <Compile Include="IDirectionValidator.cs" />
