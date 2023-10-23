@@ -127,7 +127,15 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public Basis3d SourceBasis { get; set; }
 
+        /// <summary>
+        /// Check directions.
+        /// </summary>
         public IDirectionValidator DirectionValidator { get; set; }
+
+        /// <summary>
+        /// Specifies if it was failed to exit from startPoint.
+        /// </summary>
+        public bool IsFailedOnStart { get; private set; }
 
         #endregion
 
@@ -227,6 +235,9 @@ namespace DS.PathFinder.Algorithms.AStar
             Debug.WriteLine("Close nodes count: " + _mClose.Count);
             var pathNodes = RestorePath(found, _mClose);
             var path = _refineFactory.Refine(pathNodes);
+
+            IsFailedOnStart = _mClose.Count == 1;
+            Debug.WriteLineIf(IsFailedOnStart, "PathFind failed on start point");
 
             return path;
         }
