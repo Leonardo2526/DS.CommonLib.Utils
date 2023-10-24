@@ -1,6 +1,7 @@
 ﻿using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
+using DS.ClassLib.VarUtils.Enumerables;
 using DS.ClassLib.VarUtils.Graphs;
 using DS.ClassLib.VarUtils.Points;
 using DS.PathFinder.Algorithms.AStar;
@@ -88,7 +89,10 @@ namespace DS.PathFinder
               (int)_traceSettings.A
             };
 
-            var minizator = new NodesMinimizator(angles, _collisionDetector);
+            var iteratorBuilder = new DirectionIteratorBuilder();
+            var intersectionFactory = new LineIntersectionFactory(angles, iteratorBuilder);
+
+            var minizator = new NodesMinimizator(angles, iteratorBuilder, intersectionFactory,  _collisionDetector);
             minizator.MinLinkLength = _traceSettings.F;
             minizator.MaxLinkLength = _maxLinkLength;
             minizator.InitialBasis = _sourceBasis;

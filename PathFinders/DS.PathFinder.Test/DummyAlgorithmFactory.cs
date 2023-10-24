@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.PathFindTest
 {
-    internal class DummyAlgorithmFactory : IAlgorithmFactory
+    internal class DummyAlgorithmFactory 
     {
         public IPathFindAlgorithm<Point3d, Point3d> Algorithm { get; set; }
 

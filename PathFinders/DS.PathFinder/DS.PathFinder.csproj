@@ -6,7 +6,7 @@
     <LangVersion>latest</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}</ProjectGuid>
+    <ProjectGuid>{0A99EB4B-783B-495B-B743-82077C2BB30A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>DS.PathFinder</RootNamespace>
     <AssemblyName>DS.PathFinder</AssemblyName>
@@ -79,6 +79,7 @@
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\HeuristicEnumerator.cs" />
+    <Compile Include="Algorithms\InterLine\InterLineAlgorithm.cs" />
     <Compile Include="IAlgorithmBuilder.cs" />
     <Compile Include="IPathFindIterator.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\PathFindEnumerator.cs" />
@@ -97,6 +98,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

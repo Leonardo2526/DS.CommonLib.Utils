@@ -70,6 +70,8 @@
     <Compile Include="Collisons\IIntersectionFactory.cs" />
     <Compile Include="CoordinateSystem\CCS.cs" />
     <Compile Include="CoordinateSystem\CCSModel.cs" />
+    <Compile Include="Enumerables\DirectionIteratorBuilder.cs" />
+    <Compile Include="Enumerables\IDirectionIteratorBuilder.cs" />
     <Compile Include="IDirectionValidator.cs" />
     <Compile Include="CoordinateSystem\IOctantModel.cs" />
     <Compile Include="CoordinateSystem\Octant.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="Graphs\SimpleGraph.cs" />
     <Compile Include="Graphs\GraphExtensions.cs" />
     <Compile Include="Directions\IDirectionSettings.cs" />
+    <Compile Include="ILineIntersectionFactory.cs" />
+    <Compile Include="LineIntersectionFactory.cs" />
     <Compile Include="PlaneExtensions.cs" />
     <Compile Include="Events\EventType.cs" />
     <Compile Include="Events\TaskComplition.cs" />
