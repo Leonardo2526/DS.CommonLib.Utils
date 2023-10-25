@@ -250,6 +250,26 @@ namespace DS.PathFinder.UnitTests
                 ShouldPass(path);
         }
 
+
+        [Test]
+        [Category("90 degrees")]
+        public void FindPath_9013_ShouldPass()
+        {
+            var a = 90;
+
+            var p1 = new Point3d(0, 0, 0);
+            var d1 = new Vector3d();
+            var p2 = new Point3d(10, 0, -5);
+            var d2 = new Vector3d();
+
+            var pathFinder = GetPathFinder(a, d1, d2);
+            var path = pathFinder.FindPath(p1, p2);
+
+            _pathValidator.
+                Config(d1, d2, a, _minLinkLength, 3).
+                ShouldPass(path);
+        }
+
         #endregion
 
 

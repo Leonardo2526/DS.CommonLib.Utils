@@ -1,6 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
-using DS.ClassLib.VarUtils.Collisons;
 using DS.ClassLib.VarUtils.Enumerables;
 using DS.ClassLib.VarUtils.Points;
 using Rhino.Geometry;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 
 namespace DS.ClassLib.VarUtils
 {
+    /// <inheritdoc/>
     public class LineIntersectionFactory : ILineIntersectionFactory
     {
         private static readonly int _cTolerance = 3;
@@ -28,12 +28,18 @@ namespace DS.ClassLib.VarUtils
         private Point3d _firstNode;
         private Point3d _lastNode;
 
+        /// <summary>
+        /// Instansiate a new object to find intersections.
+        /// </summary>
+        /// <param name="angles"></param>
+        /// <param name="iteratorBuilder"></param>
         public LineIntersectionFactory(List<int> angles, IDirectionIteratorBuilder iteratorBuilder)
         {
             _angles = angles;
             _iteratorBuilder = iteratorBuilder;
         }
 
+        /// <inheritdoc/>
         public Point3d IntersectionPoint { get; private set; }
 
         /// <summary>
@@ -41,9 +47,13 @@ namespace DS.ClassLib.VarUtils
         /// </summary>
         public double MinLinkLength { get; set; }
 
+        /// <inheritdoc/>
         public List<Plane> FirstNodePlanes { get; set; }
+
+        /// <inheritdoc/>
         public List<Plane> LastNodePlanes { get; set; }
 
+        /// <inheritdoc/>
         public Point3d GetIntersection(
             (Point3d point, Vector3d direction) node1, (Point3d point, Vector3d direction) node2)
         {
@@ -54,7 +64,7 @@ namespace DS.ClassLib.VarUtils
             var point2 = node2.point;
 
             _firstNodeIterator = _iteratorBuilder.Build(FirstNodePlanes, _angles, node1.direction);
-            _lastNodeIterator = _iteratorBuilder.Build(LastNodePlanes, _angles, - node2.direction);
+            _lastNodeIterator = _iteratorBuilder.Build(LastNodePlanes, _angles, -node2.direction);
 
             while (_firstNodeIterator.MoveNext())
             {
@@ -79,7 +89,7 @@ namespace DS.ClassLib.VarUtils
                         var d1 = Math.Round(point1.DistanceTo(p), _cTolerance);
                         var d2 = Math.Round(point2.DistanceTo(p), _cTolerance);
                         var sum = d1 + d2;
-                        if ((d1 == 0 || d1 >= MinLinkLength) && (d2 ==0 || d2 >= MinLinkLength) && sum < s)
+                        if ((d1 == 0 || d1 >= MinLinkLength) && (d2 == 0 || d2 >= MinLinkLength) && sum < s)
                         {
                             if (_collisionDetector is null)
                             { intersectionPoint = p; s = sum; }
@@ -88,8 +98,12 @@ namespace DS.ClassLib.VarUtils
                                 var basis1 = _basis.GetBasis(line1.UnitTangent);
                                 var basis2 = _basis.GetBasis(line2.UnitTangent);
 
-                                var collisions1 = _collisionDetector.GetCollisions(point1, p, basis1, _firstNode, _lastNode, _cTolerance);
-                                var collisions2 = _collisionDetector.GetCollisions(point2, p, basis2, _firstNode, _lastNode, _cTolerance);
+                                var collisions1 = d1 == 0 ?
+                                    new List<(object, object)>() :
+                                    _collisionDetector.GetCollisions(point1, p, basis1, _firstNode, _lastNode, _cTolerance);
+                                var collisions2 = d2 == 0 ?
+                                    new List<(object, object)>() :
+                                    _collisionDetector.GetCollisions(point2, p, basis2, _firstNode, _lastNode, _cTolerance);
 
                                 if (collisions1.Count == 0 && collisions2.Count == 0)
                                 { intersectionPoint = p; s = sum; }
@@ -102,6 +116,7 @@ namespace DS.ClassLib.VarUtils
             return IntersectionPoint = intersectionPoint;
         }
 
+        /// <inheritdoc/>
         public ILineIntersectionFactory WithDetector(ITraceCollisionDetector<Point3d> collisionDetector,
             Basis3d basis, Point3d firstNode, Point3d lastNode)
         {

@@ -3,7 +3,6 @@ using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Enumerables;
 using DS.ClassLib.VarUtils.Points;
 using Rhino.Geometry;
-using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,11 +17,8 @@ namespace DS.ClassLib.VarUtils.Graphs
     {
         private static readonly int _cTolerance = 3;
         private static readonly int _tolerance = 5;
-        private static readonly double _at = 3.DegToRad();
         private static readonly double _ct = Math.Pow(0.1, _cTolerance);
         private static readonly Basis3d _defaultBasis = new(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis);
-        private readonly List<int> _angles;
-        private readonly IDirectionIteratorBuilder _iteratorBuilder;
         private readonly ILineIntersectionFactory _lineIntersectionFactory;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
         private readonly double _rayLength = 10000;
@@ -36,13 +32,12 @@ namespace DS.ClassLib.VarUtils.Graphs
         /// It tries to erase graph nodes between first and last to minimize them by splitting graph on 4-nodes subgraph.
         /// </remarks>
         /// <param name="angles"></param>
+        /// <param name="iteratorBuilder"></param>
+        /// <param name="lineIntersectionFactory"></param>
         /// <param name="collisionDetector"></param>
-        public NodesMinimizator(List<int> angles, 
-            IDirectionIteratorBuilder iteratorBuilder, ILineIntersectionFactory lineIntersectionFactory, 
+        public NodesMinimizator(ILineIntersectionFactory lineIntersectionFactory,
             ITraceCollisionDetector<Point3d> collisionDetector = null)
         {
-            _angles = angles;
-            _iteratorBuilder = iteratorBuilder;
             _lineIntersectionFactory = lineIntersectionFactory;
             _collisionDetector = collisionDetector;
         }
@@ -74,7 +69,7 @@ namespace DS.ClassLib.VarUtils.Graphs
             _firstNode = initialNodes.First();
             _lastNode = initialNodes.Last();
 
-         var graph = new SimpleGraph(initialNodes);
+            var graph = new SimpleGraph(initialNodes);
             var graph4Basis = InitialBasis.X.Length == 0 && InitialBasis.Y.Length == 0 && InitialBasis.Z.Length == 0 ?
                 _defaultBasis.GetBasis(initialGraph.Links.First().UnitTangent) : InitialBasis;
 
@@ -111,79 +106,19 @@ namespace DS.ClassLib.VarUtils.Graphs
         private void TryReduceNodes4(SimpleGraph graph4, Plane plane,
             Vector3d firstNodeParentDir, Vector3d lastNodeParentDir, Basis3d graph4Basis)
         {
-
             var planes = new List<Plane>() { plane };
-
-            //var fisrstNodeIterator = new DirectionIterator(new List<Plane>() { plane }, _angles)
-            //{
-            //    ParentDir = firstNodeParentDir
-            //};
-            //var lastNodeIterator = new DirectionIterator(new List<Plane>() { plane }, _angles)
-            //{
-            //    ParentDir = -lastNodeParentDir
-            //};
 
             var node1 = graph4.Nodes.First();
             var node2 = graph4.Nodes.Last();
 
-
-            //var builder1 =  _iteratorBuilder.Build(planes, _angles, firstNodeParentDir);
-            //var builder2 =  _iteratorBuilder.Build(planes, _angles, -lastNodeParentDir);
-
-            _lineIntersectionFactory.
-                WithDetector(_collisionDetector, graph4Basis, _firstNode, _lastNode);
-
             _lineIntersectionFactory.FirstNodePlanes = planes;
             _lineIntersectionFactory.LastNodePlanes = planes;
-            Point3d intersectionPoint = _lineIntersectionFactory.GetIntersection((node1, firstNodeParentDir), (node2, lastNodeParentDir));
 
+            Point3d intersectionPoint = _lineIntersectionFactory.
+                WithDetector(_collisionDetector, graph4Basis, _firstNode, _lastNode).
+                GetIntersection((node1, firstNodeParentDir), (node2, lastNodeParentDir));
 
-            //Point3d intersectionPoint = default;
-            //double s = double.MaxValue;
-            //while (fisrstNodeIterator.MoveNext())
-            //{
-            //    var item1 = (Vector3d)fisrstNodeIterator.Current.Round(_cTolerance);
-            //    var line1 = new Line(node1, item1, _rayLength);
-            //    lastNodeIterator.Reset();
-            //    while (lastNodeIterator.MoveNext())
-            //    {
-            //        var item2 = (Vector3d)lastNodeIterator.Current.Round(_cTolerance);
-            //        var line2 = new Line(node2, item2, _rayLength);
-
-            //        //check angle between lines
-            //        var a1 = (int)Vector3d.VectorAngle(line1.UnitTangent, - line2.UnitTangent).RadToDeg();
-            //        if (line1.UnitTangent.IsParallelTo(line2.UnitTangent, _at) == 0
-            //            && !_angles.Contains(a1))
-            //        { continue; }
-
-            //        if (Intersection.LineLine(line1, line2, out double a, out double b, _ct, true))
-            //        {
-            //            var p = line1.PointAt(a);
-
-            //            var d1 = node1.DistanceTo(p);
-            //            var d2 = node2.DistanceTo(p);
-            //            var sum = d1 + d2;
-            //            if (d1 > MinLinkLength && d2 > MinLinkLength && sum < s)
-            //            {
-            //                if (_collisionDetector is null)
-            //                { intersectionPoint = p; s = sum; }
-            //                else
-            //                {
-            //                    var basis1 = graph4Basis.GetBasis(line1.UnitTangent);
-            //                    var basis2 = graph4Basis.GetBasis(line2.UnitTangent);
-
-            //                    var collisions1 = _collisionDetector.GetCollisions(node1, p, basis1, _firstNode, _lastNode, _cTolerance);
-            //                    var collisions2 = _collisionDetector.GetCollisions(node2, p, basis2, _firstNode, _lastNode, _cTolerance);
-
-            //                    if (collisions1.Count == 0 && collisions2.Count == 0)
-            //                    { intersectionPoint = p; s = sum; }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-            if (intersectionPoint != (Point3d)default)
+            if (!double.IsNaN(intersectionPoint.X))
             {
                 graph4.Nodes.Clear();
 

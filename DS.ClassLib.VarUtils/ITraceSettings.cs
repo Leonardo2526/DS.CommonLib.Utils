@@ -33,7 +33,7 @@ namespace DS.ClassLib.VarUtils
         double D { get; set; }
 
         /// <summary>
-        /// Distance between trace angles.
+        /// Distance between trace nodes.
         /// </summary>
         double F { get; set; }
 

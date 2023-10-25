@@ -57,13 +57,20 @@ namespace DS.PathFinder.UnitTests
         {
             var valid = true;
 
-            var startAxiliaryPoint = graph.Nodes.First() - startDirection;
-            var endAxiliaryPoint = graph.Nodes.Last() + endDirection;
 
-            var checkPath = new List<Point3d>()
-            { startAxiliaryPoint };
+            var checkPath = new List<Point3d>();
+            if (startDirection != default)
+            {
+                var startAxiliaryPoint = graph.Nodes.First() - startDirection;
+                checkPath.Add(startAxiliaryPoint);
+            }
             checkPath.AddRange(graph.Nodes);
-            checkPath.Add(endAxiliaryPoint);
+
+            if (endDirection != default)
+            {
+                var endAxiliaryPoint = graph.Nodes.Last() + endDirection;
+                checkPath.Add(endAxiliaryPoint);
+            }
 
             for (int i = 0; i < checkPath.Count - 2; i++)
             {

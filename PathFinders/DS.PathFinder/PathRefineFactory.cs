@@ -75,7 +75,7 @@ namespace DS.PathFinder
             points = MinNodes ? MinimizeNodes(points) : points;
 
             //double minimizator to fix path find issues
-            points = MinNodes ? MinimizeNodes(points) : points;
+            //points = MinNodes ? MinimizeNodes(points) : points;
 
             return points;
         }
@@ -89,13 +89,13 @@ namespace DS.PathFinder
               (int)_traceSettings.A
             };
 
-            var iteratorBuilder = new DirectionIteratorBuilder();
-            var intersectionFactory = new LineIntersectionFactory(angles, iteratorBuilder);
-
-            var minizator = new NodesMinimizator(angles, iteratorBuilder, intersectionFactory,  _collisionDetector);
-            minizator.MinLinkLength = _traceSettings.F;
-            minizator.MaxLinkLength = _maxLinkLength;
-            minizator.InitialBasis = _sourceBasis;
+            var intersectionFactory = new LineIntersectionFactory(angles, new DirectionIteratorBuilder());
+            var minizator = new NodesMinimizator(intersectionFactory, _collisionDetector)
+            {
+                MinLinkLength = _traceSettings.F,
+                MaxLinkLength = _maxLinkLength,
+                InitialBasis = _sourceBasis
+            };
 
             return minizator.ReduceNodes(graph).Nodes;
         }
