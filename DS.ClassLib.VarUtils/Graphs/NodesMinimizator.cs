@@ -1,7 +1,7 @@
 ﻿using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
-using DS.ClassLib.VarUtils.Enumerables;
-using DS.ClassLib.VarUtils.Points;
+using DS.PathFinder;
+using DS.PathFinder.Algorithms.InterLine;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,6 @@ namespace DS.ClassLib.VarUtils.Graphs
         private static readonly Basis3d _defaultBasis = new(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis);
         private readonly ILineIntersectionFactory _lineIntersectionFactory;
         private readonly ITraceCollisionDetector<Point3d> _collisionDetector;
-        private readonly double _rayLength = 10000;
         private Point3d _firstNode;
         private Point3d _lastNode;
 
@@ -77,16 +76,15 @@ namespace DS.ClassLib.VarUtils.Graphs
             {
                 var graph4 = GetFourNodesGraph(graph, i);
                 graph4Basis = graph4Basis.GetBasis(graph4.Links.First().UnitTangent);
-
-                if (graph4.IsPlane(out Plane plane) && HasValidLinks(graph4))
+                if (graph4.IsPlane(out _) && HasValidLinks(graph4))
                 {
                     Vector3d firstNodeParentDir = i == 0 ?
-                        default(Vector3d) :
+                        default :
                         new Line(graph.Nodes[i - 1], graph.Nodes[i]).UnitTangent;
                     Vector3d lastNodeParentDir = i == graph.Nodes.Count - 4 ?
-                        default(Vector3d) :
+                        default :
                         new Line(graph.Nodes[i + 3], graph.Nodes[i + 4]).UnitTangent;
-                    TryReduceNodes4(graph4, plane, firstNodeParentDir, lastNodeParentDir, graph4Basis);
+                    TryReduceNodes4(graph4, firstNodeParentDir, lastNodeParentDir, graph4Basis);
                     Rebuild(graph, graph4, i);
                 }
             }
@@ -103,30 +101,22 @@ namespace DS.ClassLib.VarUtils.Graphs
             return new SimpleGraph(nodes4);
         }
 
-        private void TryReduceNodes4(SimpleGraph graph4, Plane plane,
+        private void TryReduceNodes4(SimpleGraph graph4,
             Vector3d firstNodeParentDir, Vector3d lastNodeParentDir, Basis3d graph4Basis)
         {
-            var planes = new List<Plane>() { plane };
-
             var node1 = graph4.Nodes.First();
             var node2 = graph4.Nodes.Last();
 
-            _lineIntersectionFactory.FirstNodePlanes = planes;
-            _lineIntersectionFactory.LastNodePlanes = planes;
+            _lineIntersectionFactory.
+                WithDetector(_collisionDetector, graph4Basis, _firstNode, _lastNode);
 
-            Point3d intersectionPoint = _lineIntersectionFactory.
-                WithDetector(_collisionDetector, graph4Basis, _firstNode, _lastNode).
-                GetIntersection((node1, firstNodeParentDir), (node2, lastNodeParentDir));
+            var pathFinder = GetPathFinder(_lineIntersectionFactory, firstNodeParentDir, lastNodeParentDir, MinLinkLength);
+            var path = pathFinder.FindPath(node1, node2);
 
-            if (!double.IsNaN(intersectionPoint.X))
+            if (path != null)
             {
                 graph4.Nodes.Clear();
-
-                graph4.Nodes.Add(node1);
-                var p = intersectionPoint.Round(_tolerance);
-                if (p.DistanceTo(node1) > _ct && p.DistanceTo(node2) > _ct)
-                { graph4.Nodes.Add(p); }
-                graph4.Nodes.Add(node2);
+                graph4.Nodes.AddRange(path);
             }
         }
 
@@ -147,6 +137,17 @@ namespace DS.ClassLib.VarUtils.Graphs
             return graph4.Links.TrueForAll(l => l.Length < MaxLinkLength);
         }
 
-
+        private IPathFinder<Point3d, Point3d> GetPathFinder(ILineIntersectionFactory intersectionFactory,
+         Vector3d startDirection, Vector3d endDirection,
+         double minLinkLenth)
+        {
+            var algorithm = new InterLineAlgorithm(intersectionFactory)
+            {
+                MinLinkLength = minLinkLenth,
+                StartDirection = startDirection,
+                EndDirection = endDirection
+            };
+            return new PathFinderFactory<Point3d, Point3d>(algorithm);
+        }
     }
 }

@@ -88,7 +88,7 @@ namespace DS.ClassLib.VarUtils
 
                         var d1 = Math.Round(point1.DistanceTo(p), _cTolerance);
                         var d2 = Math.Round(point2.DistanceTo(p), _cTolerance);
-                        var sum = d1 + d2;
+                        var sum = d1 + d2;                     
                         if ((d1 == 0 || d1 >= MinLinkLength) && (d2 == 0 || d2 >= MinLinkLength) && sum < s)
                         {
                             if (_collisionDetector is null)

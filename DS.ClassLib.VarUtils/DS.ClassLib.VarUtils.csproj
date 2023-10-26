@@ -137,6 +137,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PathFinders\DS.PathFinder\DS.PathFinder.csproj">
+      <Project>{0a99eb4b-783b-495b-b743-82077c2bb30a}</Project>
+      <Name>DS.PathFinder</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

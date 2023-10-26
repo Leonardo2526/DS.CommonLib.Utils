@@ -237,6 +237,7 @@ namespace DS.PathFinder.Algorithms.AStar
 
             Debug.WriteLine("Close nodes count: " + _mClose.Count);
             var pathNodes = RestorePath(found, _mClose);
+            //var path = pathNodes.Select(n => n.Point).ToList();
             var path = _refineFactory.Refine(pathNodes);
 
             IsFailedOnStart = _mClose.Count == 1;
@@ -342,30 +343,23 @@ namespace DS.PathFinder.Algorithms.AStar
 
             if (!found) { return path; }
 
-            path.AddRange(closeNodes);
-            var fNode = path[path.Count - 1];
+            PathNode currentNode = closeNodes[closeNodes.Count - 1];
+            path.Add(currentNode);
 
-            var firstANP = path.First().ANP;
-            var lastANP = path.Last(p => p.ANP != _startPoint).ANP;
-
-
-            for (int i = path.Count - 1; i >= 0; i--)
+            while(currentNode.Point != _startPoint)
             {
-                if(fNode.ANP != firstANP 
-                    && fNode.ANP != lastANP 
-                    && fNode.ANP.DistanceTo(path[i].ANP) < _traceSettings.F)
-                    { path.RemoveAt(i); continue; }
-
-                if (fNode.ANP == path[i].Point || i == path.Count - 1)
-                {
-                    fNode = path[i];
-                }
-                else if(path[i].Point == _startPoint) { continue; }
-                else
-                { path.RemoveAt(i); }
+                currentNode = GetANPNode(currentNode, closeNodes);
+                path.Add(currentNode);
+                //break;
             }
 
+
             return path;
+        }
+
+        private PathNode GetANPNode(PathNode node, List<PathNode> closeNodes)
+        {
+            return closeNodes.FirstOrDefault(n => n.Point == node.ANP);
         }
 
 

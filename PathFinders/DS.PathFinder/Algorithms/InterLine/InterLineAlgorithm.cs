@@ -67,14 +67,12 @@ namespace DS.PathFinder.Algorithms.InterLine
 
             if (double.IsNaN(intersection.X))
             { return null; }
-            else if (intersection.DistanceTo(startPoint) < _ct || intersection.DistanceTo(endPoint) < _ct)
-            { path.Add(endPoint); return path; }
-            else
-            {
-                path.Add(intersection.Round(_tolerance));
-                path.Add(endPoint);
-            }
 
+            if (intersection.DistanceTo(startPoint) > _ct)
+            { path.Add(intersection); }
+
+            if(intersection.DistanceTo(endPoint) > _ct)
+            { path.Add(endPoint); }
 
             return path;
         }
