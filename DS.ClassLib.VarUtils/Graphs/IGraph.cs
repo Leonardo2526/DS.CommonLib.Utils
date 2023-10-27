@@ -9,13 +9,13 @@ namespace DS.ClassLib.VarUtils.Graphs
     public interface IGraph
     {
         /// <summary>
-        /// Links.
+        /// <see cref="Line"/>'s that connect <see cref="Vertices"/> pairs.
         /// </summary>
-        List<Line> Links { get; }
+        List<Line> Edges { get; }
 
         /// <summary>
         /// Nodes.
         /// </summary>
-        List<Point3d> Nodes { get; }
+        List<Point3d> Vertices { get; }
     }
 }

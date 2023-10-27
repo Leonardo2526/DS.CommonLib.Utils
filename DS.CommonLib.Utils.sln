@@ -21,11 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.Licensing", "DS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PathFinders", "PathFinders", "{18EAFE24-3894-409E-9D54-65BF87483BCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder", "PathFinders\DS.PathFinder\DS.PathFinder.csproj", "{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder", "PathFinders\DS.PathFinder\DS.PathFinder.csproj", "{0A99EB4B-783B-495B-B743-82077C2BB30A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder.Test", "PathFinders\DS.PathFinder.Test\DS.PathFinder.Test.csproj", "{21A2D571-B0FF-4734-B3C1-306B8A0589EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder.UnitTests", "DS.PathFinder.UnitTests\DS.PathFinder.UnitTests.csproj", "{4C032EC0-AF40-4B1C-991C-589B9039BDAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS.PathFinder.UnitTests", "DS.PathFinder.UnitTests\DS.PathFinder.UnitTests.csproj", "{4C032EC0-AF40-4B1C-991C-589B9039BDAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickGraphTest", "ConsoleApp1\QuickGraphTest.csproj", "{E5921BEB-3C62-4FCE-9037-5681BBE83195}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +67,10 @@ Global
 		{37411903-2A48-4D32-B23B-FC9C4535B44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37411903-2A48-4D32-B23B-FC9C4535B44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37411903-2A48-4D32-B23B-FC9C4535B44A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A99EB4B-783B-495B-B743-82077C2BB30A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A99EB4B-783B-495B-B743-82077C2BB30A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A99EB4B-783B-495B-B743-82077C2BB30A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A99EB4B-783B-495B-B743-82077C2BB30A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,12 +79,16 @@ Global
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5921BEB-3C62-4FCE-9037-5681BBE83195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5921BEB-3C62-4FCE-9037-5681BBE83195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5921BEB-3C62-4FCE-9037-5681BBE83195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5921BEB-3C62-4FCE-9037-5681BBE83195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F42C671B-41AF-4CD6-8DA8-C75EAE032D73} = {18EAFE24-3894-409E-9D54-65BF87483BCB}
+		{0A99EB4B-783B-495B-B743-82077C2BB30A} = {18EAFE24-3894-409E-9D54-65BF87483BCB}
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF} = {18EAFE24-3894-409E-9D54-65BF87483BCB}
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB} = {18EAFE24-3894-409E-9D54-65BF87483BCB}
 	EndGlobalSection

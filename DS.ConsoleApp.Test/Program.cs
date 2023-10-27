@@ -41,7 +41,7 @@ namespace DS.ConsoleApp.Test
             SimpleGraph graph = test.CreatePlanarGraph90();
             //var graph = test.CreateNotPlanarGraph();
 
-            var nodes = test.MinimizeNodes(graph).Nodes;
+            var nodes = test.MinimizeNodes(graph).Vertices;
 
             Console.WriteLine(nodes.Count);
             foreach (var node in nodes)

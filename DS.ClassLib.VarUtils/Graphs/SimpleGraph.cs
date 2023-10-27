@@ -33,10 +33,10 @@ namespace DS.ClassLib.VarUtils.Graphs
         }
 
         /// <inheritdoc/>
-        public List<Point3d> Nodes => _nodes ??= _nodes = GetNodes(_links);
+        public List<Point3d> Vertices => _nodes ??= _nodes = GetNodes(_links);
 
         /// <inheritdoc/>
-        public List<Line> Links => _links ??= _links = GetLinks(_nodes);
+        public List<Line> Edges => _links ??= _links = GetLinks(_nodes);
 
         public override string ToString()
         {

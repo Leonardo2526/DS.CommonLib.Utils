@@ -27,16 +27,16 @@ namespace DS.ClassLib.VarUtils.Graphs
         {
             var planes = new List<Plane>();
 
-            if (graph.Nodes.Count < 3) { return planes; }
+            if (graph.Vertices.Count < 3) { return planes; }
 
             var at = 3.DegToRad();
-            var origin = graph.Nodes[0];
-            var xLink = new Line(origin, graph.Nodes[1]);
+            var origin = graph.Vertices[0];
+            var xLink = new Line(origin, graph.Vertices[1]);
             var xDirection = xLink.Direction;
 
-            for (int i = 1; i < graph.Nodes.Count; i++)
+            for (int i = 1; i < graph.Vertices.Count; i++)
             {
-                var n = graph.Nodes[i];
+                var n = graph.Vertices[i];
                 var yDirection = new Line(origin, n).Direction;
                 if (xDirection.IsParallelTo(yDirection, at) == 0)
                 {
