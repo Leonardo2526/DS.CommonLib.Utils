@@ -1,4 +1,6 @@
-﻿using DS.ClassLib.VarUtils.Points;
+﻿using Castle.Core.Internal;
+using DS.ClassLib.VarUtils.Points;
+using QuickGraph;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -68,6 +70,17 @@ namespace DS.ClassLib.VarUtils.Graphs
             var planes = graph.GetPlanes();
             plane = planes.FirstOrDefault();
             return planes.Count == 0 || planes.Count == 1;
+        }
+
+        /// <summary>
+        /// Show <paramref name="graph"/> with specified <paramref name="visualisator"/>.
+        /// </summary>
+        /// <typeparam name="TVertex"></typeparam>
+        /// <param name="graph"></param>
+        /// <param name="visualisator"></param>
+        public static void Show<TVertex>(this AdjacencyGraph<TVertex, Edge<TVertex>> graph, IAdjacencyGraphVisulisator<TVertex> visualisator)
+        {
+            visualisator.Build(graph).Show();
         }
 
     }

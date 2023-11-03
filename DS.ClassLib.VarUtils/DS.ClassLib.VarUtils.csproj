@@ -50,6 +50,18 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <HintPath>..\..\DS.RevitLib.Utils\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Data, Version=3.6.61114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\DS.RevitLib.Utils\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Graphviz, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <HintPath>..\..\DS.RevitLib.Utils\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Graphviz.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\DS.RevitLib.Utils\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rhino3dm.7.15.0\lib\net45\Rhino3dm.dll</HintPath>
     </Reference>
@@ -73,9 +85,14 @@
     <Compile Include="CoordinateSystem\CCSModel.cs" />
     <Compile Include="Enumerables\DirectionIteratorBuilder.cs" />
     <Compile Include="Enumerables\IDirectionIteratorBuilder.cs" />
-    <Compile Include="Graphs\ILocationVertex.cs" />
-    <Compile Include="Graphs\TaggedLVertex.cs" />
-    <Compile Include="Graphs\LVertex.cs" />
+    <Compile Include="Graphs\IGraphFactory.cs" />
+    <Compile Include="Graphs\IAdjacencyGraphVisulisator.cs" />
+    <Compile Include="Graphs\Vertices\CompareGTaggedItems.cs" />
+    <Compile Include="Graphs\Vertices\GVertex.cs" />
+    <Compile Include="Graphs\Vertices\IEdgeBuilder.cs" />
+    <Compile Include="Graphs\Vertices\IVertex.cs" />
+    <Compile Include="Graphs\Vertices\IVertexBuilder.cs" />
+    <Compile Include="Graphs\Vertices\TaggedGVertex.cs" />
     <Compile Include="IDirectionValidator.cs" />
     <Compile Include="CoordinateSystem\IOctantModel.cs" />
     <Compile Include="CoordinateSystem\Octant.cs" />
