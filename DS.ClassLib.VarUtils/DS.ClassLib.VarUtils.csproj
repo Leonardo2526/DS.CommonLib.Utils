@@ -85,6 +85,7 @@
     <Compile Include="CoordinateSystem\CCSModel.cs" />
     <Compile Include="Enumerables\DirectionIteratorBuilder.cs" />
     <Compile Include="Enumerables\IDirectionIteratorBuilder.cs" />
+    <Compile Include="Graphs\GraphIterator.cs" />
     <Compile Include="Graphs\IGraphFactory.cs" />
     <Compile Include="Graphs\IAdjacencyGraphVisulisator.cs" />
     <Compile Include="Graphs\Vertices\CompareGTaggedItems.cs" />

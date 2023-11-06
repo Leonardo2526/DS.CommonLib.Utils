@@ -78,10 +78,10 @@ namespace DS.ClassLib.VarUtils.Graphs
         /// <typeparam name="TVertex"></typeparam>
         /// <param name="graph"></param>
         /// <param name="visualisator"></param>
-        public static void Show<TVertex>(this AdjacencyGraph<TVertex, Edge<TVertex>> graph, IAdjacencyGraphVisulisator<TVertex> visualisator)
+        public static void Show<TVertex>(this AdjacencyGraph<TVertex, Edge<TVertex>> graph, 
+            IAdjacencyGraphVisulisator<TVertex> visualisator)
         {
             visualisator.Build(graph).Show();
         }
-
     }
 }

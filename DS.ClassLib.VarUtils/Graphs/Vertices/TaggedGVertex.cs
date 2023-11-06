@@ -42,5 +42,10 @@ namespace DS.ClassLib.VarUtils.Graphs
             hashCode = hashCode * -1521134295 + EqualityComparer<TTag>.Default.GetHashCode(Tag);
             return hashCode;
         }
+
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
     }
 }

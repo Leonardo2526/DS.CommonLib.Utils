@@ -16,5 +16,11 @@ namespace DS.ClassLib.VarUtils.Graphs
         /// Visualisator that is ready to show <paramref name="graph"/>.
         /// </returns>
         IAdjacencyGraphVisulisator<TVertex> Build(AdjacencyGraph<TVertex, Edge<TVertex>> graph);
+
+        /// <summary>
+        /// Show <paramref name="vertex"/> location.
+        /// </summary>
+        /// <param name="vertex"></param>
+        void ShowLocation(IVertex vertex);
     }
 }
