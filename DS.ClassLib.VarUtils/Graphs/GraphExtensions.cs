@@ -1,6 +1,8 @@
 ﻿using Castle.Core.Internal;
+using DS.ClassLib.VarUtils.GridMap;
 using DS.ClassLib.VarUtils.Points;
 using QuickGraph;
+using QuickGraph.Algorithms;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -78,10 +80,34 @@ namespace DS.ClassLib.VarUtils.Graphs
         /// <typeparam name="TVertex"></typeparam>
         /// <param name="graph"></param>
         /// <param name="visualisator"></param>
-        public static void Show<TVertex>(this AdjacencyGraph<TVertex, Edge<TVertex>> graph, 
+        public static void Show<TVertex>(this AdjacencyGraph<TVertex, Edge<TVertex>> graph,
             IAdjacencyGraphVisulisator<TVertex> visualisator)
         {
             visualisator.Build(graph).Show();
+        }
+
+        /// <summary>
+        /// Compute shortest paths  for given vertices.
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="edgeCost"></param>
+        /// <returns>
+        /// Path edges if path was found.
+        /// <para>
+        /// Otherwise <see langword="null"/>.
+        /// </para>
+        /// </returns>
+        public static IEnumerable<Edge<IVertex>> GetPath(this IVertexAndEdgeListGraph<IVertex, Edge<IVertex>> graph, 
+            IVertex source, IVertex target, Func<Edge<IVertex>, double> edgeCost = null)
+        {           
+            edgeCost ??= edge => 1;
+            var tryGetPaths = graph.ShortestPathsDijkstra(edgeCost, source);
+
+            return tryGetPaths(target, out IEnumerable<Edge<IVertex>> path) is true ? 
+                path : 
+                null;
         }
     }
 }

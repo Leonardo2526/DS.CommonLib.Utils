@@ -2,6 +2,7 @@
 using QuickGraph;
 using QuickGraph.Algorithms;
 using QuickGraph.Algorithms.Search;
+using QuickGraph.Collections;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,7 @@ namespace ConsoleApp1
                 new Edge<IVertex>(v3, v4),
                 new Edge<IVertex>(v0, v5),
                 new Edge<IVertex>(v0, v1),
+                //new Edge<IVertex>(v0, v6),
             };
 
             //var v5 = new TaggedGVertex<int>(4, 123456);
@@ -96,8 +98,8 @@ namespace ConsoleApp1
             int vd = graph.OutDegree(v1);
             Console.WriteLine("\nv1 outDegree = " + vd);
 
+            TestGetPath(graph);
             //Test1(graph);
-            Test2(graph);
         }
 
 
@@ -112,7 +114,6 @@ namespace ConsoleApp1
             var s = graph.Sinks();
 
             var b = graph.TreeBreadthFirstSearch(testVertex);
-
 
             //var vc = graph.TopologicalSort();
             //var vbd = bdGraph.TopologicalSort();
@@ -152,8 +153,8 @@ namespace ConsoleApp1
         {
             var bdGraph = graph.ToBidirectionalGraph();
 
-            var algorithm = new BreadthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(bdGraph);
-            //var algorithm = new DepthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(bdGraph);
+            //var algorithm = new BreadthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(bdGraph);
+            var algorithm = new DepthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(bdGraph);
             var iteratror = new GraphVertexIterator(algorithm);
 
             var txt = "Current vertex id: ";
@@ -163,6 +164,18 @@ namespace ConsoleApp1
             }
         }
 
+        private static void TestGetPath(AdjacencyGraph<IVertex, Edge<IVertex>> graph)
+        {
+            var root = graph.Vertices.FirstOrDefault(v => v.Id == 0);
+            // Query path for given vertices
+            var target = graph.Vertices.FirstOrDefault(v => v.Id == 4);
+
+            var path = graph.GetPath(root, target);
+            foreach (var edge in path)
+            {
+                Console.WriteLine(edge);
+            }
+        }
 
         private static void Dfs_DiscoverVertex(IVertex vertex)
         {

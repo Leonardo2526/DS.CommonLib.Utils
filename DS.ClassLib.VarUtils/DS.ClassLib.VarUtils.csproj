@@ -93,6 +93,7 @@
     <Compile Include="Graphs\Vertices\IEdgeBuilder.cs" />
     <Compile Include="Graphs\Vertices\IVertex.cs" />
     <Compile Include="Graphs\Vertices\IVertexBuilder.cs" />
+    <Compile Include="Graphs\Vertices\IVertexLimitsValidator.cs" />
     <Compile Include="Graphs\Vertices\TaggedGVertex.cs" />
     <Compile Include="IDirectionValidator.cs" />
     <Compile Include="CoordinateSystem\IOctantModel.cs" />
