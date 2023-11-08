@@ -1,9 +1,12 @@
-﻿using QuickGraph;
+﻿using DS.ClassLib.VarUtils.Graphs.Vertices;
+using QuickGraph;
 using QuickGraph.Algorithms;
 using QuickGraph.Algorithms.Search;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace DS.ClassLib.VarUtils.Graphs
 {
@@ -22,6 +25,7 @@ namespace DS.ClassLib.VarUtils.Graphs
         /// Instanciate an object to iterate over graph <see cref="IVertex"/>'s.
         /// </summary>
         /// <param name="algorithm"></param>
+        /// <param name="rootVertex"></param>
         /// <exception cref="NotImplementedException"></exception>
         public GraphVertexIterator(RootedAlgorithmBase<IVertex, IVertexListGraph<IVertex, Edge<IVertex>>> algorithm)
         {
@@ -38,15 +42,10 @@ namespace DS.ClassLib.VarUtils.Graphs
             }
         }
 
-        private void DiscoverVertex(IVertex vertex)
-        {
-            if (!_visited.Contains(vertex.Id))
-            {
-                _algorithm.Abort();
-                _current = vertex;
-                _visited.Add(vertex.Id);
-            }
-        }
+        /// <summary>
+        /// Validators to include to next only specified veritces.
+        /// </summary>
+        public List<IValidator<IVertex>> Validators { get; } = new List<IValidator<IVertex>>();
 
         /// <inheritdoc/>
         public IVertex Current { get => _current; }
@@ -73,6 +72,29 @@ namespace DS.ClassLib.VarUtils.Graphs
         public void Reset()
         {
             _visited.Clear();
+        }
+
+        /// <summary>
+        /// Start iteration vertex index.
+        /// </summary>
+        public int StartIndex { get; set; }
+
+        private void DiscoverVertex(IVertex vertex)
+        {
+            if (!_visited.Contains(vertex.Id) && IsValid(vertex))
+            {
+                _algorithm.Abort();
+                _current = vertex;
+                _visited.Add(vertex.Id);
+            }
+        }
+
+        private bool IsValid(IVertex vertex)
+        {
+            bool valid1 = vertex.Id >= StartIndex;
+            if (!valid1) { return false; }
+
+            return Validators.TrueForAll(v => v.IsValid(vertex));
         }
     }
 }

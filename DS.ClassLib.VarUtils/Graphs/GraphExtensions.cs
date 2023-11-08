@@ -3,9 +3,11 @@ using DS.ClassLib.VarUtils.GridMap;
 using DS.ClassLib.VarUtils.Points;
 using QuickGraph;
 using QuickGraph.Algorithms;
+using QuickGraph.Algorithms.Search;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,6 +110,46 @@ namespace DS.ClassLib.VarUtils.Graphs
             return tryGetPaths(target, out IEnumerable<Edge<IVertex>> path) is true ? 
                 path : 
                 null;
+        }
+
+        /// <summary>
+        /// Splilt <paramref name="graph"/> vertices by root branches.
+        /// </summary>
+        /// <param name="graph"></param>
+        /// <param name="rootVertex"></param>
+        /// <returns>
+        /// Vertices splitted by each branch from <paramref name="rootVertex"/>.
+        /// <para>
+        /// If <paramref name="rootVertex"/> is not specified split each root of <paramref name="graph"/>.
+        /// </para>
+        /// </returns>
+        public static Dictionary<IVertex, IEnumerable<IVertex>> SplitRootBranches(this AdjacencyGraph<IVertex, Edge<IVertex>> graph, 
+            IVertex rootVertex = null)
+        {
+            var firstLevelBranches = new Dictionary<IVertex, IEnumerable<IVertex>>();
+
+            var clonedGraph = graph.Clone();
+            var initialRoots = clonedGraph.Roots().ToList();
+
+            var rootsToRemove = rootVertex is null ? initialRoots : new List<IVertex>() { rootVertex };
+            rootsToRemove.ForEach(r => clonedGraph.RemoveVertex(r));
+            var rootsToSplit = clonedGraph.Roots().Where(r => !initialRoots.Contains(r)).ToList();
+
+            var bfsClone = new BreadthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(clonedGraph);
+            foreach (IVertex root in rootsToSplit)
+            {
+                bfsClone.SetRootVertex(root);
+                bfsClone.Compute();
+                bfsClone.ClearRootVertex();
+                var blackVertices = bfsClone.VertexColors.
+                    Where(v => v.Value == GraphColor.Black).
+                    Select(v => v.Key);
+                var children = new List<IVertex>();
+                children.AddRange(blackVertices);
+                firstLevelBranches.Add(root, children);
+            }
+
+           return firstLevelBranches;
         }
     }
 }

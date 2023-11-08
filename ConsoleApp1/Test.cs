@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ConsoleApp1
 {
@@ -98,7 +100,9 @@ namespace ConsoleApp1
             int vd = graph.OutDegree(v1);
             Console.WriteLine("\nv1 outDegree = " + vd);
 
-            TestGetPath(graph);
+            Test3(graph);
+            //TestSplitRootBranches(graph);
+            //TestGetPath(graph);
             //Test1(graph);
         }
 
@@ -175,6 +179,39 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(edge);
             }
+        }
+
+        private static void TestSplitRootBranches(AdjacencyGraph<IVertex, Edge<IVertex>> graph)
+        {
+            //var root = graph.Vertices.FirstOrDefault(v => v.Id == 1);
+            //Console.WriteLine("\nInitial root is: " + root.Id);
+            
+            Dictionary<IVertex, IEnumerable<IVertex>> splittedBranches = graph.SplitRootBranches();
+
+            foreach (var keyValuePair in splittedBranches)
+            {
+                var sb = new StringBuilder();
+                var children = keyValuePair.Value.ToList();
+                children.ForEach(c => sb.Append(c.Id.ToString() + " "));
+                Console.WriteLine("Root: " + keyValuePair.Key.Id + ", values: " + sb.ToString());
+            }
+        }
+
+
+        private static void Test3(AdjacencyGraph<IVertex, Edge<IVertex>> graph)
+        {
+            var bfs = new BreadthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(graph);
+            bfs.Compute();
+
+            var v1 = graph.Vertices.FirstOrDefault(v => v.Id == 1);
+            var v2 = graph.Vertices.FirstOrDefault(v => v.Id == 3);
+
+            graph.TryGetEdge(v1, v2, out var edge);
+            graph.RemoveEdge(edge);
+
+            var bfs1 = new BreadthFirstSearchAlgorithm<IVertex, Edge<IVertex>>(graph);
+            bfs1.SetRootVertex(v1);
+            bfs1.Compute();
         }
 
         private static void Dfs_DiscoverVertex(IVertex vertex)

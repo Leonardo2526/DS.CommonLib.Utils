@@ -88,12 +88,14 @@
     <Compile Include="Graphs\GraphIterator.cs" />
     <Compile Include="Graphs\IGraphFactory.cs" />
     <Compile Include="Graphs\IAdjacencyGraphVisulisator.cs" />
+    <Compile Include="Graphs\VertexPairIterator.cs" />
     <Compile Include="Graphs\Vertices\CompareGTaggedItems.cs" />
     <Compile Include="Graphs\Vertices\GVertex.cs" />
     <Compile Include="Graphs\Vertices\IEdgeBuilder.cs" />
     <Compile Include="Graphs\Vertices\IVertex.cs" />
     <Compile Include="Graphs\Vertices\IVertexBuilder.cs" />
     <Compile Include="Graphs\Vertices\IVertexLimitsValidator.cs" />
+    <Compile Include="IValidator.cs" />
     <Compile Include="Graphs\Vertices\TaggedGVertex.cs" />
     <Compile Include="IDirectionValidator.cs" />
     <Compile Include="CoordinateSystem\IOctantModel.cs" />
