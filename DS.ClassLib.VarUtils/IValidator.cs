@@ -1,4 +1,4 @@
-﻿namespace DS.ClassLib.VarUtils.Graphs.Vertices
+﻿namespace DS.ClassLib.VarUtils
 {
     /// <summary>
     /// The interface represents validator for <typeparamref name="T"/> objects.
