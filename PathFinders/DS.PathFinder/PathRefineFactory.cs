@@ -2,8 +2,7 @@
 using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Enumerables;
-using DS.ClassLib.VarUtils.Graphs;
-using DS.ClassLib.VarUtils.Points;
+using DS.GraphUtils.Entities;
 using DS.PathFinder.Algorithms.AStar;
 using Rhino.Geometry;
 using System.Collections.Generic;
