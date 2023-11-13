@@ -102,6 +102,7 @@
     <Compile Include="Enumerables\DirectionIterator.cs" />
     <Compile Include="Directions\IDirectionSettings.cs" />
     <Compile Include="ILineIntersectionFactory.cs" />
+    <Compile Include="LineBoolTools.cs" />
     <Compile Include="LineExtensions.cs" />
     <Compile Include="LineIntersectionFactory.cs" />
     <Compile Include="PlaneExtensions.cs" />

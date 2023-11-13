@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DS.ClassLib.VarUtils;
 
 namespace DS.ConsoleApp.Test
 {
@@ -13,9 +14,9 @@ namespace DS.ConsoleApp.Test
 
         public LinesIntersectionTest()
         {
-            Run();
         }
-        private void Run()
+
+        public LinesIntersectionTest Run()
         {
             var length = 10000;
 
@@ -32,6 +33,18 @@ namespace DS.ConsoleApp.Test
             Console.WriteLine(intersection);
             Console.WriteLine(l1.PointAt(a));
             Console.WriteLine(l2.PointAt(b));
+
+            return this;
+        }
+
+        public LinesIntersectionTest BoolIntersect()
+        {
+            var line1 = new Line(new Point3d(-1,0,0), new Point3d(5, 0, 0));
+            var line2 = new Line(new Point3d(-2, 0, 0), new Point3d(3, 0, 0));
+
+            var intersectionLine = LineBoolTools.Intersect(line1, line2);
+            Console.WriteLine(intersectionLine.ToString());
+            return this;
         }
     }
 }

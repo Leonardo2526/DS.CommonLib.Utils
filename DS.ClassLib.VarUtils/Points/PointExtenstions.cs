@@ -364,7 +364,7 @@ namespace DS.ClassLib.VarUtils.Points
             projVector.Normalize();
 
             var angle = Math.Abs(Vector3D.AngleBetween(v1, v2));
-            if(angle > 90)
+            if (angle > 90)
             {
                 angle = 180 - angle;
                 projVector.Negate();
@@ -374,5 +374,49 @@ namespace DS.ClassLib.VarUtils.Points
 
             return projVector;
         }
+
+        /// <summary>
+        /// Sort <paramref name="lst"/> by distance between points.
+        /// </summary>
+        /// <param name="lst"></param>
+        /// <returns>
+        /// List of <see cref="Point3d"/> with ordered distance between them from min to max.
+        /// </returns>
+        public static List<Point3d> SortByDistance(this List<Point3d> lst)
+        {
+            List<Point3d> output = new List<Point3d>();
+            output.Add(lst[NearestPoint(new Point3d(0, 0, 0), lst)]);
+            lst.Remove(output[0]);
+            int x = 0;
+            for (int i = 0; i < lst.Count + x; i++)
+            {
+                output.Add(lst[NearestPoint(output[output.Count - 1], lst)]);
+                lst.Remove(output[output.Count - 1]);
+                x++;
+            }
+            return output;
+
+            int NearestPoint(Point3d srcPt, List<Point3d> lookIn)
+            {
+                KeyValuePair<double, int> smallestDistance = new KeyValuePair<double, int>();
+                for (int i = 0; i < lookIn.Count; i++)
+                {
+                    double distance = srcPt.DistanceTo(lookIn[i]);
+                    if (i == 0)
+                    {
+                        smallestDistance = new KeyValuePair<double, int>(distance, i);
+                    }
+                    else
+                    {
+                        if (distance < smallestDistance.Key)
+                        {
+                            smallestDistance = new KeyValuePair<double, int>(distance, i);
+                        }
+                    }
+                }
+                return smallestDistance.Value;
+            }
+        }
+
     }
 }
