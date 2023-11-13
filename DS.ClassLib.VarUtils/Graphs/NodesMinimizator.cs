@@ -64,48 +64,48 @@ namespace DS.ClassLib.VarUtils.Graphs
         public SimpleGraph ReduceNodes(SimpleGraph initialGraph)
         {
             var initialNodes = new List<Point3d>();
-            initialNodes.AddRange(initialGraph.Nodes);
+            initialNodes.AddRange(initialGraph.Vertices);
             _firstNode = initialNodes.First();
             _lastNode = initialNodes.Last();
 
             var graph = new SimpleGraph(initialNodes);
             var graph4Basis = InitialBasis.X.Length == 0 && InitialBasis.Y.Length == 0 && InitialBasis.Z.Length == 0 ?
-                _defaultBasis.GetBasis(initialGraph.Links.First().UnitTangent) : InitialBasis;
+                _defaultBasis.GetBasis(initialGraph.Edges.First().UnitTangent) : InitialBasis;
 
-            for (int i = 0; i <= graph.Nodes.Count - 4; i++)
+            for (int i = 0; i <= graph.Vertices.Count - 4; i++)
             {
                 var graph4 = GetFourNodesGraph(graph, i);
-                graph4Basis = graph4Basis.GetBasis(graph4.Links.First().UnitTangent);
+                graph4Basis = graph4Basis.GetBasis(graph4.Edges.First().UnitTangent);
                 if (graph4.IsPlane(out _) && HasValidLinks(graph4))
                 {
                     Vector3d firstNodeParentDir = i == 0 ?
                         default :
-                        new Line(graph.Nodes[i - 1], graph.Nodes[i]).UnitTangent;
-                    Vector3d lastNodeParentDir = i == graph.Nodes.Count - 4 ?
+                        new Line(graph.Vertices[i - 1], graph.Vertices[i]).UnitTangent;
+                    Vector3d lastNodeParentDir = i == graph.Vertices.Count - 4 ?
                         default :
-                        new Line(graph.Nodes[i + 3], graph.Nodes[i + 4]).UnitTangent;
+                        new Line(graph.Vertices[i + 3], graph.Vertices[i + 4]).UnitTangent;
                     TryReduceNodes4(graph4, firstNodeParentDir, lastNodeParentDir, graph4Basis);
                     Rebuild(graph, graph4, i);
                 }
             }
 
-            if (initialGraph.Nodes.Count > graph.Nodes.Count)
-            { Debug.WriteLine($"Path nodes minimized from {initialGraph.Nodes.Count} to {graph.Nodes.Count}"); }
+            if (initialGraph.Vertices.Count > graph.Vertices.Count)
+            { Debug.WriteLine($"Path nodes minimized from {initialGraph.Vertices.Count} to {graph.Vertices.Count}"); }
 
             return graph;
         }
 
         private SimpleGraph GetFourNodesGraph(SimpleGraph graph, int startIndex)
         {
-            var nodes4 = graph.Nodes.Skip(startIndex).Take(4).ToList();
+            var nodes4 = graph.Vertices.Skip(startIndex).Take(4).ToList();
             return new SimpleGraph(nodes4);
         }
 
         private void TryReduceNodes4(SimpleGraph graph4,
             Vector3d firstNodeParentDir, Vector3d lastNodeParentDir, Basis3d graph4Basis)
         {
-            var node1 = graph4.Nodes.First();
-            var node2 = graph4.Nodes.Last();
+            var node1 = graph4.Vertices.First();
+            var node2 = graph4.Vertices.Last();
 
             _lineIntersectionFactory.
                 WithDetector(_collisionDetector, graph4Basis, _firstNode, _lastNode);
@@ -115,15 +115,15 @@ namespace DS.ClassLib.VarUtils.Graphs
 
             if (path != null)
             {
-                graph4.Nodes.Clear();
-                graph4.Nodes.AddRange(path);
+                graph4.Vertices.Clear();
+                graph4.Vertices.AddRange(path);
             }
         }
 
         private void Rebuild(SimpleGraph graph, SimpleGraph graph4, int startIndex)
         {
-            var graphNodes = graph.Nodes;
-            var graph4Nodes = graph4.Nodes;
+            var graphNodes = graph.Vertices;
+            var graph4Nodes = graph4.Vertices;
 
             if (graph4Nodes.Count == 4) { return; }
 
@@ -134,7 +134,7 @@ namespace DS.ClassLib.VarUtils.Graphs
         private bool HasValidLinks(SimpleGraph graph4)
         {
             if (MaxLinkLength == 0) { return true; }
-            return graph4.Links.TrueForAll(l => l.Length < MaxLinkLength);
+            return graph4.Edges.TrueForAll(l => l.Length < MaxLinkLength);
         }
 
         private IPathFinder<Point3d, Point3d> GetPathFinder(ILineIntersectionFactory intersectionFactory,

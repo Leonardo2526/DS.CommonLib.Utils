@@ -33,8 +33,8 @@ namespace DS.PathFinder.UnitTests
             {
                 Assert.That(path, Is.Not.Null);
                 Assert.That(HasValidAngles(graph, _startDirection, _endDirection, _angle));
-                Assert.That(graph.Links.Any(l => l.Length < _minCurveLength), Is.False);
-                if (_length != 0) { Assert.That(graph.Nodes, Has.Count.EqualTo(_length)); }
+                Assert.That(graph.Edges.Any(l => l.Length < _minCurveLength), Is.False);
+                if (_length != 0) { Assert.That(graph.Vertices, Has.Count.EqualTo(_length)); }
             });
             Assert.Pass("Path points: \n" + graph.ToString());
         }
@@ -50,7 +50,7 @@ namespace DS.PathFinder.UnitTests
         public void ShouldFailCount(List<Point3d> path)
         {
             IGraph graph = new SimpleGraph(path);
-            Assert.That(graph.Nodes, Has.Count.Not.EqualTo(_length));
+            Assert.That(graph.Vertices, Has.Count.Not.EqualTo(_length));
         }
 
         private static bool HasValidAngles(IGraph graph, Vector3d startDirection, Vector3d endDirection, int angle)
@@ -61,14 +61,14 @@ namespace DS.PathFinder.UnitTests
             var checkPath = new List<Point3d>();
             if (startDirection != default)
             {
-                var startAxiliaryPoint = graph.Nodes.First() - startDirection;
+                var startAxiliaryPoint = graph.Vertices.First() - startDirection;
                 checkPath.Add(startAxiliaryPoint);
             }
-            checkPath.AddRange(graph.Nodes);
+            checkPath.AddRange(graph.Vertices);
 
             if (endDirection != default)
             {
-                var endAxiliaryPoint = graph.Nodes.Last() + endDirection;
+                var endAxiliaryPoint = graph.Vertices.Last() + endDirection;
                 checkPath.Add(endAxiliaryPoint);
             }
 

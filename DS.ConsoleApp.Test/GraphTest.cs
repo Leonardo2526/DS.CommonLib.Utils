@@ -100,7 +100,7 @@ namespace DS.ConsoleApp.Test
             };
 
             var graph = new SimpleGraph(nodes);
-            foreach (var link in graph.Links)
+            foreach (var link in graph.Edges)
             {
                 Console.WriteLine(link.ToString());
             }
@@ -111,7 +111,7 @@ namespace DS.ConsoleApp.Test
         public SimpleGraph RunLinksTest(List<Line> links)
         {
             var graph = new SimpleGraph(links);
-            foreach (var node in graph.Nodes)
+            foreach (var node in graph.Vertices)
             {
                 Console.WriteLine(node.ToString());
             }

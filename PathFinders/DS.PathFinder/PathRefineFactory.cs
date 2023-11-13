@@ -73,7 +73,7 @@ namespace DS.PathFinder
                 InitialBasis = _sourceBasis
             };
 
-            return minizator.ReduceNodes(graph).Nodes;
+            return minizator.ReduceNodes(graph).Vertices;
         }
     }
 }
