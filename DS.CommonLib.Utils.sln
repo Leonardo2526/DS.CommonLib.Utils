@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder.Test", "PathF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS.PathFinder.UnitTests", "DS.PathFinder.UnitTests\DS.PathFinder.UnitTests.csproj", "{4C032EC0-AF40-4B1C-991C-589B9039BDAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.VarUtils.Test", "DS.VarUtils.Test\DS.VarUtils.Test.csproj", "{2DF0720C-721D-4E5F-8BF7-70D2DA0476E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C032EC0-AF40-4B1C-991C-589B9039BDAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DF0720C-721D-4E5F-8BF7-70D2DA0476E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DF0720C-721D-4E5F-8BF7-70D2DA0476E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DF0720C-721D-4E5F-8BF7-70D2DA0476E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DF0720C-721D-4E5F-8BF7-70D2DA0476E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
