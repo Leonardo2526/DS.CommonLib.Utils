@@ -62,7 +62,7 @@
     <Compile Include="GetFractionTest.cs" />
     <Compile Include="EnumeratorTest.cs" />
     <Compile Include="GraphTest.cs" />
-    <Compile Include="LinesIntersectionTest.cs" />
+    <Compile Include="LinesBooleanTests.cs" />
     <Compile Include="RhinoTests\CCSTest.cs" />
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
     <Compile Include="RhinoTests\LineTest.cs" />

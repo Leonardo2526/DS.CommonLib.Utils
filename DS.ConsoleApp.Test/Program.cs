@@ -8,8 +8,10 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            new LinesIntersectionTest()
-                 .BoolIntersect();
+            new LinesBooleanTests()
+                 .BoolSubstractMultiple();
+                 //.BoolSubstract();
+            //.BoolIntersect();
 
             //new PointsOrderTest().OrderByDistance();
 

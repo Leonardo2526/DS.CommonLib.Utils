@@ -52,7 +52,7 @@ namespace DS.VarUtils.Test
         public void TestIntersections_001_ShouldPass(Point3d[] points)
         {
             var line2 = new Line(points[0], points[1]);
-            var intersectionLine = LineBoolTools.Intersect(_line1, line2, _tolerance);
+            var intersectionLine = LineBooleanTools.Intersect(_line1, line2, _tolerance);
             var p1 = intersectionLine.From;
             var p2 = intersectionLine.To;
 
@@ -70,7 +70,7 @@ namespace DS.VarUtils.Test
         public void TestIntersections_002_ShouldFail(Point3d[] points)
         {
             var line2 = new Line(points[0], points[1]);
-            var intersectionLine = LineBoolTools.Intersect(_line1, line2, _tolerance);
+            var intersectionLine = LineBooleanTools.Intersect(_line1, line2, _tolerance);
             var p1 = intersectionLine.From;
             var p2 = intersectionLine.To;
 
@@ -81,7 +81,7 @@ namespace DS.VarUtils.Test
         public void TestIntersections_003_ShouldFail(Point3d[] points)
         {
             var line2 = new Line(points[0], points[1]);
-            var intersectionLine = LineBoolTools.Intersect(_line1, line2, _tolerance);
+            var intersectionLine = LineBooleanTools.Intersect(_line1, line2, _tolerance);
             var p1 = intersectionLine.From;
             var p2 = intersectionLine.To;
 
@@ -92,7 +92,7 @@ namespace DS.VarUtils.Test
         public void TestIntersections_004_ShouldFail(Point3d[] points)
         {
             var line2 = new Line(points[0], points[1]);
-            var intersectionLine = LineBoolTools.Intersect(_line1, line2, _tolerance);
+            var intersectionLine = LineBooleanTools.Intersect(_line1, line2, _tolerance);
             var p1 = intersectionLine.From;
             var p2 = intersectionLine.To;
 
