@@ -6,7 +6,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// <summary>
     /// An object to resove to resolve <see cref="IResolveTask"/>s.
     /// </summary>
-    public interface ITaskResolver
+    public interface ITaskResolver<TTask> where TTask : IResolveTask
     {
         /// <summary>
         /// <see cref="IResolveTask"/>'s solutions.
@@ -20,7 +20,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <returns>
         /// <paramref name="task"/>'s solution.
         /// </returns>
-        ISolution TryResolve(IResolveTask task);
+        ISolution TryResolve(TTask task);
 
         /// <summary>
         /// Try to resove <paramref name="task"/> asynchronously.
@@ -29,6 +29,6 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <returns>
         /// <paramref name="task"/>'s solution.
         /// </returns>
-        Task<ISolution> TryResolveAsync(IResolveTask task);
+        Task<ISolution> TryResolveAsync(TTask task);
     }
 }

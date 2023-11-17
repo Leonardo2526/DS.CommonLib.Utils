@@ -6,22 +6,22 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// <summary>
     /// An object to resove tasks with set of resolvers.
     /// </summary>
-    public interface IMultiResolver
+    public interface IMultiResolver<TTask> where TTask : IResolveTask
     {
         /// <summary>
-        /// <see cref="ICollision"/>'s solutions.
+        /// Solutions.
         /// </summary>
         IEnumerable<ISolution> Solutions { get; }
 
         /// <summary>
-        /// Creator to produce collision's <see cref="IResolveTask"/>s.
+        /// Creator to produce collision's <typeparamref name="TTask"/>
         /// </summary>
-        IEnumerator<IResolveTask> TaskCreator { get; }
+        IEnumerator<TTask> TaskCreator { get; }
 
         /// <summary>
         /// Resolvers for <see cref="IResolveTask"/>s.
         /// </summary>
-        IEnumerable<ITaskResolver> TaskResolvers { get; }
+        IEnumerable<ITaskResolver<TTask>> TaskResolvers { get; }
 
         /// <summary>
         /// Try to resove <see cref="IResolveTask"/>'s produced by TaskCreator with set of TaskResolvers.
@@ -32,10 +32,10 @@ namespace DS.ClassLib.VarUtils.Resolvers
         ISolution TryResolve();
 
         /// <summary>
-        /// Try to resove <see cref="IResolveTask"/>'s produced by TaskCreator with set of TaskResolvers asynchronously.
+        /// Try to resove <typeparamref name="TTask"/>'s produced by TaskCreator with set of TaskResolvers asynchronously.
         /// </summary>
         /// <returns>
-        /// Solution of <see cref="IResolveTask"/>.
+        /// Solution of <typeparamref name="TTask"/>.
         /// </returns>
         Task<ISolution> TryResolveAsync();
     }

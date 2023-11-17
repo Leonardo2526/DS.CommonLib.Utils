@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DS.ClassLib.VarUtils.Resolvers
 {
-    public class DummyResolver : ITaskResolver
+    public class DummyResolver : ITaskResolver<IResolveTask>
     {
         private readonly List<ISolution> _solutions = new();
 

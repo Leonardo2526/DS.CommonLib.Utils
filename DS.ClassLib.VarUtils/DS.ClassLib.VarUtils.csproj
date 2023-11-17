@@ -48,6 +48,10 @@
     <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="DS.GraphUtils.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\bin\Debug\DS.GraphUtils.Entities.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
@@ -101,18 +105,20 @@
     <Compile Include="Resolvers\DummyCreator.cs" />
     <Compile Include="Resolvers\DummyResolver.cs" />
     <Compile Include="Resolvers\DummySolution.cs" />
-    <Compile Include="Resolvers\DummyTask.cs" />
-    <Compile Include="Resolvers\MultiResolver.cs" />
+    <Compile Include="Resolvers\PathFindMultiResolverBase.cs" />
+    <Compile Include="Resolvers\ResolveTasks\DummyTask.cs" />
+    <Compile Include="Resolvers\PathFindMultiResolver.cs" />
     <Compile Include="Collisons\IBestCollisionDetector.cs" />
     <Compile Include="Resolvers\IMultiResolver.cs" />
     <Compile Include="Collisons\IIntersectionFactory.cs" />
     <Compile Include="Resolvers\ITaskResolver.cs" />
-    <Compile Include="Resolvers\IResolveTask.cs" />
+    <Compile Include="Resolvers\ResolveTasks\IResolveTask.cs" />
     <Compile Include="CoordinateSystem\CCS.cs" />
     <Compile Include="CoordinateSystem\CCSModel.cs" />
     <Compile Include="Enumerables\DirectionIteratorBuilder.cs" />
     <Compile Include="Enumerables\IDirectionIteratorBuilder.cs" />
-    <Compile Include="ISolution.cs" />
+    <Compile Include="Resolvers\ResolveTasks\PathFindVertexTask.cs" />
+    <Compile Include="Solutions\ISolution.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="IDirectionValidator.cs" />
     <Compile Include="CoordinateSystem\IOctantModel.cs" />
@@ -169,6 +175,9 @@
     <Compile Include="NumberExtensions.cs" />
     <Compile Include="ListIntersection.cs" />
     <Compile Include="OperationCreator.cs" />
+    <Compile Include="Resolvers\ResolveTasks\ConnectTask.cs" />
+    <Compile Include="Resolvers\ResolveTasks\PathFindTask.cs" />
+    <Compile Include="Solutions\Solution.cs" />
     <Compile Include="Strings\PatternSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings\RegexPatterns.cs" />
@@ -177,12 +186,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PathFinders\DS.PathFinder\DS.PathFinder.csproj">
-      <Project>{0a99eb4b-783b-495b-b743-82077c2bb30a}</Project>
-      <Name>DS.PathFinder</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
