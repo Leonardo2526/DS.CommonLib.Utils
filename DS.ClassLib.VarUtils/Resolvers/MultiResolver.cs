@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS.ClassLib.VarUtils.Collisons
+namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
     /// An object to resove tasks with set of resolvers.
@@ -29,9 +29,6 @@ namespace DS.ClassLib.VarUtils.Collisons
         }
 
 
-        delegate Task<ISolution> ResolveRunner(ITaskResolver resolver, IResolveTask task);
-
-
         /// <inheritdoc/>
         public IEnumerator<IResolveTask> TaskCreator { get; }
 
@@ -48,15 +45,16 @@ namespace DS.ClassLib.VarUtils.Collisons
 
 
         /// <inheritdoc/>
-        public ISolution TryResolve() => 
-            Task.Run(() => GetSolution(RunResolver)).Result;
+        public ISolution TryResolve()
+        {
+            return Resolve(false).Result;
+        }
 
         /// <inheritdoc/>
-        public Task<ISolution> TryResolveAsync() =>
-            GetSolution(RunResolverAsync);
-        
+        public async Task<ISolution> TryResolveAsync() =>
+           await Resolve(true);
 
-        private async Task<ISolution> GetSolution(ResolveRunner resolveRunner)
+        private async Task<ISolution> Resolve(bool runAsync)
         {
             ISolution solution = null;
 
@@ -65,30 +63,32 @@ namespace DS.ClassLib.VarUtils.Collisons
                 _tasksIteratedCount++;
                 foreach (var resolver in TaskResolvers)
                 {
-                    Logger.Information($"Trying to resolve task {_tasksIteratedCount} with {resolver.GetType().Name}.");
-                    solution = await resolveRunner.Invoke(resolver, TaskCreator.Current);
-                    if (solution != null) 
+                    Logger?.Information($"Trying to resolve task {_tasksIteratedCount} with {resolver.GetType().Name}.");
+                    solution = runAsync ?
+                        await resolver.TryResolveAsync(TaskCreator.Current) :
+                        resolver.TryResolve(TaskCreator.Current);
+                    if (solution != null)
                     {
-                        Logger.Information($"Task {_tasksIteratedCount} resolved.");
+                        Logger?.Information($"Task {_tasksIteratedCount} resolved.");
                         _solutions.Add(solution);
-                        break; 
+                        break;
+                    }
+                    else
+                    {
+                        Logger?.Information($"Unable to resolve task {_tasksIteratedCount} with {resolver.GetType().Name}.");
                     }
                 }
             }
             else
             {
-                Logger.Information("Unable to get next task to resolve.");
-                Logger.Information($"Total tasks iterated {_tasksIteratedCount}.");
+                Logger?.Information("Unable to get next task to resolve.");
             }
+
+            Logger?.Information($"Total tasks iterated {_tasksIteratedCount}.");
+            Logger?.Information($"Total solutions {_solutions.Count}.");
 
             return solution;
         }
-
-        private Task<ISolution> RunResolverAsync(ITaskResolver resolver, IResolveTask task) =>
-            resolver.TryResolveAsync(task);
-
-        private Task<ISolution> RunResolver(ITaskResolver resolver, IResolveTask task) =>
-            Task.Run(() => resolver.TryResolve(task));
 
     }
 }

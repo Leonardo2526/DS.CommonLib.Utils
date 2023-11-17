@@ -1,4 +1,4 @@
-﻿namespace DS.ClassLib.VarUtils.Collisions
+﻿namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
     /// An object that represents task to resolve.

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DS.ClassLib.VarUtils.Collisions
+namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
     /// An object to resove to resolve <see cref="IResolveTask"/>s.
