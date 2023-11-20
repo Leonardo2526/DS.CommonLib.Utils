@@ -4,31 +4,33 @@ using System.Threading.Tasks;
 namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
-    /// An object to resove to resolve <see cref="IResolveTask"/>s.
+    /// The interface is used for objects to resolve tasks.
     /// </summary>
-    public interface ITaskResolver<TTask> where TTask : IResolveTask
+    /// <typeparam name="TTask"></typeparam>
+    /// <typeparam name="TResult"></typeparam>
+    public interface ITaskResolver<TTask, TResult>
     {
         /// <summary>
-        /// <see cref="IResolveTask"/>'s solutions.
+        /// The results of resolving a task.
         /// </summary>
-        IEnumerable<ISolution> Solutions { get; }
+        IEnumerable<TResult> Results { get; }
 
         /// <summary>
         /// Try to resove <paramref name="task"/>.
         /// </summary>
         /// <param name="task"></param>
         /// <returns>
-        /// <paramref name="task"/>'s solution.
+        /// The result of resolving a <paramref name="task"/>.
         /// </returns>
-        ISolution TryResolve(TTask task);
+        TResult TryResolve(TTask task);
 
         /// <summary>
         /// Try to resove <paramref name="task"/> asynchronously.
         /// </summary>
         /// <param name="task"></param>
         /// <returns>
-        /// <paramref name="task"/>'s solution.
+        /// The result of resolving a <paramref name="task"/>.
         /// </returns>
-        Task<ISolution> TryResolveAsync(TTask task);
+        Task<TResult> TryResolveAsync(TTask task);
     }
 }
