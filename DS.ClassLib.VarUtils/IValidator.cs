@@ -1,4 +1,7 @@
-﻿namespace DS.ClassLib.VarUtils
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace DS.ClassLib.VarUtils
 {
     /// <summary>
     /// The interface represents validator for <typeparamref name="T"/> objects.
@@ -6,6 +9,11 @@
     /// <typeparam name="T"></typeparam>
     public interface IValidator<T> where T : class
     {
+        /// <summary>
+        /// A collection that holds failed-validation information.
+        /// </summary>
+        IEnumerable<ValidationResult> ValidationResults { get; }
+
         /// <summary>
         /// Specifies if <paramref name="value"/> is valid.
         /// </summary>

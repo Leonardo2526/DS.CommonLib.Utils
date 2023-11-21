@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using DS.ClassLib.VarUtils.Extensions.Tuples;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -45,7 +46,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// Propagates notification that operations should be canceled.
         /// </summary>
         public CancellationToken CancellationToken { get; set; }
-
+       
 
         /// <summary>
         /// Try to resove <paramref name="item"/>.
@@ -67,7 +68,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public async Task<TResult> TryResolveAsync(TItem item)
             => await ResolveAsync(item, true);
 
-        private async Task<TResult> ResolveAsync(TItem item, bool runParallel)
+        private async Task<TResult> ResolveAsync(TItem item, bool runAsync)
         {
             TResult result = default;
 
@@ -77,11 +78,11 @@ namespace DS.ClassLib.VarUtils.Resolvers
 
                 Logger?.Information($"Start resolving with #{_factoriesQueue.Count} resolve factory.");
 
-                result = runParallel ?
-                    await Task.Run(() => factory.TryResolveAsync(item)) :
+                result = runAsync ?
+                    await factory.TryResolveAsync(item) :
                     factory.TryResolve(item);
 
-                if (result.Equals(default))
+                if (result is null || result.Equals(default) || result.IsTupleNull())
                 {
                     _factoriesQueue.Dequeue();
                     Logger?.Information($"Factory #{_factoriesQueue.Count + 1} returns null result, so it was removed from resolving queue.");

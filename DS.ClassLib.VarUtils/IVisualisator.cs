@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Basis;
+using System.Threading.Tasks;
 
 namespace DS.ClassLib.VarUtils
 {
@@ -7,9 +8,24 @@ namespace DS.ClassLib.VarUtils
         public void Show();
     }
 
+    /// <summary>
+    /// The interface is used to show <typeparamref name="TItem"/>. 
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     public interface IItemVisualisator<TItem>
     {
-        public void Show(TItem t);
+        /// <summary>
+        /// Show <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Show(TItem item);
+
+
+        /// <summary>
+        /// Show <paramref name="item"/> asyncronously.
+        /// </summary>
+        /// <param name="item"></param>
+        public Task ShowAsync(TItem item);
     }
 
     public interface IObjectVisualisator

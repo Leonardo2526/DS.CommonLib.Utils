@@ -1,7 +1,11 @@
-﻿using Serilog;
+﻿using Castle.Core.Internal;
+using DS.ClassLib.VarUtils.Extensions.Tuples;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DS.ClassLib.VarUtils.Resolvers
 {
@@ -52,6 +56,10 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// </summary>
         public IItemVisualisator<TResult> ResultVisualizator { get; set; }
 
+        /// <summary>
+        /// Specifies if resolve task in separate thread.
+        /// </summary>
+        public bool ResolveParallel { get; set; }
 
         /// <inheritdoc/>
         public TResult TryResolve(TItem item)
@@ -61,23 +69,24 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public async Task<TResult> TryResolveAsync(TItem item)
        => await ResolveAsync(item, true);
 
-        private async Task<TResult> ResolveAsync(TItem item, bool runParallel)
+        private async Task<TResult> ResolveAsync(TItem item, bool runAsync)
         {
             TResult result = default;
 
             var task = _taskCreator.CreateTask(item);
-            if (task != null)
+
+            if (task == null || task.Equals(default) || task.IsTupleNull())
+            {
+                Logger?.Information($"Unable to get task to resolve.");
+            }
+            else
             {
                 _tasks ??= new List<TTask>();
                 _tasks.Add(task);
                 Logger?.Information($"Task #{_tasks.Count} {task.GetType().Name} created.");
 
                 TaskVisualizator?.Show(task);
-                result = await ResolveAsync(task, runParallel);
-            }
-            else
-            {
-                Logger?.Information($"Unable to get task to resolve.");
+                result = await ResolveAsync(task, runAsync);
             }
 
             Logger?.Information($"Resolve factory tasks: {_tasks?.Count}.");
@@ -86,15 +95,25 @@ namespace DS.ClassLib.VarUtils.Resolvers
             return result;
         }
 
-        private async Task<TResult> ResolveAsync(TTask task, bool runParallel)
+        private async Task<TResult> ResolveAsync(TTask task, bool runAsync)
         {
             Logger?.Information($"Trying to resolve task with {_taskResolver.GetType().Name}.");
 
             var time1 = DateTime.Now;
 
-            var result = runParallel ?
-                 await Task.Run(() => _taskResolver.TryResolveAsync(task)) :
-                _taskResolver.TryResolve(task);
+            TResult result = default;
+            if (ResolveParallel)
+            {
+                result = runAsync ?
+                  await Task.Run(() => _taskResolver.TryResolveAsync(task)) :
+                  Task.Run(() => _taskResolver.TryResolve(task)).Result;
+            }
+            else
+            {
+                result = runAsync ?
+                    await _taskResolver.TryResolveAsync(task) :
+                    _taskResolver.TryResolve(task);
+            }
 
             var time2 = DateTime.Now;
             TimeSpan totalInterval = time2 - time1;
@@ -104,13 +123,15 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 _results ??= new List<TResult>();
                 _results.Add(result);
                 Logger?.Information($"Task resolved in {(int)totalInterval.TotalMilliseconds} ms successfully!");
+
                 ResultVisualizator?.Show(result);
+                //await ResultVisualizator?.ShowAsync(result);
+
             }
             else
             { Logger?.Information($"Unable to resolve task."); }
 
             return result;
         }
-
     }
 }

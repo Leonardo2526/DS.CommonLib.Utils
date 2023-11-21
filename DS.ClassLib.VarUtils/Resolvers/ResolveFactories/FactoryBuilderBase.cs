@@ -32,6 +32,10 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// </summary>
         public IItemVisualisator<TResult> ResultVisualizator { get; set; }
 
+        /// <summary>
+        /// Specifies if resolve task in separate thread.
+        /// </summary>
+        public bool ResolveParallel { get; set; }
 
         /// <inheritdoc/>
         public IResolveFactory<TItem, TResult> Create()
@@ -48,7 +52,8 @@ namespace DS.ClassLib.VarUtils.Resolvers
             {
                 Logger = Logger,
                 TaskVisualizator = TaskVisualizator,
-                ResultVisualizator = ResultVisualizator
+                ResultVisualizator = ResultVisualizator,
+                ResolveParallel = ResolveParallel
             };
         }
 

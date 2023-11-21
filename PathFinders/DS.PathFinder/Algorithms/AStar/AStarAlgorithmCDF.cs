@@ -140,6 +140,12 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public bool IsFailedOnStart { get; private set; }
 
+
+        /// <summary>
+        /// Maximum search time in milliseconds.
+        /// </summary>
+        public int MaxTime { get; set; } = 3000;
+
         #endregion
 
 
@@ -249,7 +255,7 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public void ResetToken()
         {
-            _internalTokenSource = new CancellationTokenSource(3000);
+            _internalTokenSource = new CancellationTokenSource(MaxTime);
             _linkedTokenSource =
                 CancellationTokenSource.CreateLinkedTokenSource(ExternalTokenSource.Token, _internalTokenSource.Token);
         }
