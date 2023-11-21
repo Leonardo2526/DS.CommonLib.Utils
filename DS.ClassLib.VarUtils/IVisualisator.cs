@@ -7,6 +7,11 @@ namespace DS.ClassLib.VarUtils
         public void Show();
     }
 
+    public interface IItemVisualisator<TItem>
+    {
+        public void Show(TItem t);
+    }
+
     public interface IObjectVisualisator
     {
         public void Show(object objectToShow);

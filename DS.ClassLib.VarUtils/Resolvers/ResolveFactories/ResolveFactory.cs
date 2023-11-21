@@ -42,6 +42,17 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// </summary>
         public ILogger Logger { get; set; }
 
+        /// <summary>
+        /// Visualizator to show <typeparamref name="TTask"/>.
+        /// </summary>
+        public IItemVisualisator<TTask> TaskVisualizator { get; set; }
+
+        /// <summary>
+        /// Visualizator to show <typeparamref name="TResult"/>.
+        /// </summary>
+        public IItemVisualisator<TResult> ResultVisualizator { get; set; }
+
+
         /// <inheritdoc/>
         public TResult TryResolve(TItem item)
         => ResolveAsync(item, false).Result;
@@ -50,7 +61,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public async Task<TResult> TryResolveAsync(TItem item)
        => await ResolveAsync(item, true);
 
-        public async Task<TResult> ResolveAsync(TItem item, bool runParallel)
+        private async Task<TResult> ResolveAsync(TItem item, bool runParallel)
         {
             TResult result = default;
 
@@ -61,6 +72,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 _tasks.Add(task);
                 Logger?.Information($"Task #{_tasks.Count} {task.GetType().Name} created.");
 
+                TaskVisualizator?.Show(task);
                 result = await ResolveAsync(task, runParallel);
             }
             else
@@ -92,6 +104,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 _results ??= new List<TResult>();
                 _results.Add(result);
                 Logger?.Information($"Task resolved in {(int)totalInterval.TotalMilliseconds} ms successfully!");
+                ResultVisualizator?.Show(result);
             }
             else
             { Logger?.Information($"Unable to resolve task."); }

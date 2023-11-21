@@ -22,6 +22,17 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// </summary>
         public IResolveFactory<TItem, TResult> ResolveFactory { get; private set; }
 
+        /// <summary>
+        /// Visualizator to show <typeparamref name="TTask"/>.
+        /// </summary>
+        public IItemVisualisator<TTask> TaskVisualizator { get; set; }
+
+        /// <summary>
+        /// Visualizator to show <typeparamref name="TResult"/>.
+        /// </summary>
+        public IItemVisualisator<TResult> ResultVisualizator { get; set; }
+
+
         /// <inheritdoc/>
         public IResolveFactory<TItem, TResult> Create()
         {
@@ -35,7 +46,9 @@ namespace DS.ClassLib.VarUtils.Resolvers
 
             return ResolveFactory = new ResolveFactory<TItem, TTask, TResult>(taskCreator, taskResolver)
             {
-                Logger = Logger
+                Logger = Logger,
+                TaskVisualizator = TaskVisualizator,
+                ResultVisualizator = ResultVisualizator
             };
         }
 

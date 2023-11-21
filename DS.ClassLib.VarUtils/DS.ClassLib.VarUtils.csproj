@@ -102,6 +102,10 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="Collisons\CollisionStatus.cs" />
+    <Compile Include="Collisons\ICollisionFactory.cs" />
+    <Compile Include="Collisons\ICollisionVisualizator.cs" />
+    <Compile Include="Collisons\IStatusCollision.cs" />
     <Compile Include="Resolvers\ResolveFactories\FactoryBuilderBase.cs" />
     <Compile Include="Resolvers\ResolveFactories\IResolveFactoryBuilder.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreator.cs" />
