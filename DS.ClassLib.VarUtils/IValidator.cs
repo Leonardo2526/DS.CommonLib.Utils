@@ -7,7 +7,7 @@ namespace DS.ClassLib.VarUtils
     /// The interface represents validator for <typeparamref name="T"/> objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IValidator<T> where T : class
+    public interface IValidator<T>
     {
         /// <summary>
         /// A collection that holds failed-validation information.

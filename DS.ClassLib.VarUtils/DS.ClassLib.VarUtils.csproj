@@ -102,7 +102,9 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="ISelector.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreatorFactory.cs" />
+    <Compile Include="Resolvers\TaskCreators\TupleValidatableTaskCreator.cs" />
     <Compile Include="TupleExtensions.cs" />
     <Compile Include="Collisons\CollisionStatus.cs" />
     <Compile Include="Collisons\ICollisionFactory.cs" />

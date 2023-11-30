@@ -51,6 +51,7 @@ namespace DS.PathFinder
             var points = path.Select(n => n.Point).ToList();
             points.Reverse();
             points = MinNodes ? MinimizeNodes(points) : points;
+            points = MinNodes ? MinimizeNodes(points) : points; //?!
 
             return points;
         }
