@@ -102,7 +102,9 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
-    <Compile Include="ISelector.cs" />
+    <Compile Include="IWindowMessenger.cs" />
+    <Compile Include="Selectors\ISelector.cs" />
+    <Compile Include="Selectors\IValidatableSelector.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreatorFactory.cs" />
     <Compile Include="Resolvers\TaskCreators\TupleValidatableTaskCreator.cs" />
     <Compile Include="TupleExtensions.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strings\RegexPatterns.cs" />
     <Compile Include="Strings\StringExtensions.cs" />
+    <Compile Include="Selectors\ValidatableSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,6 +1,7 @@
-﻿using DS.RevitLib.Utils.Various;
+﻿using DS.ClassLib.VarUtils.Selectors;
 using Serilog;
 using System;
+using System.Windows.Controls.Primitives;
 
 namespace DS.ClassLib.VarUtils.Resolvers
 {
@@ -36,10 +37,10 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public virtual (Ttask, Ttask) CreateTask(Titem item = default)
         {
             var v1 = _selector.Select();
-            if (v1 == null) { return default; }
+            if (v1 == null || !_selector.IsValid) { return default; }
 
             var v2 = _selector.Select();
-            if (v2 == null) { return default; }
+            if (v2 == null || !_selector.IsValid) { return default; }
 
             return (Convert(v1), Convert(v2));
         }
