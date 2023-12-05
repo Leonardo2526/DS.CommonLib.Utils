@@ -1,17 +1,16 @@
 ﻿namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
-    /// An object that represents builder to get <see cref="IResolveFactoryBuilder{TItem, TResult}"/>.
+    /// An object that represents builder to get <see cref="IResolveFactoryBuilder{TResult}"/>.
     /// </summary>
-    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TResult"></typeparam>
-    public interface IResolveFactoryBuilder<TItem, TResult>
+    public interface IResolveFactoryBuilder<TResult>
     {
         /// <summary>
-        /// Create factory to resolve <typeparamref name="TItem"/> and get it's resolved <typeparamref name="TResult"/>.
+        /// Create factory to resolve a taskand get it's resolved <typeparamref name="TResult"/>.
         /// </summary>
         /// <returns></returns>
-        IResolveFactory<TItem, TResult> Create();
+        IResolveFactory<TResult> Create();
 
     }
 }

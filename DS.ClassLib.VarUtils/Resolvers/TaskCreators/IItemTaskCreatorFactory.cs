@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 namespace DS.ClassLib.VarUtils.Resolvers.TaskCreators
 {
     /// <summary>
-    /// The interface is used to produce <see cref="ITaskCreator{TTask}"/>.
+    /// The interface is used to produce <see cref="IItemTaskCreator{TItem, TTask}"/>.
     /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TTask"></typeparam>
-    public interface ITaskCreatorFactory<TTask>
+    public interface IItemTaskCreatorFactory<TItem, TTask>
     {
         /// <summary>
-        /// Create <see cref="ITaskCreator{TTask}"/>.
+        /// Create <see cref="IItemTaskCreator{TItem, TTask}"/>.
         /// </summary>
         /// <returns></returns>
-        ITaskCreator<TTask> Create();
+        IItemTaskCreator<TItem, TTask> Create();
     }
 }

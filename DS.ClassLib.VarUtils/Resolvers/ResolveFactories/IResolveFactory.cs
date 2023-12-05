@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
-    /// The interface is used for objects to get result from some item.
+    /// The interface is used for objects to resolve a task.
     /// </summary>
-    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TResult"></typeparam>
-    public interface IResolveFactory<TItem, TResult>
+    public interface IResolveFactory<TResult>
     {
         /// <summary>
         /// Resolved results.
@@ -16,21 +15,19 @@ namespace DS.ClassLib.VarUtils.Resolvers
         IEnumerable<TResult> Results { get; }
 
         /// <summary>
-        /// Try to resove <paramref name="item"/>.
+        /// Try to resove a task.
         /// </summary>
-        /// <param name="item"></param>
         /// <returns>
-        /// The result of resolving an <paramref name="item"/>.
+        /// The result of resolving a task.
         /// </returns>
-        TResult TryResolve(TItem item);
+        TResult TryResolve();
 
         /// <summary>
-        /// Try to resove <paramref name="item"/> asynchronously.
+        /// Try to resove a task asynchronously.
         /// </summary>
-        /// <param name="item"></param>
         /// <returns>
-        /// The result of resolving an <paramref name="item"/>.
+        /// The result of resolving a task.
         /// </returns>
-        Task<TResult> TryResolveAsync(TItem item);
+        Task<TResult> TryResolveAsync();
     }
 }

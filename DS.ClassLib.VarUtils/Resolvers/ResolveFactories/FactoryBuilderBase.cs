@@ -3,13 +3,12 @@
 namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
-    /// Represents a builder to create <see cref="IResolveFactory{TItem, TResult}"/>.
+    /// Represents a builder to create <see cref="IResolveFactory{TResult}"/>.
     /// </summary>
-    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TTask"></typeparam>
     /// <typeparam name="TResult"></typeparam>    
-    public abstract partial class FactoryBuilderBase<TItem, TTask, TResult> :
-        IResolveFactoryBuilder<TItem, TResult>
+    public abstract partial class FactoryBuilderBase<TTask, TResult> :
+        IResolveFactoryBuilder<TResult>
     {
 
         /// <summary>
@@ -20,7 +19,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <summary>
         /// A factory get <typeparamref name="TResult"/> from <typeparamref name="TTask"/>.
         /// </summary>
-        public IResolveFactory<TItem, TResult> ResolveFactory { get; private set; }
+        public IResolveFactory<TResult> ResolveFactory { get; private set; }
 
         /// <summary>
         /// Visualizator to show <typeparamref name="TTask"/>.
@@ -38,7 +37,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public bool ResolveParallel { get; set; }
 
         /// <inheritdoc/>
-        public IResolveFactory<TItem, TResult> Create()
+        public IResolveFactory<TResult> Create()
         {
             var taskCreator = BuildTaskCreator();
             if (taskCreator == null)
@@ -48,7 +47,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
             if (taskResolver == null)
             { Logger?.Error("Failed to build task resolver."); return null; }
 
-            return ResolveFactory = new ResolveFactory<TItem, TTask, TResult>(taskCreator, taskResolver)
+            return ResolveFactory = new ResolveFactory<TTask, TResult>(taskCreator, taskResolver)
             {
                 Logger = Logger,
                 TaskVisualizator = TaskVisualizator,
@@ -61,7 +60,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// Get an object to create <typeparamref name="TTask"/>s.
         /// </summary>
         /// <returns></returns>
-        protected abstract ITaskCreator<TItem, TTask> BuildTaskCreator();
+        protected abstract ITaskCreator<TTask> BuildTaskCreator();
 
         /// <summary>
         /// Get an object to resolve <typeparamref name="TTask"/>s.

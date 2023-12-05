@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
-    /// An object to resolve a task with set of factories.
+    /// An object to resolve <typeparamref name="TItem"/> with set of factories.
     /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TResult"></typeparam>
-    public class ResolveProcessor<TResult>
+    public class ItemResolveProcessor<TItem, TResult>
     {
-        private readonly IEnumerable<IResolveFactory<TResult>> _resolveFactories;
-        private readonly Queue<IResolveFactory<TResult>> _factoriesQueue = new();
+        private readonly IEnumerable<IItemResolveFactory<TItem, TResult>> _resolveFactories;
+        private readonly Queue<IItemResolveFactory<TItem, TResult>> _factoriesQueue = new();
         private readonly List<TResult> _results = new();
 
 
@@ -22,7 +23,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// Instansiate a resolver with set of <paramref name="resolveFactories"/>.
         /// </summary>
         /// <param name="resolveFactories"></param>
-        public ResolveProcessor(IEnumerable<IResolveFactory<TResult>> resolveFactories)
+        public ItemResolveProcessor(IEnumerable<IItemResolveFactory<TItem, TResult>> resolveFactories)
         {
             _resolveFactories = resolveFactories;
             resolveFactories.ToList().ForEach(_factoriesQueue.Enqueue);
@@ -48,24 +49,26 @@ namespace DS.ClassLib.VarUtils.Resolvers
        
 
         /// <summary>
-        /// Try to resove a task.
+        /// Try to resove <paramref name="item"/>.
         /// </summary>
+        /// <param name="item"></param>
         /// <returns>
-        /// The result of resolving a task.
+        /// The result of resolving an <paramref name="item"/>.
         /// </returns>
-        public TResult TryResolve()
-            => ResolveAsync(false).Result;
+        public TResult TryResolve(TItem item)
+            => ResolveAsync(item, false).Result;
 
         /// <summary>
-        /// Try to resove a task asynchronously.
+        /// Try to resove <paramref name="item"/> asynchronously.
         /// </summary>
+        /// <param name="item"></param>
         /// <returns>
-        /// The result of resolving a task.
+        /// The result of resolving an <paramref name="item"/>.
         /// </returns>
-        public async Task<TResult> TryResolveAsync()
-            => await ResolveAsync(true);
+        public async Task<TResult> TryResolveAsync(TItem item)
+            => await ResolveAsync(item, true);
 
-        private async Task<TResult> ResolveAsync( bool runAsync)
+        private async Task<TResult> ResolveAsync(TItem item, bool runAsync)
         {
             TResult result = default;
 
@@ -76,8 +79,8 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 Logger?.Information($"Start resolving with #{_factoriesQueue.Count} resolve factory.");
 
                 result = runAsync ?
-                    await factory.TryResolveAsync() :
-                    factory.TryResolve();
+                    await factory.TryResolveAsync(item) :
+                    factory.TryResolve(item);
 
                 if (result is null || result.Equals(default) || result.IsTupleNull())
                 {

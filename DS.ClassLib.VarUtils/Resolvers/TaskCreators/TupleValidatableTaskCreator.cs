@@ -10,7 +10,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// </summary>
     /// <typeparam name="Titem"></typeparam>
     /// <typeparam name="Ttask"></typeparam>
-    public class TupleValidatableTaskCreator<Titem, Ttask> : ITaskCreator<Titem, (Ttask, Ttask)>
+    public class TupleValidatableTaskCreator<Ttask> : ITaskCreator<(Ttask, Ttask)>
     {
         private readonly IValidatableSelector<Ttask> _selector;
 
@@ -34,7 +34,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public virtual (Ttask, Ttask) CreateTask(Titem item = default)
+        public virtual (Ttask, Ttask) CreateTask()
         {
             var v1 = _selector.Select();
             if (v1 == null || !_selector.IsValid) { return default; }

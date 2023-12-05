@@ -10,25 +10,26 @@ using System.Xml.Linq;
 namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <summary>
-    /// A factory to resolve a task.
+    /// A factory to resolve <typeparamref name="TItem"/>.
     /// </summary>
     /// <typeparam name="TTask"></typeparam>
+    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TResult"></typeparam>
-    public class ResolveFactory<TTask, TResult> : IResolveFactory<TResult>
+    public class ItemResolveFactory<TItem, TTask, TResult> : IItemResolveFactory<TItem, TResult>
     {
-        private readonly ITaskCreator<TTask> _taskCreator;
+        private readonly IItemTaskCreator<TItem, TTask> _taskCreator;
         private readonly ITaskResolver<TTask, TResult> _taskResolver;
         private List<TTask> _tasks;
         private List<TResult> _results;
 
         /// <summary>
         /// Instansiate a factory to resolve 
-        /// a task with <paramref name="taskCreator"/> and <paramref name="taskResolver"/>  
+        /// <typeparamref name="TItem"/> with <paramref name="taskCreator"/> and <paramref name="taskResolver"/>  
         /// where task is <typeparamref name="TTask"/> and result of resolving is <typeparamref name="TResult"/>.     
         /// </summary>
         /// <param name="taskCreator"></param>
         /// <param name="taskResolver"></param>
-        public ResolveFactory(ITaskCreator<TTask> taskCreator,
+        public ItemResolveFactory(IItemTaskCreator<TItem, TTask> taskCreator,
             ITaskResolver<TTask, TResult> taskResolver)
         {
             _taskCreator = taskCreator;
@@ -61,18 +62,18 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public bool ResolveParallel { get; set; }
 
         /// <inheritdoc/>
-        public TResult TryResolve()
-        => ResolveAsync(false).Result;
+        public TResult TryResolve(TItem item)
+        => ResolveAsync(item, false).Result;
 
         /// <inheritdoc/>
-        public async Task<TResult> TryResolveAsync()
-       => await ResolveAsync(true);
+        public async Task<TResult> TryResolveAsync(TItem item)
+       => await ResolveAsync(item, true);
 
-        private async Task<TResult> ResolveAsync(bool runAsync)
+        private async Task<TResult> ResolveAsync(TItem item, bool runAsync)
         {
             TResult result = default;
 
-            var task = _taskCreator.CreateTask();
+            var task = _taskCreator.CreateTask(item);
 
             if (task == null || task.Equals(default) || task.IsTupleNull())
             {

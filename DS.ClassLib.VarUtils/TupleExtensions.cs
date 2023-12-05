@@ -59,7 +59,7 @@ namespace DS.ClassLib.VarUtils.Extensions.Tuples
             if (!IsValueTuple(tuple)) { return false; }
             var type = tuple.GetType();
             var values = type.GetRuntimeFields().Select(f => f.GetValue(tuple));
-            return values.Any(f => f is null);
+            return values.Any(f => f is null || IsTupleNull(f));
         }
     }
 }

@@ -3,13 +3,15 @@
     /// <summary>
     /// The interface is used to create tasks to resolve.
     /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     /// <typeparam name="TTask"></typeparam>
-    public interface ITaskCreator<TTask>
+    public interface IItemTaskCreator<TItem, TTask>
     {
         /// <summary>
         /// Create task to resolve.
         /// </summary>
+        /// <param name="item"></param>
         /// <returns></returns>
-        TTask CreateTask();
+        TTask CreateTask(TItem item);
     }
 }
