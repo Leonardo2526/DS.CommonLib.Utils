@@ -85,9 +85,9 @@
     <Compile Include="EnumeratorTest.cs" />
     <Compile Include="GraphTest.cs" />
     <Compile Include="LinesBooleanTests.cs" />
-    <Compile Include="MultiResolverTest.cs" />
     <Compile Include="RhinoTests\CCSTest.cs" />
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
+    <Compile Include="RhinoTests\Basis3dTests.cs" />
     <Compile Include="RhinoTests\LineTest.cs" />
     <Compile Include="RhinoTests\PointConverterTest.cs" />
     <Compile Include="RhinoTests\PlaneSurfaceTest.cs" />

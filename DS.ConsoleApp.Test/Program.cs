@@ -9,11 +9,16 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            var test = new MultiResolverTest()
-                .CreateResolver();
+            Basis3dTests.TryCreateTransforms1();
+            //Basis3dTests.ConvertBasis();
+            //Basis3dTests.TestBasisOrthonormal();
+
+
+            //var test = new MultiResolverTest()
+            //    .CreateResolver();
 
             //test.Resolve();
-            Task.Run(() => test.ResolveAsync().Wait());
+            //Task.Run(() => test.ResolveAsync().Wait());
 
 
             //new LinesBooleanTests()

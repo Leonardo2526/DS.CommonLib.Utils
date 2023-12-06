@@ -190,6 +190,12 @@ namespace DS.PathFinder.Algorithms.AStar
 
             double minDistToANP = _traceSettings.R + _traceSettings.D;
 
+            //PointVisualisator?.ShowVector(_startPoint, _startPoint + StartDirection);
+            //PointVisualisator?.Show(StartANP);
+            //PointVisualisator?.ShowVector(_endPoint, _endPoint + EndDirection);
+            //PointVisualisator?.Show(EndANP);
+            //PointVisualisator?.Show(SourceBasis);
+
             //iterate over open list.
             while (_mOpen.Count > 0)
             {
@@ -322,6 +328,7 @@ namespace DS.PathFinder.Algorithms.AStar
                 { return false; }
             }
 
+            //PointVisualisator?.Show(newNode.Basis);
             //check collisions 
             if (_mOpen.Count == 0 && _mClose.Count == 0)
                 { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }
