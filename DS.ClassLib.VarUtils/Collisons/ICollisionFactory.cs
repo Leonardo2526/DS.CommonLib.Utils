@@ -26,6 +26,6 @@ namespace DS.ClassLib.VarUtils.Collisions
         /// Returns <see langword="null"/> if <paramref name="item1"/> and <paramref name="item2"/> have no intersections.
         /// </para>
         /// </returns>
-        TCollision CreateCollision(TItem1 item1, TItem1 item2);
+        TCollision CreateCollision(TItem1 item1, TITem2 item2);
     }
 }

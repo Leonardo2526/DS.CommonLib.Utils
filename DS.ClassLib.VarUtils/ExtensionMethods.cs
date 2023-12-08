@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DS.ClassLib.VarUtils.Extensions.Tuples;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -52,5 +53,21 @@ namespace DS.ClassLib.VarUtils
             if (assembly == null) { return DateTime.MinValue; }
             return File.GetLastWriteTime(assembly.Location);
         }
+
+        /// <summary>
+        /// Check for <see langword="null"/> of <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="item"/> is equal to <see langword="null"/> or default.
+        /// <para>
+        /// <see langword="true"/> if <paramref name="item"/> is <see cref="ValueTuple"/> and one of it's fields is <see langword="null"/>.
+        /// </para>
+        /// <para>
+        /// 
+        /// Otherwise <see langword="false"/></para>
+        /// </returns>
+        public static bool IsNullOrDefaultOrTuple(this object item)
+            => item is null || item.Equals(default) || item.IsTupleNull();
     }
 }

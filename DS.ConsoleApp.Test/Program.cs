@@ -9,7 +9,8 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            Basis3dTests.TryCreateTransforms1();
+            ActionTwoWayEnumeratorTest.StringIterator();
+            //Basis3dTests.TryCreateTransforms1();
             //Basis3dTests.ConvertBasis();
             //Basis3dTests.TestBasisOrthonormal();
 

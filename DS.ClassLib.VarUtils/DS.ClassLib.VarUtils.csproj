@@ -102,9 +102,14 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="Iterators\ActionTwoWayEnumerator.cs" />
+    <Compile Include="Iterators\TwoWayEnumerator.cs" />
+    <Compile Include="Iterators\ITwoWayEnumerator.cs" />
     <Compile Include="IWindowMessenger.cs" />
+    <Compile Include="Resolvers\IResolveProcessor.cs" />
     <Compile Include="Resolvers\ResolveFactories\IResolveFactory.cs" />
     <Compile Include="Resolvers\ResolveFactories\IItemResolveFactoryBuilder.cs" />
+    <Compile Include="Resolvers\ResolveFactories\IResolveProcessorFactory.cs" />
     <Compile Include="Resolvers\ResolveFactories\ResolveFactory.cs" />
     <Compile Include="Resolvers\ResolveProcessor.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreator.cs" />

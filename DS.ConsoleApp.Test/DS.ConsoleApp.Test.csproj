@@ -77,6 +77,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionTwoWayEnumeratorTest.cs" />
     <Compile Include="AssemblyInfoTest.cs" />
     <Compile Include="GCDTest.cs" />
     <Compile Include="DirectoriesTest.cs" />

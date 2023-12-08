@@ -11,11 +11,11 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// An object to resolve a task with set of factories.
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
-    public class ResolveProcessor<TResult>
+    public class ResolveProcessor<TResult> : IResolveProcessor<TResult>
     {
-        private readonly IEnumerable<IResolveFactory<TResult>> _resolveFactories;
         private readonly Queue<IResolveFactory<TResult>> _factoriesQueue = new();
-        private readonly List<TResult> _results = new();
+        private Queue<IResolveFactory<TResult>> _specificFactoriesQueue;
+        private readonly IEnumerable<IResolveFactory<TResult>> _resolveFactories;
 
 
         /// <summary>
@@ -29,10 +29,11 @@ namespace DS.ClassLib.VarUtils.Resolvers
         }
 
 
+
         /// <summary>
         /// The results of resolving.
         /// </summary>
-        public IEnumerable<TResult> Results => _results;
+        public IEnumerable<TResult> Results => _resolveFactories.SelectMany(f => f.Results);
 
 
         /// <summary>
@@ -45,35 +46,52 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// Propagates notification that operations should be canceled.
         /// </summary>
         public CancellationToken CancellationToken { get; set; }
-       
 
-        /// <summary>
-        /// Try to resove a task.
-        /// </summary>
-        /// <returns>
-        /// The result of resolving a task.
-        /// </returns>
+        /// <inheritdoc/>
+        public IEnumerable<IResolveFactory<TResult>> ResolveFactories => _resolveFactories;
+
+
+        /// <inheritdoc/>
         public TResult TryResolve()
-            => ResolveAsync(false).Result;
+            => ResolveAsync(_factoriesQueue, false).Result;
 
-        /// <summary>
-        /// Try to resove a task asynchronously.
-        /// </summary>
-        /// <returns>
-        /// The result of resolving a task.
-        /// </returns>
+        /// <inheritdoc/>
+        public TResult TryResolve(IEnumerable<IResolveFactory<TResult>> resolveFactories)
+        {
+            if(_specificFactoriesQueue is null)
+            {
+                _specificFactoriesQueue = new();
+                resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
+            }
+            return ResolveAsync(_specificFactoriesQueue, false).Result;
+        }
+
+        /// <inheritdoc/>
         public async Task<TResult> TryResolveAsync()
-            => await ResolveAsync(true);
+            => await ResolveAsync(_factoriesQueue, true);
 
-        private async Task<TResult> ResolveAsync( bool runAsync)
+        /// <inheritdoc/>
+        public async Task<TResult> TryResolveAsync(IEnumerable<IResolveFactory<TResult>> resolveFactories)
+        {
+            if (_specificFactoriesQueue is null)
+            {
+                _specificFactoriesQueue = new();
+                resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
+            }
+            return await ResolveAsync(_specificFactoriesQueue, false);
+        }
+
+
+
+        private async Task<TResult> ResolveAsync(Queue<IResolveFactory<TResult>> resolveFactoriesQueue, bool runAsync)
         {
             TResult result = default;
 
-            while (_factoriesQueue.Count > 0)
+            while (resolveFactoriesQueue.Count > 0)
             {
-                var factory = _factoriesQueue.Peek();
+                var factory = resolveFactoriesQueue.Peek();
 
-                Logger?.Information($"Start resolving with #{_factoriesQueue.Count} resolve factory.");
+                Logger?.Information($"Start resolving with #{resolveFactoriesQueue.Count} resolve factory.");
 
                 result = runAsync ?
                     await factory.TryResolveAsync() :
@@ -81,13 +99,12 @@ namespace DS.ClassLib.VarUtils.Resolvers
 
                 if (result is null || result.Equals(default) || result.IsTupleNull())
                 {
-                    _factoriesQueue.Dequeue();
-                    Logger?.Information($"Factory #{_factoriesQueue.Count + 1} returns null result, so it was removed from resolving queue.");
+                    resolveFactoriesQueue.Dequeue();
+                    Logger?.Information($"Factory #{resolveFactoriesQueue.Count + 1} returns null result, so it was removed from resolving queue.");
                 }
                 else
                 {
-                    _results.Add(result);
-                    Logger?.Information($"Processor results: {_results?.Count}.");
+                    Logger?.Information($"Processor results: {Results?.Count()}.");
                     break;
                 }
 
