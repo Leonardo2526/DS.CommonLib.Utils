@@ -140,6 +140,12 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public bool IsFailedOnStart { get; private set; }
 
+
+        /// <summary>
+        /// Maximum search time in milliseconds.
+        /// </summary>
+        public int MaxTime { get; set; } = 3000;
+
         #endregion
 
 
@@ -183,6 +189,12 @@ namespace DS.PathFinder.Algorithms.AStar
             _mOpen.Push(parentNode);
 
             double minDistToANP = _traceSettings.R + _traceSettings.D;
+
+            //PointVisualisator?.ShowVector(_startPoint, _startPoint + StartDirection);
+            //PointVisualisator?.Show(StartANP);
+            //PointVisualisator?.ShowVector(_endPoint, _endPoint + EndDirection);
+            //PointVisualisator?.Show(EndANP);
+            //PointVisualisator?.Show(SourceBasis);
 
             //iterate over open list.
             while (_mOpen.Count > 0)
@@ -249,7 +261,7 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public void ResetToken()
         {
-            _internalTokenSource = new CancellationTokenSource(3000);
+            _internalTokenSource = new CancellationTokenSource(MaxTime);
             _linkedTokenSource =
                 CancellationTokenSource.CreateLinkedTokenSource(ExternalTokenSource.Token, _internalTokenSource.Token);
         }
@@ -316,6 +328,7 @@ namespace DS.PathFinder.Algorithms.AStar
                 { return false; }
             }
 
+            //PointVisualisator?.Show(newNode.Basis);
             //check collisions 
             if (_mOpen.Count == 0 && _mClose.Count == 0)
                 { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }

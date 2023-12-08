@@ -1,5 +1,6 @@
 ﻿using DS.ConsoleApp.Test.RhinoTests;
 using System;
+using System.Threading.Tasks;
 
 namespace DS.ConsoleApp.Test
 {
@@ -8,9 +9,21 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            new LinesBooleanTests()
-                 .BoolSubstractMultiple();
-                 //.BoolSubstract();
+            Basis3dTests.TryCreateTransforms1();
+            //Basis3dTests.ConvertBasis();
+            //Basis3dTests.TestBasisOrthonormal();
+
+
+            //var test = new MultiResolverTest()
+            //    .CreateResolver();
+
+            //test.Resolve();
+            //Task.Run(() => test.ResolveAsync().Wait());
+
+
+            //new LinesBooleanTests()
+            //     .BoolSubstractMultiple();
+            //.BoolSubstract();
             //.BoolIntersect();
 
             //new PointsOrderTest().OrderByDistance();
