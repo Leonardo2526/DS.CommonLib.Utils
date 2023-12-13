@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace DS.ClassLib.VarUtils.Selectors
 {
@@ -6,7 +8,7 @@ namespace DS.ClassLib.VarUtils.Selectors
     /// The interface is used to select <typeparamref name="T"/> objects and validate them.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IValidatableSelector<T> : ISelector<T>
+    public interface IValidatableSelector<T> : ISelector<T>, IResettable
     {
         /// <summary>
         /// Selected <typeparamref name="T"/>.

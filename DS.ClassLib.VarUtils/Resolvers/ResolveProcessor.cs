@@ -2,6 +2,7 @@
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
     public class ResolveProcessor<TResult> : IResolveProcessor<TResult>
     {
         private readonly Queue<IResolveFactory<TResult>> _factoriesQueue = new();
-        private Queue<IResolveFactory<TResult>> _specificFactoriesQueue;
+        private Queue<IResolveFactory<TResult>> _specificFactoriesQueue = new ();
         private readonly IEnumerable<IResolveFactory<TResult>> _resolveFactories;
 
 
@@ -33,7 +34,20 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <summary>
         /// The results of resolving.
         /// </summary>
-        public IEnumerable<TResult> Results => _resolveFactories.SelectMany(f => f.Results);
+        public IEnumerable<TResult> Results
+        {
+            get
+            {
+                var results = new List<TResult>();
+                foreach (var factory in _resolveFactories)
+                {
+                    var fr = factory.Results;
+                    if (fr != null)
+                    { results.AddRange(fr); }
+                }
+                return results;
+            }
+        }
 
 
         /// <summary>
@@ -42,43 +56,27 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public ILogger Logger { get; set; }
 
 
-        /// <summary>
-        /// Propagates notification that operations should be canceled.
-        /// </summary>
-        public CancellationToken CancellationToken { get; set; }
-
         /// <inheritdoc/>
         public IEnumerable<IResolveFactory<TResult>> ResolveFactories => _resolveFactories;
 
-
         /// <inheritdoc/>
-        public TResult TryResolve()
-            => ResolveAsync(_factoriesQueue, false).Result;
+        public CancellationTokenSource CancellationTokenSource { get; set; }
 
         /// <inheritdoc/>
         public TResult TryResolve(IEnumerable<IResolveFactory<TResult>> resolveFactories)
         {
-            if(_specificFactoriesQueue is null)
-            {
-                _specificFactoriesQueue = new();
-                resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
-            }
+            _specificFactoriesQueue.Clear();
+            resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
             return ResolveAsync(_specificFactoriesQueue, false).Result;
         }
 
         /// <inheritdoc/>
-        public async Task<TResult> TryResolveAsync()
-            => await ResolveAsync(_factoriesQueue, true);
-
-        /// <inheritdoc/>
         public async Task<TResult> TryResolveAsync(IEnumerable<IResolveFactory<TResult>> resolveFactories)
         {
-            if (_specificFactoriesQueue is null)
-            {
-                _specificFactoriesQueue = new();
-                resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
-            }
-            return await ResolveAsync(_specificFactoriesQueue, false);
+
+            _specificFactoriesQueue.Clear();
+            resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
+            return await ResolveAsync(_specificFactoriesQueue, true);
         }
 
 
@@ -108,7 +106,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
                     break;
                 }
 
-                if (CancellationToken.IsCancellationRequested)
+                if (CancellationTokenSource.Token.IsCancellationRequested)
                 {
                     Logger?.Information($"Resolving cancellation requested).");
                     break;

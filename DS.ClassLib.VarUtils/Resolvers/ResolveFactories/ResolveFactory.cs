@@ -4,6 +4,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -59,6 +60,12 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// Specifies if resolve task in separate thread.
         /// </summary>
         public bool ResolveParallel { get; set; }
+
+        /// <inheritdoc/>
+        public CancellationTokenSource CancellationTokenSource { get; set; }
+
+        /// <inheritdoc/>
+        public int Id { get; set; }
 
         /// <inheritdoc/>
         public TResult TryResolve()
@@ -123,9 +130,12 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 _results.Add(result);
                 Logger?.Information($"Task resolved in {(int)totalInterval.TotalMilliseconds} ms successfully!");
 
-                ResultVisualizator?.Show(result);
-                //await ResultVisualizator?.ShowAsync(result);
-
+                if (ResultVisualizator != null)
+                {
+                    if (runAsync)
+                    { await ResultVisualizator.ShowAsync(result); }
+                    else { ResultVisualizator.Show(result); }
+                }
             }
             else
             { Logger?.Information($"Unable to resolve task."); }

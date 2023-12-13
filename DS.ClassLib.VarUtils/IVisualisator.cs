@@ -33,7 +33,7 @@ namespace DS.ClassLib.VarUtils
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
     /// <typeparam name="TItem"></typeparam>
-    public interface IVisualisator<TItem, TResult>
+    public interface IItemResultVisualisator<TItem, TResult>
     {
         /// <summary>
         /// Show <paramref name="item"/>.

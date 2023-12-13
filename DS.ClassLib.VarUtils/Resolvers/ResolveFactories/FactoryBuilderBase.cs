@@ -37,7 +37,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public bool ResolveParallel { get; set; }
 
         /// <inheritdoc/>
-        public IResolveFactory<TResult> Create()
+        public IResolveFactory<TResult> Create(int id = 0)
         {
             var taskCreator = BuildTaskCreator();
             if (taskCreator == null)
@@ -52,7 +52,8 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 Logger = Logger,
                 TaskVisualizator = TaskVisualizator,
                 ResultVisualizator = ResultVisualizator,
-                ResolveParallel = ResolveParallel
+                ResolveParallel = ResolveParallel, 
+                Id = id
             };
         }
 

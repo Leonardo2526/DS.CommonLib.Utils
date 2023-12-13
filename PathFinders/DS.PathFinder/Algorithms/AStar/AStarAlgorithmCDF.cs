@@ -262,7 +262,7 @@ namespace DS.PathFinder.Algorithms.AStar
         public void ResetToken()
         {
             _internalTokenSource = new CancellationTokenSource(MaxTime);
-            _linkedTokenSource =
+            _linkedTokenSource = ExternalTokenSource is null ? _internalTokenSource :
                 CancellationTokenSource.CreateLinkedTokenSource(ExternalTokenSource.Token, _internalTokenSource.Token);
         }
 

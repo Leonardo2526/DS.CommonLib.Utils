@@ -32,10 +32,12 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <summary>
         /// Create <typeparamref name="Ttask"/> task.
         /// </summary>
-        /// <param name="item"></param>
         /// <returns></returns>
         public virtual (Ttask, Ttask) CreateTask()
         {
+            if (!_selector.TryReset())
+            { Logger?.Error($"Failed to reset {nameof(IValidatableSelector<Ttask>)}."); }
+
             var v1 = _selector.Select();
             if (v1 == null || !_selector.IsValid) { return default; }
 

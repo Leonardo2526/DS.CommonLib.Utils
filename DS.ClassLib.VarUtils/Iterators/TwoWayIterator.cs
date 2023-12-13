@@ -11,25 +11,22 @@ namespace DS.ClassLib.VarUtils.Iterators
     ///  Iterator over a generic collection with abilily to move forward and back.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TwoWayEnumerator<T> : ITwoWayEnumerator<T>
+    public class TwoWayIterator<T> : ITwoWayEnumerator<T>
     {
-        private IEnumerator<T> _enumerator;
-        private List<T> _buffer;
+        private List<T> _items;
         private int _index;
 
         /// <summary>
-        /// Instansiate iterator over a generic collection with abilily to move forward and back
-        /// with fixed <paramref name="items"/> collection. 
-        /// </summary>       
+        /// Instansiate iterator over a generic collection with abilily to move forward and back. 
+        /// </summary>
         /// <param name="items"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public TwoWayEnumerator(IEnumerable<T> items)
+        public TwoWayIterator(List<T> items)
         {
             if (items == null)
                 throw new ArgumentNullException("enumerator");
 
-            _enumerator = items.GetEnumerator();
-            _buffer = new List<T>();
+            _items = items;
             _index = -1;
         }
 
@@ -38,10 +35,10 @@ namespace DS.ClassLib.VarUtils.Iterators
         {
             get
             {
-                if (_index < 0 || _index >= _buffer.Count)
+                if (_index < 0 || _index >= _items.Count)
                     throw new InvalidOperationException();
 
-                return _buffer[_index];
+                return _items[_index];
             }
         }
 
@@ -54,15 +51,8 @@ namespace DS.ClassLib.VarUtils.Iterators
         /// <inheritdoc/>
         public bool MoveNext()
         {
-            if (_index < _buffer.Count - 1)
+            if (_index < _items.Count - 1)
             {
-                ++_index;
-                return true;
-            }
-
-            if (_enumerator.MoveNext())
-            {
-                _buffer.Add(_enumerator.Current);
                 ++_index;
                 return true;
             }
@@ -85,15 +75,14 @@ namespace DS.ClassLib.VarUtils.Iterators
         /// <inheritdoc/>
         public void Reset()
         {
-            _enumerator.Reset();
-            _buffer.Clear();
+            _items.Clear();
             _index = -1;
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            _enumerator.Dispose();
+            throw new NotImplementedException();
         }
 
     }

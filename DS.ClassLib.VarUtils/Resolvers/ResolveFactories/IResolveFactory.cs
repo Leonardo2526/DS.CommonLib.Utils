@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DS.ClassLib.VarUtils.Resolvers
@@ -9,6 +10,16 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// <typeparam name="TResult"></typeparam>
     public interface IResolveFactory<TResult>
     {
+        /// <summary>
+        /// Factory id.
+        /// </summary>
+        int Id { get;}
+
+        /// <summary>
+        /// Propagates notification that operations should be canceled.
+        /// </summary>
+        CancellationTokenSource CancellationTokenSource { get; set; }
+
         /// <summary>
         /// Resolved results.
         /// </summary>

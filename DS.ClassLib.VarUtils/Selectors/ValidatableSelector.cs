@@ -128,7 +128,18 @@ namespace DS.ClassLib.VarUtils.Selectors
             { Messenger.Show(messageBuilder.ToString(), "Ошибка"); }
         }
 
-        private void Reset()
+        /// <inheritdoc/>
+        public bool TryReset()
+        {
+            _selectors.ToList().
+                Select(s => s.Target).
+                OfType<IResettable>().ToList().
+                ForEach(s => s.TryReset());
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public void Reset()
         {
             _selectedItem = default;
             _isValid = false;

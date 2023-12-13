@@ -45,6 +45,11 @@ namespace DS.ClassLib.VarUtils.Iterators
         }
 
         /// <summary>
+        /// Current index.
+        /// </summary>
+        public int Index => _index;
+
+        /// <summary>
         /// Action on <see cref="MoveNext"/>
         /// </summary>
         public Predicate<T> NextAction

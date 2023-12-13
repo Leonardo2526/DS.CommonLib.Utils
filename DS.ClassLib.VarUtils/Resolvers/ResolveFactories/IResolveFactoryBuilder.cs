@@ -10,7 +10,7 @@
         /// Create factory to resolve a taskand get it's resolved <typeparamref name="TResult"/>.
         /// </summary>
         /// <returns></returns>
-        IResolveFactory<TResult> Create();
+        IResolveFactory<TResult> Create(int id = 0);
 
     }
 }
