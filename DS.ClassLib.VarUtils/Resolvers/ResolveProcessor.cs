@@ -15,8 +15,9 @@ namespace DS.ClassLib.VarUtils.Resolvers
     public class ResolveProcessor<TResult> : IResolveProcessor<TResult>
     {
         private readonly Queue<IResolveFactory<TResult>> _factoriesQueue = new();
-        private Queue<IResolveFactory<TResult>> _specificFactoriesQueue = new ();
         private readonly IEnumerable<IResolveFactory<TResult>> _resolveFactories;
+        private Queue<IResolveFactory<TResult>> _specificFactoriesQueue = new ();
+        private CancellationTokenSource _cancellationTokenSource;
 
 
         /// <summary>
@@ -60,7 +61,14 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public IEnumerable<IResolveFactory<TResult>> ResolveFactories => _resolveFactories;
 
         /// <inheritdoc/>
-        public CancellationTokenSource CancellationTokenSource { get; set; }
+        public CancellationTokenSource CancellationTokenSource => _cancellationTokenSource;
+
+        /// <inheritdoc/>
+        public bool TryReset()
+        {
+            _resolveFactories.ToList().ForEach(f => f.TryReset());
+            return true;
+        }
 
         /// <inheritdoc/>
         public TResult TryResolve(IEnumerable<IResolveFactory<TResult>> resolveFactories)
@@ -73,7 +81,6 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <inheritdoc/>
         public async Task<TResult> TryResolveAsync(IEnumerable<IResolveFactory<TResult>> resolveFactories)
         {
-
             _specificFactoriesQueue.Clear();
             resolveFactories.ToList().ForEach(_specificFactoriesQueue.Enqueue);
             return await ResolveAsync(_specificFactoriesQueue, true);
@@ -84,6 +91,10 @@ namespace DS.ClassLib.VarUtils.Resolvers
         private async Task<TResult> ResolveAsync(Queue<IResolveFactory<TResult>> resolveFactoriesQueue, bool runAsync)
         {
             TResult result = default;
+            _cancellationTokenSource = new CancellationTokenSource();
+            //_cancellationTokenSource.CancelAfter(5000);
+            //_cancellationTokenSource.Cancel();
+            resolveFactoriesQueue.ToList().ForEach(f => f.CancellationTokenSource = CancellationTokenSource);
 
             while (resolveFactoriesQueue.Count > 0)
             {

@@ -42,7 +42,7 @@ namespace DS.PathFinder.Algorithms.InterLine
         public Vector3d EndDirection { get; set; }
 
         /// <inheritdoc/>
-        public CancellationTokenSource ExternalTokenSource { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public CancellationTokenSource ExternalToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         /// <inheritdoc/>
         public List<Point3d> FindPath(Point3d startPoint, Point3d endPoint)

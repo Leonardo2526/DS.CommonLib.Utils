@@ -8,7 +8,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// The interface is used for objects to resolve a task.
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
-    public interface IResolveFactory<TResult>
+    public interface IResolveFactory<TResult> : IResettable
     {
         /// <summary>
         /// Factory id.

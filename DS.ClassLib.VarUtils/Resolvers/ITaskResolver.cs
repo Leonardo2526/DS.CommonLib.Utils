@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DS.ClassLib.VarUtils.Resolvers
@@ -10,6 +11,11 @@ namespace DS.ClassLib.VarUtils.Resolvers
     /// <typeparam name="TResult"></typeparam>
     public interface ITaskResolver<TTask, TResult>
     {
+        /// <summary>
+        /// Propagates notification that operations should be canceled.
+        /// </summary>
+        CancellationTokenSource CancellationToken { get; set; }
+
         /// <summary>
         /// The results of resolving a task.
         /// </summary>

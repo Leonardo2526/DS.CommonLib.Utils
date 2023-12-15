@@ -17,6 +17,11 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public ILogger Logger { get; set; }
 
         /// <summary>
+        /// Show messaged option.
+        /// </summary>
+        public IWindowMessenger Messenger { get; set; }
+
+        /// <summary>
         /// A factory get <typeparamref name="TResult"/> from <typeparamref name="TTask"/>.
         /// </summary>
         public IResolveFactory<TResult> ResolveFactory { get; private set; }
@@ -50,6 +55,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
             return ResolveFactory = new ResolveFactory<TTask, TResult>(taskCreator, taskResolver)
             {
                 Logger = Logger,
+                Messenger = Messenger,
                 TaskVisualizator = TaskVisualizator,
                 ResultVisualizator = ResultVisualizator,
                 ResolveParallel = ResolveParallel, 

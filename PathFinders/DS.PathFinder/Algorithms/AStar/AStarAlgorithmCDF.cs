@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DS.PathFinder.Algorithms.AStar
 {
@@ -97,7 +98,7 @@ namespace DS.PathFinder.Algorithms.AStar
         }
 
         /// <inheritdoc/>
-        public CancellationTokenSource ExternalTokenSource { get; set; } = new CancellationTokenSource();
+        public CancellationTokenSource ExternalToken { get; set; }
 
 
         /// <summary>
@@ -190,9 +191,13 @@ namespace DS.PathFinder.Algorithms.AStar
 
             double minDistToANP = _traceSettings.R + _traceSettings.D;
 
-            //PointVisualisator?.ShowVector(_startPoint, _startPoint + StartDirection);
+            Task.Delay(1000).Wait();
+
+            //if (StartDirection.Length > 0)
+            //{ PointVisualisator?.ShowVector(_startPoint, _startPoint + StartDirection); }
             //PointVisualisator?.Show(StartANP);
-            //PointVisualisator?.ShowVector(_endPoint, _endPoint + EndDirection);
+            //if (EndDirection.Length > 0)
+            //{ PointVisualisator?.ShowVector(_endPoint, _endPoint + EndDirection); }
             //PointVisualisator?.Show(EndANP);
             //PointVisualisator?.Show(SourceBasis);
 
@@ -262,8 +267,8 @@ namespace DS.PathFinder.Algorithms.AStar
         public void ResetToken()
         {
             _internalTokenSource = new CancellationTokenSource(MaxTime);
-            _linkedTokenSource = ExternalTokenSource is null ? _internalTokenSource :
-                CancellationTokenSource.CreateLinkedTokenSource(ExternalTokenSource.Token, _internalTokenSource.Token);
+            _linkedTokenSource = ExternalToken == null ? _internalTokenSource :
+                CancellationTokenSource.CreateLinkedTokenSource(ExternalToken.Token, _internalTokenSource.Token);
         }
 
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
@@ -320,13 +325,13 @@ namespace DS.PathFinder.Algorithms.AStar
 
             newNode = _nodeBuilder.BuildWithParameters();
 
-            if (endNode)
-            {
-                var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 ?
-                    _traceSettings.R + _traceSettings.D : _traceSettings.F;
-                if (newNode.ANP.DistanceTo(_endPoint) < minDist)
-                { return false; }
-            }
+            //if (endNode)
+            //{
+            //    var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 || EndDirection.Length == 0 ?
+            //        _traceSettings.R + _traceSettings.D : _traceSettings.F;
+            //    if (newNode.ANP.DistanceTo(_endPoint) < minDist)
+            //    { return false; }
+            //}
 
             //PointVisualisator?.Show(newNode.Basis);
             //check collisions 

@@ -75,7 +75,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
 
             if (_totalTokenSource is not null && _totalTokenSource.Token.IsCancellationRequested)
             { Log.Information("Path search iteration time is up."); return false; }
-            if (TokenSource is not null && TokenSource.Token.IsCancellationRequested)
+            if (TokenSource != null && TokenSource.IsCancellationRequested)
             { Log.Information("Path search iteration time is up."); return false; }
 
             if (!_heuristicEnumerator.MoveNext())

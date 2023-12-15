@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace DS.ClassLib.VarUtils.Resolvers
 {
     /// <inheritdoc/>
-    public interface IResolveProcessor<TResult>
+    public interface IResolveProcessor<TResult> : IResettable
     {
 
         /// <summary>
         /// Propagates notification that operations should be canceled.
         /// </summary>
-        CancellationTokenSource CancellationTokenSource { get; set; }
+        CancellationTokenSource CancellationTokenSource { get; }
 
         /// <summary>
         /// Factories to resolve tasks.

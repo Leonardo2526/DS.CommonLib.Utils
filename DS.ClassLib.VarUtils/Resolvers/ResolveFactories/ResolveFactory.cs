@@ -2,6 +2,7 @@
 using DS.ClassLib.VarUtils.Extensions.Tuples;
 using Serilog;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -47,6 +48,11 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public ILogger Logger { get; set; }
 
         /// <summary>
+        /// Show messaged option.
+        /// </summary>
+        public IWindowMessenger Messenger { get; set; }
+
+        /// <summary>
         /// Visualizator to show <typeparamref name="TTask"/>.
         /// </summary>
         public IItemVisualisator<TTask> TaskVisualizator { get; set; }
@@ -68,6 +74,18 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public int Id { get; set; }
 
         /// <inheritdoc/>
+        public bool TryReset()
+        {
+            if (_taskCreator is IEnumerator<TTask> enumerator)
+            {
+                enumerator.Reset();
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
         public TResult TryResolve()
         => ResolveAsync(false).Result;
 
@@ -84,6 +102,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
             if (task == null || task.Equals(default) || task.IsTupleNull())
             {
                 Logger?.Information($"Unable to get task to resolve.");
+                Messenger?.Show("Решение не найдено.");
             }
             else
             {
@@ -110,6 +129,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
             TResult result = default;
             if (ResolveParallel)
             {
+                _taskResolver.CancellationToken = CancellationTokenSource;
                 result = runAsync ?
                   await Task.Run(() => _taskResolver.TryResolveAsync(task)) :
                   Task.Run(() => _taskResolver.TryResolve(task)).Result;
@@ -138,7 +158,10 @@ namespace DS.ClassLib.VarUtils.Resolvers
                 }
             }
             else
-            { Logger?.Information($"Unable to resolve task."); }
+            { 
+                Logger?.Information($"Unable to resolve task.");
+                Messenger?.Show("Решение не найдено.");
+            }
 
             return result;
         }
