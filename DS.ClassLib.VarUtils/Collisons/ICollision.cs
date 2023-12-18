@@ -1,7 +1,7 @@
 ﻿namespace DS.ClassLib.VarUtils.Collisions
 {
     /// <summary>
-    /// Represents intersection between objects.
+    /// Represents collisions between objects.
     /// </summary>
     public interface ICollision
     {
@@ -9,7 +9,7 @@
 
 
     /// <summary>
-    /// Represents collsion(intersection) between <typeparamref name="TItem1"/> and <typeparamref name="TItem2"/>.
+    /// Represents collsion between <typeparamref name="TItem1"/> and <typeparamref name="TItem2"/>.
     /// </summary>
     /// <typeparam name="TItem1"></typeparam>
     /// <typeparam name="TItem2"></typeparam>

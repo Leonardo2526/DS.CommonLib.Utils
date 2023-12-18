@@ -191,7 +191,7 @@ namespace DS.PathFinder.Algorithms.AStar
 
             double minDistToANP = _traceSettings.R + _traceSettings.D;
 
-            Task.Delay(1000).Wait();
+            //Task.Delay(1000).Wait();
 
             //if (StartDirection.Length > 0)
             //{ PointVisualisator?.ShowVector(_startPoint, _startPoint + StartDirection); }
