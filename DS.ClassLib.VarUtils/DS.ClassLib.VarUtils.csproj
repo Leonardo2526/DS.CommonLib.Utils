@@ -102,6 +102,8 @@
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
     <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="Connection\IConnectionService.cs" />
+    <Compile Include="Intersections\IIntersection.cs" />
     <Compile Include="IResettable.cs" />
     <Compile Include="Iterators\ActionTwoWayEnumerator.cs" />
     <Compile Include="Iterators\TwoWayIterator.cs" />

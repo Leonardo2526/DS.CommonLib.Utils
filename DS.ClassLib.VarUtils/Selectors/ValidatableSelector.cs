@@ -56,6 +56,9 @@ namespace DS.ClassLib.VarUtils.Selectors
         /// </summary>
         public IWindowMessenger Messenger { get; set; }
 
+        /// <inheritdoc/>
+        public bool CheckAllValidators { get; set; }
+
         #endregion
 
 
@@ -81,7 +84,23 @@ namespace DS.ClassLib.VarUtils.Selectors
                 return default;
             }
 
-            _isValid = Validators.ToList().TrueForAll(v => v.IsValid(_selectedItem));
+            if (CheckAllValidators)
+            {
+                var results = new List<ValidationResult>();
+                foreach (var validator in Validators)
+                {
+                    if (!validator.IsValid(_selectedItem))
+                    {
+                        results.AddRange(validator.ValidationResults);
+                    }
+                }
+                _isValid = results.Count == 0;
+            }
+            else
+            {
+                _isValid = Validators.ToList().TrueForAll(v => v.IsValid(_selectedItem));
+            }
+
             if (!_isValid)
             { Logger?.Warning("Selected item is not valid."); }
 

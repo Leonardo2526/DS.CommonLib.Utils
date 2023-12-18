@@ -11,6 +11,11 @@ namespace DS.ClassLib.VarUtils.Selectors
     public interface IValidatableSelector<T> : ISelector<T>, IResettable
     {
         /// <summary>
+        /// Validate object by all validators or only to first with not valid result.
+        /// </summary>
+        public bool CheckAllValidators { get; set; }
+
+        /// <summary>
         /// Selected <typeparamref name="T"/>.
         /// </summary>
         public T SelectedItem { get; }
