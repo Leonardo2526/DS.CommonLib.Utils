@@ -325,13 +325,15 @@ namespace DS.PathFinder.Algorithms.AStar
 
             newNode = _nodeBuilder.BuildWithParameters();
 
-            //if (endNode)
-            //{
-            //    var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 || EndDirection.Length == 0 ?
-            //        _traceSettings.R + _traceSettings.D : _traceSettings.F;
-            //    if (newNode.ANP.DistanceTo(_endPoint) < minDist)
-            //    { return false; }
-            //}
+            if (endNode)
+            {
+                var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 || EndDirection.Length == 0 ?
+                    _traceSettings.R + _traceSettings.D : _traceSettings.F;
+                if (newNode.ANP.DistanceTo(_endPoint) < minDist)
+                {
+                    return false;
+                }
+            }
 
             //PointVisualisator?.Show(newNode.Basis);
             //check collisions 
