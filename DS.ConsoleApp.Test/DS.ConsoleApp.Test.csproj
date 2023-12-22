@@ -89,6 +89,7 @@
     <Compile Include="RhinoTests\CCSTest.cs" />
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
     <Compile Include="RhinoTests\Basis3dTests.cs" />
+    <Compile Include="RhinoTests\GeometryOffsetTest.cs" />
     <Compile Include="RhinoTests\LineTest.cs" />
     <Compile Include="RhinoTests\PointConverterTest.cs" />
     <Compile Include="RhinoTests\PlaneSurfaceTest.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="RhinoTests\PointsOrderTest.cs" />
     <Compile Include="RhinoTests\Rectangle3dTest.cs" />
     <Compile Include="RhinoTests\RhinoMathTest.cs" />
+    <Compile Include="RoolsFilterFactoryTest.cs" />
     <Compile Include="TransformTest.cs" />
     <Compile Include="IntersectionTest.cs" />
     <Compile Include="LicensingTest.cs" />

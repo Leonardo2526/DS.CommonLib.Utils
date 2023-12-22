@@ -1,4 +1,5 @@
-﻿using DS.ConsoleApp.Test.RhinoTests;
+﻿using DS.ClassLib.VarUtils.Filters;
+using DS.ConsoleApp.Test.RhinoTests;
 using System;
 using System.Threading.Tasks;
 
@@ -9,7 +10,9 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            ActionTwoWayEnumeratorTest.StringIterator();
+            GeometryOffsetTest.Run1();
+            //RoolsFilterFactoryTest.Test1();
+            //ActionTwoWayEnumeratorTest.StringIterator();
             //Basis3dTests.TryCreateTransforms1();
             //Basis3dTests.ConvertBasis();
             //Basis3dTests.TestBasisOrthonormal();
