@@ -50,6 +50,24 @@ namespace DS.ClassLib.VarUtils
         /// <returns> A new <see cref="Line"/> nearest to coordinate values that contains a number of fractional digits equal to digits.</returns>
         public static Line Round(this Line line, int digits = 5)
         => new(line.From.Round(digits), line.To.Round(digits));
+
+        /// <summary>
+        /// Check if <paramref name="line1"/> overlap <paramref name="line2"/> or vice versa
+        /// </summary>
+        /// <param name="line1"></param>
+        /// <param name="line2"></param>
+        /// <returns>
+        /// <see langword="true"/> if overlap.
+        /// <para>
+        /// Otherwise <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsOverlapped(this Line line1, Line line2)
+        {
+            var subStructionLines = LineBooleanTools.Substract(line1, line2);
+            if(subStructionLines.Count == 0 || subStructionLines.Count > 1) { return true; }
+            return subStructionLines.Count == 1 && subStructionLines.First().Length < line1.Length;
+        }
         
     }
 }

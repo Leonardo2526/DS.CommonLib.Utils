@@ -89,6 +89,8 @@
     <Compile Include="RhinoTests\CCSTest.cs" />
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
     <Compile Include="RhinoTests\Basis3dTests.cs" />
+    <Compile Include="RhinoTests\IntersectionsTest.cs" />
+    <Compile Include="RhinoTests\RectangleContainTest.cs" />
     <Compile Include="RhinoTests\GeometryOffsetTest.cs" />
     <Compile Include="RhinoTests\LineTest.cs" />
     <Compile Include="RhinoTests\PointConverterTest.cs" />

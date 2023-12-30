@@ -10,7 +10,8 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            GeometryOffsetTest.Run1();
+            new LineTest().CompareLines();
+            //IntersectionsTest.Run1();
             //RoolsFilterFactoryTest.Test1();
             //ActionTwoWayEnumeratorTest.StringIterator();
             //Basis3dTests.TryCreateTransforms1();
