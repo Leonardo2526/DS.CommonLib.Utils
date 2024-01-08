@@ -113,6 +113,7 @@
     <Compile Include="Iterators\TwoWayEnumerator.cs" />
     <Compile Include="Iterators\ITwoWayEnumerator.cs" />
     <Compile Include="IWindowMessenger.cs" />
+    <Compile Include="RectangleBooleanTools.cs" />
     <Compile Include="Resolvers\IResolveProcessor.cs" />
     <Compile Include="Resolvers\ResolveFactories\IResolveFactory.cs" />
     <Compile Include="Resolvers\ResolveFactories\IItemResolveFactoryBuilder.cs" />

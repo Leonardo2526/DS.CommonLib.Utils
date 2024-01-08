@@ -10,7 +10,7 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            new LineTest().CompareLines();
+            RecatngleIntersectionsTest.RunWithTransformToBoundingBox();
             //IntersectionsTest.Run1();
             //RoolsFilterFactoryTest.Test1();
             //ActionTwoWayEnumeratorTest.StringIterator();

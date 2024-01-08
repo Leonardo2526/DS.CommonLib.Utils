@@ -37,5 +37,10 @@ namespace DS.ConsoleApp.Test.RhinoTests
 
             Console.WriteLine(line1 == line2);
         }
+
+        //public IEnumerable<Line> UniteLines(IEnumerable<Line> lines)
+        //{
+
+        //}
     }
 }

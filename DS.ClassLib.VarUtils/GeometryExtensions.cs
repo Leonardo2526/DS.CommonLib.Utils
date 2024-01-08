@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,9 +33,7 @@ namespace DS.ClassLib.VarUtils
             resultRectangle = default;
             if (offset <= -rectangle.Width / 2 || offset <= -rectangle.Height / 2) { return false; }
 
-            var corners = new List<Point3d>();
-            for (int i = 0; i < 4; i++)
-            {corners.Add(rectangle.Corner(i));}
+            var corners = rectangle.GetCorners().ToList();
             var p01 = corners[0];
             var p02 = corners[2];
 
@@ -63,6 +60,62 @@ namespace DS.ClassLib.VarUtils
         /// </returns>
         public static List<Rhino.Geometry.Line> ToLines(this Rectangle3d rectangle)
         => rectangle.ToPolyline().GetSegments().ToList();
+
+
+        /// <summary>
+        /// Get <paramref name="rectangle"/>'s corners.
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <returns>
+        /// Ordered list of <paramref name="rectangle"/>'s corners.
+        /// </returns>
+        public static IEnumerable<Point3d> GetCorners(this Rectangle3d rectangle)
+        => new List<Point3d>()
+        { rectangle.Corner(0), rectangle.Corner(1), rectangle.Corner(2), rectangle.Corner(3) };
+
+        /// <summary>
+        /// Get the min <see cref="Box"/> from <paramref name="rectangle"/>.
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <returns>
+        /// The smallest <see cref="Box"/> that contains a set of <paramref name="rectangle"/> corners.
+        /// </returns>
+        public static Box GetMinBox(this Rectangle3d rectangle)
+            => new(rectangle.Plane, rectangle.GetCorners());
+
+        /// <summary>
+        /// Get the <see cref="Box"/> from <paramref name="rectangle"/>.
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <param name="offset">Offset by <paramref name="rectangle"/>'s plane normal.</param>
+        /// <returns>
+        /// The <see cref="Box"/> that contains a set of <paramref name="rectangle"/> corners 
+        /// moved on <paramref name="offset"/> from <paramref name="rectangle"/>'s both plane sides.
+        /// </returns>
+        public static Box GetExtendedBox(this Rectangle3d rectangle, double offset = 0)
+        {
+            if(offset == 0) { return GetMinBox(rectangle); }
+
+            var plane = rectangle.Plane;
+
+            var corners = rectangle.GetCorners().ToList();
+            var extCorners = new List<Point3d>()
+                {
+                    corners[0], corners[1]
+                };
+            var translationVector = Vector3d.Multiply(plane.Normal, offset);
+            var t1 = Transform.Translation(translationVector);
+            var t1Inverse = Transform.Translation(-translationVector);
+
+            var ce2 = corners[2];
+            var ce3 = corners[3];
+
+            ce2.Transform(t1);
+            extCorners.Add(ce2);
+            ce3.Transform(t1Inverse);
+            extCorners.Add(ce3);
+            return new Box(plane, extCorners);
+        }
 
         /// <summary>
         /// Try to increse/reduce <paramref name="circle"/>'s radius on <paramref name="offset"/>.       
