@@ -32,9 +32,9 @@ namespace DS.ClassLib.VarUtils
         public static bool Intersection(this Rectangle3d r1, Rectangle3d r2, bool strict, out Rectangle3d intersectionRectangle)
         {
             intersectionRectangle = default;
-            if (r1.Plane.Normal.IsParallelTo(r2.Plane.Normal, 1.DegToRad()) == 0)
+            if (!r1.Plane.IsCoplanar(r2.Plane))
             { return false; }
-
+            
             var targetRectangle1 = r1;
             var rotationTransform1 = Transform.PlaneToPlane(r1.Plane, Plane.WorldXY);
             if (!targetRectangle1.Transform(rotationTransform1)) { throw new Exception(); }
@@ -43,9 +43,12 @@ namespace DS.ClassLib.VarUtils
             var rotationTransform2 = Transform.PlaneToPlane(r1.Plane, Plane.WorldXY);
             if (!targetRectangle2.Transform(rotationTransform2)) { throw new Exception(); }
 
-            var corners1 = targetRectangle1.GetCorners();
+            var corners1 = new List<Point3d>();
+            targetRectangle1.GetCorners().ToList().ForEach(corner => corners1.Add(new Point3d(corner.X, corner.Y,0)));
             var box1 = new BoundingBox(corners1);
-            var corners2 = targetRectangle2.GetCorners();
+
+            var corners2 = new List<Point3d>();
+            targetRectangle2.GetCorners().ToList().ForEach(corner => corners2.Add(new Point3d(corner.X, corner.Y, 0)));
             var box2 = new BoundingBox(corners2);
             var intersectionBox = BoundingBox.Intersection(box1, box2);
 

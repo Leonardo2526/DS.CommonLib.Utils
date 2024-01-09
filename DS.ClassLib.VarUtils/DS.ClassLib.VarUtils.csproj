@@ -106,6 +106,7 @@
     <Compile Include="Filters\IFilterFactory.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="GeometryExtensions.cs" />
+    <Compile Include="GeometryUtils.cs" />
     <Compile Include="Intersections\IIntersection.cs" />
     <Compile Include="IResettable.cs" />
     <Compile Include="Iterators\ActionTwoWayEnumerator.cs" />

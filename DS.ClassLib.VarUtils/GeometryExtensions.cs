@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using DS.ClassLib.VarUtils.Points;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,5 +137,21 @@ namespace DS.ClassLib.VarUtils
             resultCircle = new(circle.Plane, circle.Radius + offset);
             return true;
         }
+
+        /// <summary>
+        /// Check if <paramref name="plane1"/> is coplanar with <paramref name="plane2"/>.
+        /// </summary>
+        /// <param name="plane1"></param>
+        /// <param name="plane2"></param>
+        /// <returns>
+        /// <see langword="true"/> if planes are coplanar.
+        /// <para>
+        /// Otherwise <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsCoplanar(this Plane plane1, Plane plane2)
+            => plane1.Normal.IsParallelTo(plane2.Normal, 1.DegToRad()) != 0 
+            && plane1.DistanceTo(plane2.Origin) < 0.001;
+        
     }
 }

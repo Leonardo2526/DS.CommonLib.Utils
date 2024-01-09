@@ -40,6 +40,7 @@ namespace DS.VarUtils.Test.RectangleTests
             {
                 RectangleFactory.CreateXY(new Point3d(11,11,0), new Point3d(12, 12, 0)),
                 RectangleFactory.CreateXY(new Point3d(-10,-10,0), new Point3d(-5, -5, 0)),
+                RectangleFactory.CreateXYMoved(new Point3d(0,0,1), new Point3d(1, 1, 1) ,1),
             };
             Assert.That(
             rectangles.TrueForAll(rect => 

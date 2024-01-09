@@ -1,5 +1,8 @@
-﻿using DS.ClassLib.VarUtils.Filters;
+﻿using DS.ClassLib.VarUtils;
+using DS.ClassLib.VarUtils.Filters;
 using DS.ConsoleApp.Test.RhinoTests;
+using DS.ConsoleApp.Test.RhinoTests.Rectangles;
+using Rhino.Geometry;
 using System;
 using System.Threading.Tasks;
 
@@ -10,7 +13,9 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            RecatngleIntersectionsTest.RunWithTransformToBoundingBox();
+            Console.WriteLine(p1.IsCoplanar(p2));
+
+            //ConvertToRectangleTest.Convert2();
             //IntersectionsTest.Run1();
             //RoolsFilterFactoryTest.Test1();
             //ActionTwoWayEnumeratorTest.StringIterator();

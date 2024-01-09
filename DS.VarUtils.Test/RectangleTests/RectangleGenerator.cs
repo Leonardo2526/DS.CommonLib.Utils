@@ -31,6 +31,15 @@ namespace DS.VarUtils.Test.RectangleTests
         public static Rectangle3d CreateXY(Point3d p1, Point3d p2)
         => new(Plane.WorldXY, p1, p2);
 
+        public static Rectangle3d CreateXYMoved(Point3d p1, Point3d p2, double normalOffset)
+        {
+            var plane = Plane.WorldXY;
+            var moveVector= Vector3d.Multiply(plane.Normal, normalOffset);
+            if(plane.Translate(moveVector))
+            { return new(plane, p1, p2); ; }
+            else { return default; }
+        }
+
         public static Rectangle3d CreateXZ(Point3d p1, Point3d p2)
             => new(Plane.WorldZX, p1, p2);
 
