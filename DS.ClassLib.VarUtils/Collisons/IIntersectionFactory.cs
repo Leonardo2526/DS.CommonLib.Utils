@@ -3,7 +3,7 @@
 namespace DS.ClassLib.VarUtils.Collisons
 {
     /// <summary>
-    /// Factory to find intersection between <typeparamref name="T"/> objects.
+    /// Factory to find intersection with <typeparamref name="T"/> objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IIntersectionFactory<T>

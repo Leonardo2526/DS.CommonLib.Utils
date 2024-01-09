@@ -101,7 +101,7 @@
   <ItemGroup>
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
-    <Compile Include="Basis\IBasis3D.cs" />
+    <Compile Include="Collisons\ITIntersectionFactory.cs" />
     <Compile Include="Filters\RulesFilterFactory.cs" />
     <Compile Include="Filters\IFilterFactory.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
@@ -114,6 +114,7 @@
     <Compile Include="Iterators\TwoWayEnumerator.cs" />
     <Compile Include="Iterators\ITwoWayEnumerator.cs" />
     <Compile Include="IWindowMessenger.cs" />
+    <Compile Include="Points\IPoint3dConverter.cs" />
     <Compile Include="RectangleBooleanTools.cs" />
     <Compile Include="Resolvers\IResolveProcessor.cs" />
     <Compile Include="Resolvers\ResolveFactories\IResolveFactory.cs" />
@@ -155,7 +156,6 @@
     <Compile Include="Collisons\ICollisionDetector.cs" />
     <Compile Include="ClassHandler.cs" />
     <Compile Include="Collisons\PointCollision.cs" />
-    <Compile Include="ConsoleMapDrawer.cs" />
     <Compile Include="Directions\DirectionSettings.cs" />
     <Compile Include="Enumerables\AngleEnumerable.cs" />
     <Compile Include="Enumerables\PlaneEnumerable.cs" />
@@ -172,10 +172,6 @@
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Agreagate.cs" />
     <Compile Include="Collisons\ICollision.cs" />
-    <Compile Include="GridMap\MapBase.cs" />
-    <Compile Include="GridMap\d2\XY\IntMap.cs" />
-    <Compile Include="GridMap\IGraph.cs" />
-    <Compile Include="GridMap\IMap.cs" />
     <Compile Include="GridMap\IMapDrawer.cs" />
     <Compile Include="ITraceSettings.cs" />
     <Compile Include="ITransferFactory.cs" />
@@ -184,12 +180,8 @@
     <Compile Include="IVisualisator.cs" />
     <Compile Include="Basis\Basis3d.cs" />
     <Compile Include="Basis\IBasis.cs" />
-    <Compile Include="Basis\OrthoBasis.cs" />
-    <Compile Include="Basis\OrthoNormBasis.cs" />
     <Compile Include="Points\NPoint3D.cs" />
     <Compile Include="Points\Point3dConverter.cs" />
-    <Compile Include="Points\VectorPointConverter.cs" />
-    <Compile Include="Points\IPointConverter.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Points\MaxDistanceClient.cs" />
