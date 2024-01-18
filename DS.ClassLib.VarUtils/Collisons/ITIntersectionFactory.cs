@@ -10,12 +10,12 @@ namespace DS.ClassLib.VarUtils.Collisons
     public interface ITIntersectionFactory<T, P>
     {
         /// <summary>
-        /// Get intersections of <paramref name="objectToFindItersections"/> with <typeparamref name="T"/> objects.
+        /// Get intersections of <paramref name="item"/> with <typeparamref name="T"/>s.
         /// </summary>
-        /// <param name="objectToFindItersections"></param>
+        /// <param name="item"></param>
         /// <returns>
-        /// List of <typeparamref name="T"/> objects that intersect with <paramref name="objectToFindItersections"/>.
+        /// List of <typeparamref name="T"/>s that intersect with <paramref name="item"/>.
         /// </returns>
-        IEnumerable<T> GetIntersections(P objectToFindItersections);
+        IEnumerable<T> GetIntersections(P item);
     }
 }

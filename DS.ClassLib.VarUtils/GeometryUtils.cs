@@ -17,18 +17,19 @@ namespace DS.ClassLib.VarUtils
         /// </summary>
         /// <param name="lines"></param>
         /// <param name="rectangle"></param>
+        /// <param name="tolerance"></param>
         /// <returns>
         /// <see langword="true"/> if <paramref name="lines"/> are closed and coplanar.
         /// <para>
         /// Otherwise <see langword="false"/> .
         /// </para>
         /// </returns>
-        public static bool TryCreateRectangle(IEnumerable<Line> lines, out Rectangle3d rectangle)
+        public static bool TryCreateRectangle(IEnumerable<Line> lines, out Rectangle3d rectangle, int tolerance = 3)
         {
             rectangle = default;
 
             var polyLine = ToPolyLine(lines);
-            if(!polyLine.IsClosed || 
+            if (!polyLine.IsClosedWithinTolerance(Math.Pow(0.1, tolerance)) ||
                 !polyLine.ToPolylineCurve().TryGetPlane(out var plane)) { return false; }
 
             polyLine.MergeColinearSegments(1.DegToRad(), true);
