@@ -232,7 +232,6 @@ namespace DS.PathFinder.Algorithms.AStar
                     found = true;
                     break;
                 }
-
                 var distToANP = parentNode.ANP.DistanceTo(parentNode.Point);
 
                 void pushNodeWithParent() => TryPushNode(parentNode, parentNode.Dir);
@@ -344,10 +343,10 @@ namespace DS.PathFinder.Algorithms.AStar
                 var v1 = new TaggedGVertex<Point3d>(1, parentNode.Point);
                 var v2 = new TaggedGVertex<Point3d>(2, newNode.Point);
                 var edge = new TaggedEdge<TaggedGVertex<Point3d>, Basis3d>(v1, v2, newNode.Basis);
-                //if (!TaggedEdgeValidator.IsValid(edge))
-                //{
-                //    return false;
-                //}
+                if (!TaggedEdgeValidator.IsValid(edge))
+                {
+                    return false;
+                }
             }
 
             //PointVisualisator?.Show(newNode.Basis);

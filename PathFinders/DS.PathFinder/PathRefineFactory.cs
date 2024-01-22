@@ -42,6 +42,8 @@ namespace DS.PathFinder
         /// </summary>
         public bool MinNodes { get; set; }
 
+        public ITaggedEdgeValidator<TaggedGVertex<Point3d>, Basis3d> EdgeValidator { get; set; }
+
         /// <inheritdoc/>
         public List<Point3d> Refine(List<PathNode> path)
         {
@@ -65,7 +67,10 @@ namespace DS.PathFinder
               (int)_traceSettings.A
             };
 
-            var intersectionFactory = new LineIntersectionFactory(angles, new DirectionIteratorBuilder());
+            var intersectionFactory = new LineIntersectionFactory(angles, new DirectionIteratorBuilder())
+            {
+                EdgeValidator = EdgeValidator
+            };
             var minizator = new NodesMinimizator(intersectionFactory, _collisionDetector)
             {
                 MinLinkLength = _traceSettings.F,
