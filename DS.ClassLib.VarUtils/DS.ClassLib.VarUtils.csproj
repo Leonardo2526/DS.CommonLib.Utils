@@ -109,10 +109,14 @@
     <Compile Include="GeometryUtils.cs" />
     <Compile Include="Intersections\IIntersection.cs" />
     <Compile Include="IResettable.cs" />
+    <Compile Include="Iterators\ActionEnumerator.cs" />
     <Compile Include="Iterators\ActionTwoWayEnumerator.cs" />
+    <Compile Include="Iterators\Enumerator.cs" />
     <Compile Include="Iterators\TwoWayIterator.cs" />
     <Compile Include="Iterators\TwoWayEnumerator.cs" />
     <Compile Include="Iterators\ITwoWayEnumerator.cs" />
+    <Compile Include="Iterators\ValidationResultsConverter.cs" />
+    <Compile Include="IValidatorFactory.cs" />
     <Compile Include="IWindowMessenger.cs" />
     <Compile Include="Points\IPoint3dConverter.cs" />
     <Compile Include="RectangleBooleanTools.cs" />
@@ -200,6 +204,7 @@
     <Compile Include="Strings\RegexPatterns.cs" />
     <Compile Include="Strings\StringExtensions.cs" />
     <Compile Include="Selectors\ValidatableSelector.cs" />
+    <Compile Include="Iterators\ValidatorIterator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

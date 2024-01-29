@@ -105,7 +105,6 @@
     <Compile Include="TransformTest.cs" />
     <Compile Include="IntersectionTest.cs" />
     <Compile Include="LicensingTest.cs" />
-    <Compile Include="MapTests.cs" />
     <Compile Include="NPoint3DTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
