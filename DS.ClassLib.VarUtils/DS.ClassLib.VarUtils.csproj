@@ -107,6 +107,7 @@
     <Compile Include="Connection\IConnectionService.cs" />
     <Compile Include="GeometryExtensions.cs" />
     <Compile Include="GeometryUtils.cs" />
+    <Compile Include="IBuilder.cs" />
     <Compile Include="Intersections\IIntersection.cs" />
     <Compile Include="IResettable.cs" />
     <Compile Include="Iterators\ActionEnumerator.cs" />

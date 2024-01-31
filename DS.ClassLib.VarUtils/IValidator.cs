@@ -4,10 +4,16 @@ using System.ComponentModel.DataAnnotations;
 namespace DS.ClassLib.VarUtils
 {
     /// <summary>
+    /// The interface represents validator
+    /// </summary>
+    public interface IValidator;
+
+
+    /// <summary>
     /// The interface represents validator for <typeparamref name="T"/> objects.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IValidator<T>
+    public interface IValidator<T> : IValidator
     {
         /// <summary>
         /// A collection that holds failed-validation information.
@@ -21,4 +27,5 @@ namespace DS.ClassLib.VarUtils
         /// <returns></returns>
         bool IsValid(T value);
     }
+
 }

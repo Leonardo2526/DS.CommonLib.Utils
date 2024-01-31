@@ -12,4 +12,17 @@
         /// <returns></returns>
         IValidator<T> GetValidator();
     }
+
+    /// <summary>
+    /// Factory to create <see cref="IValidator"/>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IValidatorFactory
+    {
+        /// <summary>
+        /// Create a new <see cref="IValidator"/>
+        /// </summary>
+        /// <returns></returns>
+        IValidator GetValidator();
+    }
 }
