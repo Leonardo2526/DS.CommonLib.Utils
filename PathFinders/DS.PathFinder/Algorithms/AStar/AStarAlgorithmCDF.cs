@@ -99,6 +99,8 @@ namespace DS.PathFinder.Algorithms.AStar
             }
         }
 
+        private double _pt;
+
         /// <inheritdoc/>
         public CancellationTokenSource ExternalToken { get; set; }
 
@@ -177,7 +179,7 @@ namespace DS.PathFinder.Algorithms.AStar
                default : new Line(_startPoint, _endPoint);
 
             MTolerance = _nodeBuilder.Step;
-
+            _pt = Math.Pow(0.1, _tolerance);
             //initiate a new search
             var parentNode = new PathNode()
             {
@@ -223,10 +225,9 @@ namespace DS.PathFinder.Algorithms.AStar
                 //if (parentNode.Point.DistanceTo(checkPoint1) < 0.001)
                 //{
 
-                //}
-
+                //}               
                 if (parentNode.Point.Round(_cTolerance) == endPoint.Round(_cTolerance))
-                {
+                    {
                     parentNode.Point = endPoint;
                     _mClose.Add(parentNode);
                     found = true;
@@ -300,10 +301,6 @@ namespace DS.PathFinder.Algorithms.AStar
                 if (endAngle != 0
                     && _traceSettings.A != endAngle
                     && _traceSettings.A != -endAngle)
-                // && !_traceSettings.AList.Contains(endAngle)
-                //&& !_traceSettings.AList.Contains(-endAngle))
-                { return false; }
-                else if (EndANP != default && newNode.Point.DistanceTo(EndANP) < _traceSettings.R + _traceSettings.D)
                 { return false; }
             }
 
@@ -351,7 +348,7 @@ namespace DS.PathFinder.Algorithms.AStar
 
             //PointVisualisator?.Show(newNode.Basis);
             //check collisions 
-            if (_mOpen.Count == 0 && _mClose.Count == 0)
+            if (parentNode.Point.DistanceTo(_startPoint) < _pt)
                 { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }
             else if (endNode)
             { _collisionDetector.GetLastCollisions(parentNode.Point, newNode.Basis); }
