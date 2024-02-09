@@ -101,7 +101,8 @@
   <ItemGroup>
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
-    <Compile Include="Collisons\ITIntersectionFactory.cs" />
+    <Compile Include="Intersections\IIntersectionVisualizator.cs" />
+    <Compile Include="Intersections\ITIntersectionFactory.cs" />
     <Compile Include="Filters\RulesFilterFactory.cs" />
     <Compile Include="Filters\IFilterFactory.cs" />
     <Compile Include="Connection\IConnectionService.cs" />
@@ -109,7 +110,9 @@
     <Compile Include="GeometryUtils.cs" />
     <Compile Include="IBuilder.cs" />
     <Compile Include="Intersections\IIntersection.cs" />
+    <Compile Include="Intersections\IIntersectionFactoryBuilder.cs" />
     <Compile Include="IResettable.cs" />
+    <Compile Include="ISerilogged.cs" />
     <Compile Include="Iterators\ActionEnumerator.cs" />
     <Compile Include="Iterators\ActionTwoWayEnumerator.cs" />
     <Compile Include="Iterators\Enumerator.cs" />
@@ -146,7 +149,6 @@
     <Compile Include="Resolvers\ResolveFactories\ItemResolveFactory.cs" />
     <Compile Include="Resolvers\ItemResolveProcessor.cs" />
     <Compile Include="Collisons\IBestCollisionDetector.cs" />
-    <Compile Include="Collisons\IIntersectionFactory.cs" />
     <Compile Include="CoordinateSystem\CCS.cs" />
     <Compile Include="CoordinateSystem\CCSModel.cs" />
     <Compile Include="Enumerables\DirectionIteratorBuilder.cs" />

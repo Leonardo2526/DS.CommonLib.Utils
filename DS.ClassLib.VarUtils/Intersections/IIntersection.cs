@@ -1,4 +1,4 @@
-﻿namespace DS.GraphUtils.Entities.Intersections
+﻿namespace DS.ClassLib.VarUtils.Intersections
 {
     /// <summary>
     /// Represents intersection between <typeparamref name="TItem"/>s with <typeparamref name="TIntersectionResult"/>.

@@ -17,7 +17,6 @@ namespace DS.ClassLib.VarUtils.Resolvers
         private readonly Queue<IResolveFactory<TResult>> _factoriesQueue = new();
         private readonly IEnumerable<IResolveFactory<TResult>> _resolveFactories;
         private Queue<IResolveFactory<TResult>> _specificFactoriesQueue = new ();
-        private CancellationTokenSource _cancellationTokenSource;
 
 
         /// <summary>
@@ -61,8 +60,8 @@ namespace DS.ClassLib.VarUtils.Resolvers
         public IEnumerable<IResolveFactory<TResult>> ResolveFactories => _resolveFactories;
 
         /// <inheritdoc/>
-        public CancellationTokenSource CancellationTokenSource => _cancellationTokenSource;
-
+        public CancellationTokenSource CancellationTokenSource {get;set;} = 
+            new CancellationTokenSource();
         /// <inheritdoc/>
         public bool TryReset()
         {
@@ -91,7 +90,6 @@ namespace DS.ClassLib.VarUtils.Resolvers
         private async Task<TResult> ResolveAsync(Queue<IResolveFactory<TResult>> resolveFactoriesQueue, bool runAsync)
         {
             TResult result = default;
-            _cancellationTokenSource = new CancellationTokenSource();
             //_cancellationTokenSource.CancelAfter(5000);
             //_cancellationTokenSource.Cancel();
             resolveFactoriesQueue.ToList().ForEach(f => f.CancellationTokenSource = CancellationTokenSource);

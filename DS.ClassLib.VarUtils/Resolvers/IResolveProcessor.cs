@@ -14,7 +14,7 @@ namespace DS.ClassLib.VarUtils.Resolvers
         /// <summary>
         /// Propagates notification that operations should be canceled.
         /// </summary>
-        CancellationTokenSource CancellationTokenSource { get; }
+        CancellationTokenSource CancellationTokenSource { get; set; }
 
         /// <summary>
         /// Factories to resolve tasks.
