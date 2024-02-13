@@ -30,7 +30,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         /// Otherwise from max to min step value.
         /// </para>
         /// </summary>
-        /// <param name="algorithmFactory"></param>
+        /// <param name="toleranceUpdater"></param>
         /// <param name="inverse"></param>
         /// <param name="isIterationAvailable"></param>
         public ToleranceEnumerator(IToleranceUpdater toleranceUpdater, bool inverse = false, bool isIterationAvailable = true)

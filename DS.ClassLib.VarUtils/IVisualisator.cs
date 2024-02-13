@@ -1,10 +1,57 @@
 ﻿using DS.ClassLib.VarUtils.Basis;
+using System.Threading.Tasks;
 
 namespace DS.ClassLib.VarUtils
 {
     public interface IVisualisator
     {
         public void Show();
+    }
+
+    /// <summary>
+    /// The interface is used to show <typeparamref name="TItem"/>. 
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    public interface IItemVisualisator<TItem>
+    {
+        /// <summary>
+        /// Show <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Show(TItem item);
+
+
+        /// <summary>
+        /// Show <paramref name="item"/> asyncronously.
+        /// </summary>
+        /// <param name="item"></param>
+        public Task ShowAsync(TItem item);
+    }
+
+    /// <summary>
+    /// The interface is used to show <typeparamref name="TItem"/>. 
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
+    /// <typeparam name="TItem"></typeparam>
+    public interface IItemResultVisualisator<TItem, TResult>
+    {
+        /// <summary>
+        /// Show <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>
+        /// <typeparamref name="TResult"/> of visualization.
+        /// </returns>
+        public TResult Show(TItem item);
+
+        /// <summary>
+        /// Show <paramref name="item"/> asyncronously.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>
+        ///  <typeparamref name="TResult"/> of visualization.
+        /// </returns>
+        public Task<TResult> ShowAsync(TItem item);
     }
 
     public interface IObjectVisualisator

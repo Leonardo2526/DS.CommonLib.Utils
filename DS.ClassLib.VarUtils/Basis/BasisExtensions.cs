@@ -45,9 +45,14 @@ namespace DS.ClassLib.VarUtils.Basis
         {
             Basis3d nBasis = basis;
 
+            //nBasis.X.Unitize();
+            //nBasis.Y.Unitize();
+            //nBasis.Z.Unitize();
+
             nBasis.X = Vector3d.Divide(basis.X, basis.X.Length);
             nBasis.Y = Vector3d.Divide(basis.Y, basis.Y.Length);
             nBasis.Z = Vector3d.Divide(basis.Z, basis.Z.Length);
+
 
             return nBasis;
         }
@@ -94,5 +99,27 @@ namespace DS.ClassLib.VarUtils.Basis
         /// </returns>
         public static Transform GetTransform(this Basis3d sourceBasis, Basis3d targetBasis) =>
             Transform.ChangeBasis(sourceBasis.X, sourceBasis.Y, sourceBasis.Z, targetBasis.X, targetBasis.Y, targetBasis.Z);
+
+        /// <summary>
+        /// Convert <paramref name="sourceBasis"/> to rightanded and orthonormal <see cref="Basis3d"/>..
+        /// </summary>
+        /// <param name="sourceBasis"></param>
+        /// <returns>
+        /// A new rightanded and orthonormal <see cref="Basis3d"/>.
+        /// </returns>
+        public static Basis3d ToRightandedOrthonormal(this Basis3d sourceBasis)
+        {
+            if(sourceBasis.IsOrthonormal() && sourceBasis.IsRighthanded()) 
+            { return sourceBasis; }
+
+            var basisX = sourceBasis.X;
+            basisX.Unitize();
+            var basisZ = Vector3d.CrossProduct(sourceBasis.X, sourceBasis.Y);
+            basisZ.Unitize();
+            var basisY = Vector3d.CrossProduct(basisZ, sourceBasis.X);
+            basisY.Unitize();
+
+            return new Basis3d(sourceBasis.Origin, basisX, basisY, basisZ);  
+        }
     }
 }

@@ -3,6 +3,7 @@ using Serilog;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace DS.PathFinder.Algorithms.Enumeratos
@@ -48,6 +49,11 @@ namespace DS.PathFinder.Algorithms.Enumeratos
         public List<Point3d> Current => _path;
 
         /// <summary>
+        /// The core Serilog, used for writing log events.
+        /// </summary>
+        public ILogger Logger { get; set; }
+
+        /// <summary>
         /// Outer token.
         /// </summary>
         public CancellationTokenSource TokenSource { get; set; }
@@ -75,7 +81,7 @@ namespace DS.PathFinder.Algorithms.Enumeratos
 
             if (_totalTokenSource is not null && _totalTokenSource.Token.IsCancellationRequested)
             { Log.Information("Path search iteration time is up."); return false; }
-            if (TokenSource is not null && TokenSource.Token.IsCancellationRequested)
+            if (TokenSource != null && TokenSource.IsCancellationRequested)
             { Log.Information("Path search iteration time is up."); return false; }
 
             if (!_heuristicEnumerator.MoveNext())
@@ -98,8 +104,8 @@ namespace DS.PathFinder.Algorithms.Enumeratos
             DateTime stepDate2 = DateTime.Now;
 
             TimeSpan interval = stepDate2 - stepDate1;
-            Log.Information($"Iteration {_index + 1} search time is {(int)interval.TotalMilliseconds} ms");
-
+            var logMessage = $"Iteration {_index + 1} search time is {(int)interval.TotalMilliseconds} ms";
+            Logger?.Information(logMessage);
             return true;
         }
 

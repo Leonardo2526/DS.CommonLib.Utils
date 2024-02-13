@@ -1,7 +1,6 @@
 ﻿using DS.ClassLib.VarUtils.Basis;
 using Rhino.Geometry;
 using System.Collections.Generic;
-using System.Windows.Media.Media3D;
 
 namespace DS.ClassLib.VarUtils.Collisions
 {

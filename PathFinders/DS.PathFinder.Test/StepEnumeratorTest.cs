@@ -22,12 +22,12 @@ namespace ConsoleApp.PathFindTest
         {
             int i = 0;
             double maxModelStep = 500;
-            var enumerator = new StepEnumerator(_nodeBuilder, maxModelStep, true);
-            while(enumerator.MoveNext())
-            {
-                i++;
-                Console.WriteLine(i + " - "+ enumerator.Current);
-            }
+            //var enumerator = new StepEnumerator(_nodeBuilder, maxModelStep, true);
+            //while(enumerator.MoveNext())
+            //{
+            //    i++;
+            //    Console.WriteLine(i + " - "+ enumerator.Current);
+            //}
         }
     }
 }

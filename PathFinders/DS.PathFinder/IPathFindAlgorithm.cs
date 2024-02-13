@@ -12,7 +12,7 @@ namespace DS.PathFinder
         /// <summary>
         /// Token to cancel finding path operation.
         /// </summary>
-        public CancellationTokenSource ExternalTokenSource { get; set; }
+        public CancellationTokenSource ExternalToken { get; set; }
 
         /// <summary>
         /// Find path between <paramref name="startPoint"/> and <paramref name="endPoint"/>.

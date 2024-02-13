@@ -6,7 +6,7 @@
     <LangVersion>latest</LangVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F42C671B-41AF-4CD6-8DA8-C75EAE032D73}</ProjectGuid>
+    <ProjectGuid>{0A99EB4B-783B-495B-B743-82077C2BB30A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>DS.PathFinder</RootNamespace>
     <AssemblyName>DS.PathFinder</AssemblyName>
@@ -47,7 +47,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\DS.CommonLib.Utils\DS.ClassLib.VarUtils\bin\Debug\DS.ClassLib.VarUtils.dll</HintPath>
     </Reference>
+    <Reference Include="DS.GraphUtils.Entities">
+      <HintPath>..\..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\bin\Debug\DS.GraphUtils.Entities.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Olimproekt\MEPAutoCoordination\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Data, Version=3.6.61114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Olimproekt\MEPAutoCoordination\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Graphviz, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Olimproekt\MEPAutoCoordination\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Graphviz.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Olimproekt\MEPAutoCoordination\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rhino3dm.7.15.0\lib\net45\Rhino3dm.dll</HintPath>
     </Reference>
@@ -79,6 +94,7 @@
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\HeuristicEnumerator.cs" />
+    <Compile Include="Algorithms\InterLine\InterLineAlgorithm.cs" />
     <Compile Include="IAlgorithmBuilder.cs" />
     <Compile Include="IPathFindIterator.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\PathFindEnumerator.cs" />
@@ -97,6 +113,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

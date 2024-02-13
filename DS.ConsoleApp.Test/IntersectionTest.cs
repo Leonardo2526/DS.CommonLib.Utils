@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using DS.ClassLib.VarUtils;
+using Rhino.Geometry;
 using Rhino.Geometry.Intersect;
 using System;
 using System.Collections.Generic;
@@ -14,28 +15,40 @@ namespace DS.ConsoleApp.Test
 
         public IntersectionTest()
         {
-            (Point3d point1, Point3d point2, bool intersection) = Run();
+        }
+
+        public void  Run()
+        {
+            Point3d p11 = new Point3d(0, 0, 0);
+            Point3d p12 = new Point3d(5, 0, 0);
+            Line line1 = new Line(p11, p12);
+
+            Point3d p21 = new Point3d(0, 0, 0);
+            Point3d p22 = new Point3d(5, 0, 0);
+            Line line2 = new Line(p21, p22);       
+
+
+            var intersection = Intersection.LineLine(line1, line2, out double a, out double b, _tolerance, true);
+            Point3d point1 = line1.PointAt(a);
+            Point3d point2 = line2.PointAt(b);
+
             Console.WriteLine("Intersection is: " + intersection);
             Console.WriteLine("Intersection point on line1 is: " + point1);
             Console.WriteLine("Intersection point on line2 is: " + point2);
         }
 
-        private (Point3d point1, Point3d point2, bool intersection) Run()
+        public void OverlapTest()
         {
             Point3d p11 = new Point3d(0, 0, 0);
             Point3d p12 = new Point3d(5, 0, 0);
             Line line1 = new Line(p11, p12);
 
 
-            Point3d p21 = new Point3d(20, 2, 0);
-            Point3d p22 = new Point3d(20, -2, 0);
+            Point3d p21 = new Point3d(3, 0, 0);
+            Point3d p22 = new Point3d(4, 0, 0);
             Line line2 = new Line(p21, p22);
 
-            var intersection = Intersection.LineLine(line1, line2, out double a, out double b, _tolerance, true);
-            Point3d point1 = line1.PointAt(a);
-            Point3d point2 = line2.PointAt(b);
-
-            return (point1, point2, intersection);    
+            Console.WriteLine(line1.IsOverlapped(line2));
         }
     }
 }

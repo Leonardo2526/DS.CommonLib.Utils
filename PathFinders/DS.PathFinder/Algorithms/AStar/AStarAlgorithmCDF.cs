@@ -3,6 +3,8 @@ using DS.ClassLib.VarUtils.Basis;
 using DS.ClassLib.VarUtils.Collisions;
 using DS.ClassLib.VarUtils.Enumerables;
 using DS.ClassLib.VarUtils.Points;
+using DS.GraphUtils.Entities;
+using QuickGraph;
 using Rhino;
 using Rhino.Geometry;
 using System;
@@ -11,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DS.PathFinder.Algorithms.AStar
 {
@@ -62,6 +65,9 @@ namespace DS.PathFinder.Algorithms.AStar
             _refineFactory = refineFactory;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AStarAlgorithmCDF()
         {
         }
@@ -93,8 +99,10 @@ namespace DS.PathFinder.Algorithms.AStar
             }
         }
 
+        private double _pt;
+
         /// <inheritdoc/>
-        public CancellationTokenSource ExternalTokenSource { get; set; } = new CancellationTokenSource();
+        public CancellationTokenSource ExternalToken { get; set; }
 
 
         /// <summary>
@@ -127,7 +135,23 @@ namespace DS.PathFinder.Algorithms.AStar
         /// </summary>
         public Basis3d SourceBasis { get; set; }
 
+        /// <summary>
+        /// Check directions.
+        /// </summary>
         public IDirectionValidator DirectionValidator { get; set; }
+
+        public ITaggedEdgeValidator<TaggedGVertex<Point3d>, Basis3d> TaggedEdgeValidator { get;set; }
+
+        /// <summary>
+        /// Specifies if it was failed to exit from startPoint.
+        /// </summary>
+        public bool IsFailedOnStart { get; private set; }
+
+
+        /// <summary>
+        /// Maximum search time in milliseconds.
+        /// </summary>
+        public int MaxTime { get; set; } = 3000;
 
         #endregion
 
@@ -155,7 +179,7 @@ namespace DS.PathFinder.Algorithms.AStar
                default : new Line(_startPoint, _endPoint);
 
             MTolerance = _nodeBuilder.Step;
-
+            _pt = Math.Pow(0.1, _tolerance);
             //initiate a new search
             var parentNode = new PathNode()
             {
@@ -172,6 +196,16 @@ namespace DS.PathFinder.Algorithms.AStar
             _mOpen.Push(parentNode);
 
             double minDistToANP = _traceSettings.R + _traceSettings.D;
+
+            //Task.Delay(1000).Wait();
+
+            //if (StartDirection.Length > 0)
+            //{ PointVisualisator?.ShowVector(_startPoint, _startPoint + StartDirection); }
+            //PointVisualisator?.Show(StartANP);
+            //if (EndDirection.Length > 0)
+            //{ PointVisualisator?.ShowVector(_endPoint, _endPoint + EndDirection); }
+            //PointVisualisator?.Show(EndANP);
+            //PointVisualisator?.Show(SourceBasis);
 
             //iterate over open list.
             while (_mOpen.Count > 0)
@@ -191,16 +225,14 @@ namespace DS.PathFinder.Algorithms.AStar
                 //if (parentNode.Point.DistanceTo(checkPoint1) < 0.001)
                 //{
 
-                //}
-
+                //}               
                 if (parentNode.Point.Round(_cTolerance) == endPoint.Round(_cTolerance))
-                {
+                    {
                     parentNode.Point = endPoint;
                     _mClose.Add(parentNode);
                     found = true;
                     break;
                 }
-
                 var distToANP = parentNode.ANP.DistanceTo(parentNode.Point);
 
                 void pushNodeWithParent() => TryPushNode(parentNode, parentNode.Dir);
@@ -226,7 +258,11 @@ namespace DS.PathFinder.Algorithms.AStar
 
             Debug.WriteLine("Close nodes count: " + _mClose.Count);
             var pathNodes = RestorePath(found, _mClose);
+            //var path = pathNodes.Select(n => n.Point).ToList();
             var path = _refineFactory.Refine(pathNodes);
+
+            IsFailedOnStart = _mClose.Count == 1;
+            Debug.WriteLineIf(IsFailedOnStart, "PathFind failed on start point");
 
             return path;
         }
@@ -234,9 +270,9 @@ namespace DS.PathFinder.Algorithms.AStar
         /// <inheritdoc/>
         public void ResetToken()
         {
-            _internalTokenSource = new CancellationTokenSource(3000);
-            _linkedTokenSource =
-                CancellationTokenSource.CreateLinkedTokenSource(ExternalTokenSource.Token, _internalTokenSource.Token);
+            _internalTokenSource = new CancellationTokenSource(MaxTime);
+            _linkedTokenSource = ExternalToken == null ? _internalTokenSource :
+                CancellationTokenSource.CreateLinkedTokenSource(ExternalToken.Token, _internalTokenSource.Token);
         }
 
         private bool TryPushNode(PathNode parentNode, Vector3d nodeDir)
@@ -265,10 +301,6 @@ namespace DS.PathFinder.Algorithms.AStar
                 if (endAngle != 0
                     && _traceSettings.A != endAngle
                     && _traceSettings.A != -endAngle)
-                // && !_traceSettings.AList.Contains(endAngle)
-                //&& !_traceSettings.AList.Contains(-endAngle))
-                { return false; }
-                else if (EndANP != default && newNode.Point.DistanceTo(EndANP) < _traceSettings.R + _traceSettings.D)
                 { return false; }
             }
 
@@ -295,14 +327,28 @@ namespace DS.PathFinder.Algorithms.AStar
 
             if (endNode)
             {
-                var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 ?
+                var minDist = newNode.Dir.IsParallelTo(EndDirection, 3.DegToRad()) == 1 || EndDirection.Length == 0 ?
                     _traceSettings.R + _traceSettings.D : _traceSettings.F;
                 if (newNode.ANP.DistanceTo(_endPoint) < minDist)
-                { return false; }
+                {
+                    return false;
+                }
             }
 
+            if (TaggedEdgeValidator is not null)
+            {
+                var v1 = new TaggedGVertex<Point3d>(1, parentNode.Point);
+                var v2 = new TaggedGVertex<Point3d>(2, newNode.Point);
+                var edge = new TaggedEdge<TaggedGVertex<Point3d>, Basis3d>(v1, v2, newNode.Basis);
+                if (!TaggedEdgeValidator.IsValid(edge))
+                {
+                    return false;
+                }
+            }
+
+            //PointVisualisator?.Show(newNode.Basis);
             //check collisions 
-            if (_mOpen.Count == 0 && _mClose.Count == 0)
+            if (parentNode.Point.DistanceTo(_startPoint) < _pt)
                 { _collisionDetector.GetFirstCollisions(newNode.Point, newNode.Basis); }
             else if (endNode)
             { _collisionDetector.GetLastCollisions(parentNode.Point, newNode.Basis); }
@@ -328,30 +374,23 @@ namespace DS.PathFinder.Algorithms.AStar
 
             if (!found) { return path; }
 
-            path.AddRange(closeNodes);
-            var fNode = path[path.Count - 1];
+            PathNode currentNode = closeNodes[closeNodes.Count - 1];
+            path.Add(currentNode);
 
-            var firstANP = path.First().ANP;
-            var lastANP = path.Last(p => p.ANP != _startPoint).ANP;
-
-
-            for (int i = path.Count - 1; i >= 0; i--)
+            while(currentNode.Point != _startPoint)
             {
-                if(fNode.ANP != firstANP 
-                    && fNode.ANP != lastANP 
-                    && fNode.ANP.DistanceTo(path[i].ANP) < _traceSettings.F)
-                    { path.RemoveAt(i); continue; }
-
-                if (fNode.ANP == path[i].Point || i == path.Count - 1)
-                {
-                    fNode = path[i];
-                }
-                else if(path[i].Point == _startPoint) { continue; }
-                else
-                { path.RemoveAt(i); }
+                currentNode = GetANPNode(currentNode, closeNodes);
+                path.Add(currentNode);
+                //break;
             }
 
+
             return path;
+        }
+
+        private PathNode GetANPNode(PathNode node, List<PathNode> closeNodes)
+        {
+            return closeNodes.FirstOrDefault(n => n.Point == node.ANP);
         }
 
 
