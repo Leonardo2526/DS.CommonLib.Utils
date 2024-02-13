@@ -1,13 +1,9 @@
 ﻿using DS.ClassLib.VarUtils;
 using DS.ClassLib.VarUtils.Collisions;
-using DS.ClassLib.VarUtils.Enumerables;
-using DS.ClassLib.VarUtils.Graphs;
+using DS.GraphUtils.Entities;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DS.ConsoleApp.Test
 {
@@ -67,9 +63,9 @@ namespace DS.ConsoleApp.Test
             new Point3d(2,0,2),
         };
 
-        public SimpleGraph CreatePlanarGraph90()=>new SimpleGraph(_planarNodes90);
-        public SimpleGraph CreatePlanarGraph45()=>new SimpleGraph(_planarNodes45);
-        public SimpleGraph CreatePlanarGraphMinus45()=>new SimpleGraph(_planarNodesMinus45);
+        public SimpleGraph CreatePlanarGraph90() => new SimpleGraph(_planarNodes90);
+        public SimpleGraph CreatePlanarGraph45() => new SimpleGraph(_planarNodes45);
+        public SimpleGraph CreatePlanarGraphMinus45() => new SimpleGraph(_planarNodesMinus45);
         public SimpleGraph CreatePlanarGraph30() => new SimpleGraph(_planarNodes30);
 
 
@@ -100,7 +96,7 @@ namespace DS.ConsoleApp.Test
             };
 
             var graph = new SimpleGraph(nodes);
-            foreach (var link in graph.Links)
+            foreach (var link in graph.Edges)
             {
                 Console.WriteLine(link.ToString());
             }
@@ -111,27 +107,27 @@ namespace DS.ConsoleApp.Test
         public SimpleGraph RunLinksTest(List<Line> links)
         {
             var graph = new SimpleGraph(links);
-            foreach (var node in graph.Nodes)
+            foreach (var node in graph.Vertices)
             {
                 Console.WriteLine(node.ToString());
             }
             return graph;
         }
 
-        public SimpleGraph MinimizeNodes(SimpleGraph graph)
-        {
-            var angles = new List<int>()
-            {
-              90
-            };
+        //public SimpleGraph MinimizeNodes(SimpleGraph graph)
+        //{
+        //    var angles = new List<int>()
+        //    {
+        //      90
+        //    };
 
-            ITraceCollisionDetector<Point3d> collisionDetector = null;
+        //    ITraceCollisionDetector<Point3d> collisionDetector = null;
 
-            var nm = new NodesMinimizator(angles, collisionDetector);
-            nm.MinLinkLength = 0;
-            nm.MaxLinkLength = 5;
+        //    var nm = new NodesMinimizator(angles, collisionDetector);
+        //    nm.MinLinkLength = 0;
+        //    nm.MaxLinkLength = 5;
 
-            return nm.ReduceNodes(graph);
-        }
+        //    return nm.ReduceNodes(graph);
+        //}
     }
 }

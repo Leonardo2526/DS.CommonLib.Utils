@@ -1,6 +1,7 @@
 ﻿using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace DS.ClassLib.VarUtils.Graphs
 {
@@ -32,10 +33,17 @@ namespace DS.ClassLib.VarUtils.Graphs
         }
 
         /// <inheritdoc/>
-        public List<Point3d> Nodes => _nodes ??= _nodes = GetNodes(_links);
+        public List<Point3d> Vertices => _nodes ??= _nodes = GetNodes(_links);
 
         /// <inheritdoc/>
-        public List<Line> Links => _links ??= _links = GetLinks(_nodes);
+        public List<Line> Edges => _links ??= _links = GetLinks(_nodes);
+
+        public override string ToString()
+        {
+            var sb= new StringBuilder();
+            _nodes.ForEach(n => sb.AppendLine($"({n})"));
+            return sb.ToString();
+        }
 
         private List<Line> GetLinks(List<Point3d> nodes)
         {

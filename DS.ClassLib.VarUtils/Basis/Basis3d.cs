@@ -1,4 +1,6 @@
-﻿using Rhino.Geometry;
+﻿using DS.ClassLib.VarUtils.Points;
+using Rhino.Geometry;
+using System.Text;
 
 namespace DS.ClassLib.VarUtils.Basis
 {
@@ -43,5 +45,27 @@ namespace DS.ClassLib.VarUtils.Basis
         /// Basis origin point.
         /// </summary>
         public Point3d Origin { get; set; }
+
+        /// <summary>
+        /// Round each item of basis to specified <paramref name="tolerance"/>.
+        /// </summary>
+        /// <param name="tolerance"></param>
+        /// <returns></returns>
+        public Basis3d Round(int tolerance = 3) =>
+          new Basis3d(
+              Origin.Round(tolerance),
+              X.Round(tolerance), Y.Round(tolerance), Z.Round(tolerance));
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Origin: ({Origin})");
+            sb.AppendLine($"basisX: ({X})");
+            sb.AppendLine($"basisY: ({Y})");
+            sb.AppendLine($"basisZ: ({Z})");
+
+            return sb.ToString();
+        }
     }
 }

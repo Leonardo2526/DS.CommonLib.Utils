@@ -1,17 +1,11 @@
-﻿using DS.ClassLib.FileSystemUtils;
-using DS.ClassLib.VarUtils;
-using DS.ClassLib.VarUtils.Graphs;
+﻿using DS.ClassLib.VarUtils;
+using DS.ClassLib.VarUtils.Filters;
 using DS.ConsoleApp.Test.RhinoTests;
+using DS.ConsoleApp.Test.RhinoTests.Rectangles;
 using Rhino;
 using Rhino.Geometry;
-using Rhino.Geometry.Intersect;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DS.ConsoleApp.Test
 {
@@ -20,48 +14,34 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            var test = new LineTest();
-            //test.Disable();
-            //test.Enable();
-            //test.EnableByVector();
-            //test.SetPriority1();
+            double v = RhinoMath.UnitScale(UnitSystem.Millimeters, UnitSystem.Feet);
+            Console.WriteLine(304 * v);
+            //Console.WriteLine(p1.IsCoplanar(p2));
 
-            //new BoxOriginTest();
-            //new BoundingBoxTest();
-            //new LinesIntersectionTest();
-            //new EnumeratorTest();
+            //ConvertToRectangleTest.Convert2();
+            //IntersectionsTest.Run1();
+            //RoolsFilterFactoryTest.Test1();
+            //ActionTwoWayEnumeratorTest.StringIterator();
+            //Basis3dTests.TryCreateTransforms1();
+            //Basis3dTests.ConvertBasis();
+            //Basis3dTests.TestBasisOrthonormal();
+
+
+            //var test = new MultiResolverTest()
+            //    .CreateResolver();
+
+            //test.Resolve();
+            //Task.Run(() => test.ResolveAsync().Wait());
+
+
+            //new LinesBooleanTests()
+            //     .BoolSubstractMultiple();
+            //.BoolSubstract();
+            //.BoolIntersect();
+
+            //new PointsOrderTest().OrderByDistance();
+
             Console.ReadLine();
         }
-
-        [STAThread]
-        static void Main_Graph(string[] args)
-        {
-            var test = new GraphTest();
-
-            SimpleGraph graph = test.CreatePlanarGraph90();
-            //var graph = test.CreateNotPlanarGraph();
-
-            var nodes = test.MinimizeNodes(graph).Nodes;
-
-            Console.WriteLine(nodes.Count);
-            foreach (var node in nodes)
-            {
-                Console.WriteLine(node.ToString());
-            }
-            Console.ReadLine();
-        }
-
-        //static void Main(string[] args)
-        //{
-        //    //var number = 0.010;
-        //    var number = 80.0555;
-        //    var fractLength = number.FractionString().Length;
-        //    var (wholeNumber, fractNumber) = number.Split();
-        //    Console.WriteLine("The fractLength is: " + fractLength);
-        //    Console.WriteLine("The wholeNumber is: " + wholeNumber);
-        //    Console.WriteLine("The fractNumber is: " + fractNumber);
-        //    //GetFractionTest.Run();
-        //    Console.ReadLine();
-        //}
     }
 }

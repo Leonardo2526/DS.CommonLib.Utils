@@ -33,13 +33,13 @@ namespace ConsoleApp.PathFindTest
             var dummyFactory = new DummyAlgorithmFactory();
 
             double maxModelStep = 2500;
-            var stepEnumerator = new StepEnumerator(_nodeBuilder, maxModelStep, true);
-            var heuristicEnumerator = new HeuristicEnumerator(_nodeBuilder, false);
-            var toleranceEnumerator = new ToleranceEnumerator(dummyFactory, true);
-            var pathFindEnumerator = new PathFindEnumerator(stepEnumerator, heuristicEnumerator, toleranceEnumerator, dummyFactory);
+            //var stepEnumerator = new StepEnumerator(_nodeBuilder, maxModelStep, true);
+            //var heuristicEnumerator = new HeuristicEnumerator(_nodeBuilder, false);
+            //var toleranceEnumerator = new ToleranceEnumerator(dummyFactory, true);
+            //var pathFindEnumerator = new PathFindEnumerator(stepEnumerator, heuristicEnumerator, toleranceEnumerator, dummyFactory);
 
-            while (pathFindEnumerator.MoveNext())
-            { var path = pathFindEnumerator.Current; }
+            //while (pathFindEnumerator.MoveNext())
+            //{ var path = pathFindEnumerator.Current; }
         }
     }
 }
