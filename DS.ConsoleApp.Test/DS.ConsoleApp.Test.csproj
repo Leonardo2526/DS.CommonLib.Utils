@@ -91,6 +91,7 @@
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
     <Compile Include="RhinoTests\Basis3dTests.cs" />
     <Compile Include="RhinoTests\Rectangles\ConvertToRectangleTest.cs" />
+    <Compile Include="RhinoTests\Rectangles\CreateRectangleTest.cs" />
     <Compile Include="RhinoTests\Rectangles\RecatngleIntersectionsTest.cs" />
     <Compile Include="RhinoTests\Rectangles\RectangleContainTest.cs" />
     <Compile Include="RhinoTests\GeometryOffsetTest.cs" />

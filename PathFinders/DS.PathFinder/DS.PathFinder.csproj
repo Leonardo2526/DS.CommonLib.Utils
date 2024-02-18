@@ -90,6 +90,10 @@
     <Compile Include="Algorithms\AStar\ComparePFNode.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\ToleranceEnumerator.cs" />
     <Compile Include="Algorithms\AStar\Enums.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\AStarGraphAlgorithm.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\PriorityComparer.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\VertexLocationComparer.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\Node.cs" />
     <Compile Include="Algorithms\AStar\INodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
