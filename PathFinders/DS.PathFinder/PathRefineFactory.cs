@@ -5,6 +5,7 @@ using DS.ClassLib.VarUtils.Enumerables;
 using DS.GraphUtils.Entities;
 using DS.PathFinder.Algorithms.AStar;
 using Rhino.Geometry;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace DS.PathFinder
     /// <summary>
     /// An object that represents factory to refine path.
     /// </summary>
-    public class PathRefineFactory : IRefineFactory<Point3d>
+    public class PathRefineFactory : IRefineFactory<Point3d>, ISerilogged
     {
         private readonly int _tolerance = 3;
         private readonly ITraceSettings _traceSettings;
@@ -43,6 +44,7 @@ namespace DS.PathFinder
         public bool MinNodes { get; set; }
 
         public ITaggedEdgeValidator<TaggedGVertex<Point3d>, Basis3d> EdgeValidator { get; set; }
+        public ILogger Logger { get; set; }
 
         /// <inheritdoc/>
         public List<Point3d> Refine(List<PathNode> path)
@@ -52,10 +54,19 @@ namespace DS.PathFinder
 
             var points = path.Select(n => n.Point).ToList();
             points.Reverse();
-            points = MinNodes ? MinimizeNodes(points) : points;
-            //points = MinNodes ? MinimizeNodes(points) : points; //?!
 
-            return points;
+            List<Point3d> minPoints = null;
+            try
+            {
+                minPoints = MinNodes ? MinimizeNodes(points) : points;
+            }
+            catch (System.Exception)
+            {
+                Logger.Warning("Failed to minimize nodes.");
+            }
+
+            return minPoints != null && minPoints.Count > 0 ? 
+                minPoints : points;
         }
 
         private List<Point3d> MinimizeNodes(List<Point3d> points)
