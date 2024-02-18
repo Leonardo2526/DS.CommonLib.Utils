@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.ClassLib.VarUtils", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.PathFinder.Test", "DS.PathFinder.Test\DS.PathFinder.Test.csproj", "{21A2D571-B0FF-4734-B3C1-306B8A0589EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.GraphUtils.Entities", "..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\DS.GraphUtils.Entities.csproj", "{3F3C36E6-646A-47B2-AD46-81268EAD25B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21A2D571-B0FF-4734-B3C1-306B8A0589EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F3C36E6-646A-47B2-AD46-81268EAD25B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F3C36E6-646A-47B2-AD46-81268EAD25B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F3C36E6-646A-47B2-AD46-81268EAD25B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F3C36E6-646A-47B2-AD46-81268EAD25B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
