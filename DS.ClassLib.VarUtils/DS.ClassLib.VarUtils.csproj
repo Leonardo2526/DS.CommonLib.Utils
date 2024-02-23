@@ -208,6 +208,7 @@
     <Compile Include="Strings\StringExtensions.cs" />
     <Compile Include="Selectors\ValidatableSelector.cs" />
     <Compile Include="Iterators\ValidatorIterator.cs" />
+    <Compile Include="UnitConvertionExtenstions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

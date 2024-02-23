@@ -9,7 +9,7 @@ namespace DS.PathFinder.Algorithms.AStar.GraphAlgorithm
 {
     public struct Node
     {
-        public Node(  Point3d location)
+        public Node(Point3d location)
         {
             Location = location;
         }
@@ -17,18 +17,24 @@ namespace DS.PathFinder.Algorithms.AStar.GraphAlgorithm
         public Point3d Location { get; }
 
         /// <summary>
-        /// Path priority.
+        /// Full distance.
         /// </summary>
-        public double F { get; set; }
+        public readonly double F => G + H;
 
         /// <summary>
-        /// Distance to parent node.
+        /// Distance to start node.
         /// </summary>
         public double G { get; set; }
 
         /// <summary>
-        /// Distance to end point.
+        /// Distance to end node.
         /// </summary>
         public double H { get; set; }
+
+
+        /// <summary>
+        /// Path from start node.
+        /// </summary>
+        public int Path { get; set; }
     }
 }
