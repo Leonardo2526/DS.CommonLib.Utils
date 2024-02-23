@@ -16,9 +16,9 @@ namespace DS.PathFinder.Algorithms.AStar.GraphAlgorithm
     /// An algorithm to find path between <see cref="Point3d"/> points in continuous data field based on graph.
     /// </summary>
     public class AStarGraphAlgorithm(
-        ITaggedVertexFactory<Node> vertexFactory, 
-        IEdgeFactory<NodeVertex> edgeFactory) : 
-        IBestPathFindAlgorithm<Point3d, Point3d>, 
+        ITaggedVertexFactory<Node> vertexFactory,
+        IEdgeFactory<NodeVertex> edgeFactory) :
+        IBestPathFindAlgorithm<Point3d, Point3d>,
         IGraphFactory<NodeVertex>, ISerilogged
     {
         private static readonly int _compareTolerance = 2;
@@ -71,7 +71,7 @@ namespace DS.PathFinder.Algorithms.AStar.GraphAlgorithm
 
             var result = graph.ShortestPathsDijkstra((e) => 1, _source)
                             .Invoke(_target, out var edges);
-            if(!result)
+            if (!result)
             {
                 Logger?.Warning("Failed to find path.");
                 return Enumerable.Empty<Point3d>();
@@ -104,9 +104,9 @@ namespace DS.PathFinder.Algorithms.AStar.GraphAlgorithm
                 if (child == null) { continue; }
 
                 var edge = edgeFactory.Create(parent, child);
-                if (edge == null) { continue; }
+                    if (edge == null) { continue; }
 
-                graph.AddEdge(edge);
+                    graph.AddEdge(edge);
                 _mOpen.Push(child);
             }
 
