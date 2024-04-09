@@ -1,4 +1,5 @@
-﻿using Rhino.Geometry;
+﻿using Rhino;
+using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,5 +122,23 @@ namespace DS.ClassLib.VarUtils.Points
             }
         }
 
+
+        /// <summary>
+        /// Determines whether <paramref name="p1"/> has the same coordinate as <paramref name="p2"/>
+        /// with given <paramref name="tolerance"/>.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="p1"/> coordinate is equal to <paramref name="p2"/>.
+        /// <para>
+        /// Otherwise <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsAlmostEqualTo(this Point3d p1,
+         Point3d p2,
+         double tolerance = RhinoMath.ZeroTolerance)
+         => p1.DistanceTo(p2) < tolerance;
     }
 }

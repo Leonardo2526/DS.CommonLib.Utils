@@ -35,9 +35,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>DS.ConsoleApp.Test.RhinoTestProgram</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DS.GraphUtils.Entities">
       <HintPath>..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\bin\Debug\DS.GraphUtils.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreLinq, Version=4.2.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.4.2.0\lib\netstandard2.0\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -87,9 +93,11 @@
     <Compile Include="EnumeratorTest.cs" />
     <Compile Include="GraphTest.cs" />
     <Compile Include="LinesBooleanTests.cs" />
+    <Compile Include="RhinoTests\Startups\RhinoTestProgram.cs" />
     <Compile Include="RhinoTests\CCSTest.cs" />
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
     <Compile Include="RhinoTests\Basis3dTests.cs" />
+    <Compile Include="RhinoTests\PointsSortTest.cs" />
     <Compile Include="RhinoTests\Rectangles\ConvertToRectangleTest.cs" />
     <Compile Include="RhinoTests\Rectangles\CreateRectangleTest.cs" />
     <Compile Include="RhinoTests\Rectangles\RecatngleIntersectionsTest.cs" />

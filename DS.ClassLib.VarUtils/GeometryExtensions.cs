@@ -152,6 +152,53 @@ namespace DS.ClassLib.VarUtils
         public static bool IsCoplanar(this Plane plane1, Plane plane2)
             => plane1.Normal.IsParallelTo(plane2.Normal, 1.DegToRad()) != 0 
             && plane1.DistanceTo(plane2.Origin) < 0.001;
-        
+
+        /// <summary>
+        /// Try to get type of <paramref name="plane"/> in Cartesian coordinate system.
+        /// </summary>
+        /// <param name="plane"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>
+        /// XY, YZ or XZ type if <paramref name="plane"/>'s normal is parallel to one of 
+        /// Cartesian coordinate system axis.
+        /// <para>
+        /// Otherwise default value.
+        /// </para>
+        /// </returns>
+        public static OrthoPlane TryGetOrthoType(this Plane plane,
+         double tolerance = 0.0174533)
+        {
+            var normal = plane.Normal;
+            OrthoPlane orthoPlane = default;
+            if (normal.IsParallelTo(Vector3d.XAxis, tolerance) != 0)
+            { orthoPlane = OrthoPlane.YZ; }
+            else if (normal.IsParallelTo(Vector3d.YAxis, tolerance) != 0)
+            { orthoPlane = OrthoPlane.XZ; }
+            else if (normal.IsParallelTo(Vector3d.ZAxis, tolerance) != 0)
+            { orthoPlane = OrthoPlane.XY; }
+
+            return orthoPlane;
+        }
+
+        /// <summary>
+        /// Try to get type of <paramref name="curve"/>'s <see cref="Plane"/> 
+        /// in Cartesian coordinate system.
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>
+        /// XY, YZ or XZ type if <paramref name="curve"/>'s <see cref="Plane"/>
+        /// normal is parallel to one of 
+        /// Cartesian coordinate system axis.
+        /// <para>
+        /// Otherwise default value.
+        /// </para>
+        /// </returns>
+        public static OrthoPlane TryGetPlaneOrthoType(this Curve curve,
+         double tolerance = 0.0174533)
+         => curve.TryGetPlane(out var plane) ?
+         TryGetOrthoType(plane, tolerance) :
+         default;
+
     }
 }

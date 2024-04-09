@@ -101,6 +101,8 @@
   <ItemGroup>
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
+    <Compile Include="BinaryOperations\IBinaryOperations.cs" />
+    <Compile Include="BinaryOperations\BinaryOperationType.cs" />
     <Compile Include="Intersections\IIntersectionVisualizator.cs" />
     <Compile Include="Intersections\ITIntersectionFactory.cs" />
     <Compile Include="Filters\RulesFilterFactory.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="IValidatorFactory.cs" />
     <Compile Include="IWindowMessenger.cs" />
     <Compile Include="Points\IPoint3dConverter.cs" />
+    <Compile Include="Points\PointComparer.cs" />
     <Compile Include="RectangleBooleanTools.cs" />
     <Compile Include="Resolvers\IResolveProcessor.cs" />
     <Compile Include="Resolvers\ResolveFactories\IResolveFactory.cs" />
@@ -136,6 +139,7 @@
     <Compile Include="Selectors\IValidatableSelector.cs" />
     <Compile Include="Resolvers\TaskCreators\IItemTaskCreatorFactory.cs" />
     <Compile Include="Resolvers\TaskCreators\TupleValidatableTaskCreator.cs" />
+    <Compile Include="TimeSpanRunner.cs" />
     <Compile Include="TupleExtensions.cs" />
     <Compile Include="Collisons\CollisionStatus.cs" />
     <Compile Include="Collisons\ICollisionFactory.cs" />
