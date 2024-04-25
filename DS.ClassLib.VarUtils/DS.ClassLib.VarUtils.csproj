@@ -52,6 +52,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\bin\Debug\DS.GraphUtils.Entities.dll</HintPath>
     </Reference>
+    <Reference Include="MoreLinq, Version=4.2.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\..\OLMP.RevitAPI\packages\morelinq.4.2.0\lib\netstandard2.0\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
@@ -101,8 +104,10 @@
   <ItemGroup>
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
+    <Compile Include="BinaryOperations\IBinaryOperationsMany.cs" />
     <Compile Include="BinaryOperations\IBinaryOperations.cs" />
     <Compile Include="BinaryOperations\BinaryOperationType.cs" />
+    <Compile Include="GlobalUsings.cs" />
     <Compile Include="Intersections\IIntersectionVisualizator.cs" />
     <Compile Include="Intersections\ITIntersectionFactory.cs" />
     <Compile Include="Filters\RulesFilterFactory.cs" />
@@ -115,6 +120,7 @@
     <Compile Include="Intersections\IIntersectionFactoryBuilder.cs" />
     <Compile Include="IResettable.cs" />
     <Compile Include="ISerilogged.cs" />
+    <Compile Include="ISnapShoter.cs" />
     <Compile Include="Iterators\ActionEnumerator.cs" />
     <Compile Include="Iterators\ActionTwoWayEnumerator.cs" />
     <Compile Include="Iterators\Enumerator.cs" />
@@ -135,6 +141,7 @@
     <Compile Include="Resolvers\ResolveProcessor.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreator.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreatorFactory.cs" />
+    <Compile Include="RhinoUtils\BoundingBoxBinaryOperationsMany.cs" />
     <Compile Include="Selectors\ISelector.cs" />
     <Compile Include="Selectors\IValidatableSelector.cs" />
     <Compile Include="Resolvers\TaskCreators\IItemTaskCreatorFactory.cs" />
@@ -218,6 +225,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

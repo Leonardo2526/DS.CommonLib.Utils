@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Points;
+using MoreLinq;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -200,5 +201,27 @@ namespace DS.ClassLib.VarUtils
          TryGetOrthoType(plane, tolerance) :
          default;
 
+        /// <summary>
+        /// Get extrusion lines of <paramref name="box"/> that represent
+        /// lines between two sides of <paramref name="box"/>'s plane.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns>
+        /// The collection of four <see cref="Line"/>s.
+        /// </returns>
+        public static IEnumerable<Line> GetExtrusionLines(this Box box)
+        {
+            var corners = box.GetCorners();
+            var corners1 = corners.Take(4);
+            var corners2 = corners.TakeLast(4);
+
+            var lines = new List<Line>();
+            for (int i = 0; i < 4; i++)
+            {
+                var l1 = new Line(corners1.ElementAt(i), corners2.ElementAt(i));
+                lines.Add(l1);
+            }
+            return lines;
+        }
     }
 }

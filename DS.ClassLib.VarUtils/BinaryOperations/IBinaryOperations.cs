@@ -4,7 +4,7 @@ namespace DS.ClassLib.VarUtils.BinaryOperations
 {
     /// <summary>
     /// The interface is used to perform base binary operations between 
-    /// two <typeparamref name="T"/> and return <typeparamref name="R"/>.
+    /// two <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="R"></typeparam>
