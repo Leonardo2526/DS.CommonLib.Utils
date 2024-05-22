@@ -150,6 +150,7 @@
     <Compile Include="Selectors\IValidatableSelector.cs" />
     <Compile Include="Resolvers\TaskCreators\IItemTaskCreatorFactory.cs" />
     <Compile Include="Resolvers\TaskCreators\TupleValidatableTaskCreator.cs" />
+    <Compile Include="Strings\Formatters\ReplaceUpperWithSpaceFormatter.cs" />
     <Compile Include="TimeSpanRunner.cs" />
     <Compile Include="TupleExtensions.cs" />
     <Compile Include="Collisons\CollisionStatus.cs" />
