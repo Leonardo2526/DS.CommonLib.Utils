@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Basis\BasisExtensions.cs" />
     <Compile Include="Basis\BasisOrigin.cs" />
+    <Compile Include="Benchmarks\BenchmarkReport.cs" />
     <Compile Include="BinaryOperations\IBinaryOperationsMany.cs" />
     <Compile Include="BinaryOperations\IBinaryOperations.cs" />
     <Compile Include="BinaryOperations\BinaryOperationType.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Iterators\ValidationResultsConverter.cs" />
     <Compile Include="IValidatorFactory.cs" />
     <Compile Include="IWindowMessenger.cs" />
+    <Compile Include="MathUtils.cs" />
     <Compile Include="Points\IPoint3dConverter.cs" />
     <Compile Include="Points\PointComparer.cs" />
     <Compile Include="RectangleBooleanTools.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Selectors\IValidatableSelector.cs" />
     <Compile Include="Resolvers\TaskCreators\IItemTaskCreatorFactory.cs" />
     <Compile Include="Resolvers\TaskCreators\TupleValidatableTaskCreator.cs" />
+    <Compile Include="Benchmarks\SimpleBenchmark.cs" />
     <Compile Include="Strings\Formatters\ReplaceUpperWithSpaceFormatter.cs" />
     <Compile Include="TimeSpanRunner.cs" />
     <Compile Include="TupleExtensions.cs" />
