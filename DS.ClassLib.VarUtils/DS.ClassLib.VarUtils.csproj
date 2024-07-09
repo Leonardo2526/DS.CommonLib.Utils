@@ -148,6 +148,7 @@
     <Compile Include="Resolvers\TaskCreators\ITaskCreator.cs" />
     <Compile Include="Resolvers\TaskCreators\ITaskCreatorFactory.cs" />
     <Compile Include="RhinoUtils\BoundingBoxBinaryOperationsMany.cs" />
+    <Compile Include="Selectors\IMultiSelector.cs" />
     <Compile Include="Selectors\ISelector.cs" />
     <Compile Include="Selectors\IValidatableSelector.cs" />
     <Compile Include="Resolvers\TaskCreators\IItemTaskCreatorFactory.cs" />
