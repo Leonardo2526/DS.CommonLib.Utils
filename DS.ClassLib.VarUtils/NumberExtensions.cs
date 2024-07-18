@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Rhino;
+using Rhino.Geometry;
+using System;
 
 namespace DS.ClassLib.VarUtils
 {
@@ -198,6 +200,26 @@ namespace DS.ClassLib.VarUtils
             if(number == 0) return 0;
             return (int)(number / (Math.Abs(number)));
         }
+
+        /// <summary>
+        /// Specifies if <paramref name="a"/> is equal to <paramref name="b"/> 
+        /// with given <paramref name="tolerance"/>.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>
+        /// <see langword="true"/> if difference beteween <paramref name="a"/> 
+        /// and <paramref name="b"/> is less <paramref name="tolerance"/>.
+        /// <para>
+        /// Otherwise <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool IsAlmostEqual(
+            this double a,
+            double b,
+            double tolerance = RhinoMath.ZeroTolerance)
+            => Math.Abs(a - b) < tolerance;
     }
 
 }

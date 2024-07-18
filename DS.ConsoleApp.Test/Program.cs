@@ -14,8 +14,9 @@ namespace DS.ConsoleApp.Test
 
         static void Main(string[] args)
         {
-            double v = RhinoMath.UnitScale(UnitSystem.Millimeters, UnitSystem.Feet);
-            Console.WriteLine(304 * v);
+            var rect=  CreateRectangleTest.Create();
+            Console.WriteLine(rect.IsValid);
+            Console.WriteLine(rect.Area);
             //Console.WriteLine(p1.IsCoplanar(p2));
 
             //ConvertToRectangleTest.Convert2();

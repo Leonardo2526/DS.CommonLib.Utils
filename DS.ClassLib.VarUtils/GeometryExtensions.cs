@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Points;
+using MoreLinq;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
@@ -152,6 +153,75 @@ namespace DS.ClassLib.VarUtils
         public static bool IsCoplanar(this Plane plane1, Plane plane2)
             => plane1.Normal.IsParallelTo(plane2.Normal, 1.DegToRad()) != 0 
             && plane1.DistanceTo(plane2.Origin) < 0.001;
-        
+
+        /// <summary>
+        /// Try to get type of <paramref name="plane"/> in Cartesian coordinate system.
+        /// </summary>
+        /// <param name="plane"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>
+        /// XY, YZ or XZ type if <paramref name="plane"/>'s normal is parallel to one of 
+        /// Cartesian coordinate system axis.
+        /// <para>
+        /// Otherwise default value.
+        /// </para>
+        /// </returns>
+        public static OrthoPlane TryGetOrthoType(this Plane plane,
+         double tolerance = 0.0174533)
+        {
+            var normal = plane.Normal;
+            OrthoPlane orthoPlane = default;
+            if (normal.IsParallelTo(Vector3d.XAxis, tolerance) != 0)
+            { orthoPlane = OrthoPlane.YZ; }
+            else if (normal.IsParallelTo(Vector3d.YAxis, tolerance) != 0)
+            { orthoPlane = OrthoPlane.XZ; }
+            else if (normal.IsParallelTo(Vector3d.ZAxis, tolerance) != 0)
+            { orthoPlane = OrthoPlane.XY; }
+
+            return orthoPlane;
+        }
+
+        /// <summary>
+        /// Try to get type of <paramref name="curve"/>'s <see cref="Plane"/> 
+        /// in Cartesian coordinate system.
+        /// </summary>
+        /// <param name="curve"></param>
+        /// <param name="tolerance"></param>
+        /// <returns>
+        /// XY, YZ or XZ type if <paramref name="curve"/>'s <see cref="Plane"/>
+        /// normal is parallel to one of 
+        /// Cartesian coordinate system axis.
+        /// <para>
+        /// Otherwise default value.
+        /// </para>
+        /// </returns>
+        public static OrthoPlane TryGetPlaneOrthoType(this Curve curve,
+         double tolerance = 0.0174533)
+         => curve.TryGetPlane(out var plane) ?
+         TryGetOrthoType(plane, tolerance) :
+         default;
+
+        /// <summary>
+        /// Get extrusion lines of <paramref name="box"/> that represent
+        /// lines between two sides of <paramref name="box"/>'s plane.
+        /// </summary>
+        /// <param name="box"></param>
+        /// <returns>
+        /// The collection of four <see cref="Line"/>s.
+        /// </returns>
+        public static IEnumerable<Line> GetExtrusionLines(this Box box)
+        {
+            var corners = box.GetCorners();
+            var corners1 = corners.Take(4);
+            var corners2 = corners.TakeLast(4);
+
+            var lines = new List<Line>();
+            for (int i = 0; i < 4; i++)
+            {
+                var l1 = new Line(corners1.ElementAt(i), corners2.ElementAt(i));
+                lines.Add(l1);
+            }
+            return lines;
+        }
     }
 }

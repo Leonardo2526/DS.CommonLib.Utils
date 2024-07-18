@@ -95,10 +95,10 @@ namespace DS.ClassLib.VarUtils.Basis
         /// <param name="sourceBasis"></param>
         /// <param name="targetBasis"></param>
         /// <returns>
-        /// <see cref="Transform"/> to change <paramref name="sourceBasis"/> to <paramref name="targetBasis"/>.
+        /// <see cref="RG.Transform"/> to change <paramref name="sourceBasis"/> to <paramref name="targetBasis"/>.
         /// </returns>
         public static Transform GetTransform(this Basis3d sourceBasis, Basis3d targetBasis) =>
-            Transform.ChangeBasis(sourceBasis.X, sourceBasis.Y, sourceBasis.Z, targetBasis.X, targetBasis.Y, targetBasis.Z);
+            RG.Transform.ChangeBasis(sourceBasis.X, sourceBasis.Y, sourceBasis.Z, targetBasis.X, targetBasis.Y, targetBasis.Z);
 
         /// <summary>
         /// Convert <paramref name="sourceBasis"/> to rightanded and orthonormal <see cref="Basis3d"/>..
@@ -120,6 +120,29 @@ namespace DS.ClassLib.VarUtils.Basis
             basisY.Unitize();
 
             return new Basis3d(sourceBasis.Origin, basisX, basisY, basisZ);  
+        }
+
+        /// <summary>
+        /// Perform <paramref name="transform"/> to <paramref name="basis"/>.
+        /// </summary>
+        /// <param name="basis"></param>
+        /// <param name="transform"></param>
+        /// <returns>
+        /// The result <see cref="Basis3d"/> of transformation.
+        /// </returns>
+        public static Basis3d Transform(this Basis3d basis, Transform transform)
+        {
+            var origin = new Point3d(basis.Origin);
+            var x = new Vector3d(basis.X);
+            var y = new Vector3d(basis.Y);  
+            var z = new Vector3d(basis.Z);
+
+            origin.Transform(transform);
+            x.Transform(transform);
+            y.Transform(transform);
+            z.Transform(transform);
+
+            return new Basis3d(origin, x, y, z);
         }
     }
 }

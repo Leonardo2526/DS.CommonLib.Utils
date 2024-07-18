@@ -35,9 +35,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>DS.ConsoleApp.Test.BenchmarkTestProgram</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DS.GraphUtils.Entities">
       <HintPath>..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\bin\Debug\DS.GraphUtils.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="MoreLinq, Version=4.2.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.4.2.0\lib\netstandard2.0\MoreLinq.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="Rhino3dm, Version=7.15.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -45,6 +51,9 @@
     </Reference>
     <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.3.1.1\lib\net471\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Console, Version=5.0.1.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Console.5.0.1\lib\net471\Serilog.Sinks.Console.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.Debug, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.Debug.2.0.0\lib\net46\Serilog.Sinks.Debug.dll</HintPath>
@@ -80,6 +89,7 @@
   <ItemGroup>
     <Compile Include="ActionTwoWayEnumeratorTest.cs" />
     <Compile Include="AssemblyInfoTest.cs" />
+    <Compile Include="BenchmarkTestProgram.cs" />
     <Compile Include="GCDTest.cs" />
     <Compile Include="DirectoriesTest.cs" />
     <Compile Include="FractionConverter.cs" />
@@ -87,10 +97,13 @@
     <Compile Include="EnumeratorTest.cs" />
     <Compile Include="GraphTest.cs" />
     <Compile Include="LinesBooleanTests.cs" />
+    <Compile Include="RhinoTests\Startups\RhinoTestProgram.cs" />
     <Compile Include="RhinoTests\CCSTest.cs" />
     <Compile Include="RhinoTests\CheckDefaultValuesTest.cs" />
     <Compile Include="RhinoTests\Basis3dTests.cs" />
+    <Compile Include="RhinoTests\PointsSortTest.cs" />
     <Compile Include="RhinoTests\Rectangles\ConvertToRectangleTest.cs" />
+    <Compile Include="RhinoTests\Rectangles\CreateRectangleTest.cs" />
     <Compile Include="RhinoTests\Rectangles\RecatngleIntersectionsTest.cs" />
     <Compile Include="RhinoTests\Rectangles\RectangleContainTest.cs" />
     <Compile Include="RhinoTests\GeometryOffsetTest.cs" />

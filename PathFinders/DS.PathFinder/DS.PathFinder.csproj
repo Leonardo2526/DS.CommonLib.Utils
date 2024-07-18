@@ -50,6 +50,9 @@
     <Reference Include="DS.GraphUtils.Entities">
       <HintPath>..\..\..\DS.GraphUtils\DS.GraphUtils.Entities\DS.GraphUtils.Entities\bin\Debug\DS.GraphUtils.Entities.dll</HintPath>
     </Reference>
+    <Reference Include="MoreLinq, Version=4.2.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Olimproekt\MEPAutoCoordination\packages\morelinq.4.2.0\lib\netstandard2.0\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
       <HintPath>..\..\..\Olimproekt\MEPAutoCoordination\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
@@ -90,6 +93,18 @@
     <Compile Include="Algorithms\AStar\ComparePFNode.cs" />
     <Compile Include="Algorithms\AStar\Enumerators\ToleranceEnumerator.cs" />
     <Compile Include="Algorithms\AStar\Enums.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\AStarGraphAlgorithm.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeBuilderImpl\GraphNodeBuilder.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\INodeVectoryFactory.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeBuilderImpl\ParametersSpecificator.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeBuilderImpl\LocationSpecificator.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeBuilderImpl\ISpecifyNodeLocation.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeBuilderImpl\ISpecifyParameter.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeVectorFactory.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\NodeVertexFactory.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\PriorityComparer.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\VertexLocationComparer.cs" />
+    <Compile Include="Algorithms\AStar\GraphAlgorithm\Node.cs" />
     <Compile Include="Algorithms\AStar\INodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\NodeBuilder.cs" />
     <Compile Include="Algorithms\AStar\PathNode.cs" />
@@ -113,7 +128,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ProjectDescription.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

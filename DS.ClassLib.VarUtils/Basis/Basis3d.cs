@@ -1,4 +1,5 @@
 ﻿using DS.ClassLib.VarUtils.Points;
+using Rhino;
 using Rhino.Geometry;
 using System.Text;
 
@@ -9,6 +10,9 @@ namespace DS.ClassLib.VarUtils.Basis
     /// </summary>
     public struct Basis3d : IBasis<Vector3d>
     {
+        private const double _angleTolerance = RhinoMath.DefaultAngleTolerance;
+        private const double _tolerance = RhinoMath.ZeroTolerance;
+
         /// <summary>
         /// Instansiate an object that represents basis of <see cref="Vector3d"/>'s.
         /// </summary>
@@ -67,5 +71,41 @@ namespace DS.ClassLib.VarUtils.Basis
 
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Determines whether the <paramref name="basis1"/> and <paramref name="basis2"/> 
+        /// are equals.
+        /// </summary>
+        /// <param name="basis1"></param>
+        /// <param name="basis2"></param>
+        /// <returns>
+        /// <see langword="true"/> if all basis have the same directions and origin points.
+        /// <para>
+        /// Otherwise <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool operator ==(Basis3d basis1, Basis3d basis2)
+        {
+            var b1 = basis1.X.IsParallelTo(basis2.X, _angleTolerance) == 1;
+            var b2 = basis1.Y.IsParallelTo(basis2.Y, _angleTolerance) == 1;
+            var b3 = basis1.Z.IsParallelTo(basis2.Z, _angleTolerance) == 1;
+            var b4 = basis1.Origin.IsAlmostEqualTo(basis2.Origin, _tolerance);
+            return b1 && b2 && b3 && b4;
+        }
+
+        /// <summary>
+        /// Determines whether the <paramref name="basis1"/> and <paramref name="basis2"/> 
+        /// aren't equals.
+        /// </summary>
+        /// <param name="basis1"></param>
+        /// <param name="basis2"></param>
+        /// <returns>
+        /// <see langword="true"/> if one of basis haven't the same directions or origin point.
+        /// <para>
+        /// Otherwise <see langword="false"/>.
+        /// </para>
+        /// </returns>
+        public static bool operator !=(Basis3d basis1, Basis3d basis2)
+            => !(basis1 == basis2);
     }
 }
